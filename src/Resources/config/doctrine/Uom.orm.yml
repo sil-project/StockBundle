@@ -1,3 +1,23 @@
 Sil\Bundle\StockBundle\Domain\Entity\Uom:
     type: mappedSuperclass
     
+    fields:
+        name:
+            type: string(255)
+            nullable: false
+        factor:
+            type: decimal
+            nullable: false
+        rounding:
+            type: int
+            nullable: false
+        active:
+            type: boolean
+            nullable: false
+    
+    manyToOne:
+        type: 
+            targetEntity: UomType
+            joinColumn:
+                name: uom_type_id
+                referencedColumnName: id

@@ -1,3 +1,28 @@
 Sil\Bundle\StockBundle\Domain\Entity\Operation:
     type: mappedSuperclass
     
+    fields:
+        code:
+            type: string(64)
+            unique: true
+            nullable: false
+        expectedAt: 
+            type: datetime
+    
+    manyToOne:
+        srcLocation: 
+            targetEntity: Location   
+            joinColumn:
+                name: location_src_id
+                referencedColumnName: id
+        destLocation: 
+            targetEntity: Location
+            joinColumn:
+                name: location_dest_id
+                referencedColumnName: id
+   
+            
+    embedded:
+        state:
+            class: ProgressState
+   

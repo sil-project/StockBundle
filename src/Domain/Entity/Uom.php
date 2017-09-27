@@ -47,14 +47,14 @@ class Uom
      * 
      * @var int
      */
-    private $rounding;
+    private $rounding = 4;
 
     /**
      * Enable/disable the unit of measure without deleting it
      * 
      * @var bool
      */
-    private $active;
+    private $active = true;
 
     /**
      * 

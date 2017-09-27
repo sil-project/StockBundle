@@ -1,3 +1,13 @@
 Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy:
     type: mappedSuperclass
     
+    fields:
+        name:
+            type: string(255)
+            unique: true
+            nullable: false
+        description:
+            type: string(255)
+        orderBy:
+            type: simple_array
+

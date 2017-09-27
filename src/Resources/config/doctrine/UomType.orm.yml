@@ -1,3 +1,8 @@
 Sil\Bundle\StockBundle\Domain\Entity\UomType:
     type: mappedSuperclass
     
+    fields:
+        name:
+            type: string(64)
+            unique: true
+            nullable: false

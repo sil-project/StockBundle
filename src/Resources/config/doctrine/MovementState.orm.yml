@@ -1,5 +1,0 @@
-Sil\Bundle\StockBundle\Domain\Entity\MovementState:
-    type: embeddable
-    fields:
-        value: 
-            type: string(255)

@@ -6,14 +6,12 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
             type: string(64)
             unique: true
             nullable: false
-        createdAt: 
-            type: datetime
         expectedAt: 
             type: datetime
             
     manyToOne:
         stockItem: 
-            targetEntity: StockItem
+            targetEntity: StockItemInterface
             joinColumn:
                 name: stockitem_id
                 referencedColumnName: id
@@ -28,15 +26,20 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
                 name: location_dest_id
                 referencedColumnName: id
         batch: 
-            targetEntity: Batch
+            targetEntity: BatchInterface
             joinColumn:
                 name: batch_id
                 referencedColumnName: id
                 nullable: true
-            
+                
+    oneToMany:
+        reservedStockUnits:
+          targetEntity: StockUnit
+          mappedBy: reservationMovement
+          
     embedded:
         state:
-            class: MovementState
+            class: ProgressState
         qty:
             class: UomQty
             
