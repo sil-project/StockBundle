@@ -1,0 +1,43 @@
+Sil\Bundle\StockBundle\Domain\Entity\Movement:
+    type: mappedSuperclass
+
+    fields:
+        code:
+            type: string(64)
+            unique: true
+            nullable: false
+        createdAt: 
+            type: datetime
+        expectedAt: 
+            type: datetime
+            
+    manyToOne:
+        stockItem: 
+            targetEntity: StockItem
+            joinColumn:
+                name: stockitem_id
+                referencedColumnName: id
+        srcLocation: 
+            targetEntity: Location   
+            joinColumn:
+                name: location_src_id
+                referencedColumnName: id
+        destLocation: 
+            targetEntity: Location
+            joinColumn:
+                name: location_dest_id
+                referencedColumnName: id
+        batch: 
+            targetEntity: Batch
+            joinColumn:
+                name: batch_id
+                referencedColumnName: id
+                nullable: true
+            
+    embedded:
+        state:
+            class: MovementState
+        qty:
+            class: UomQty
+            
+    

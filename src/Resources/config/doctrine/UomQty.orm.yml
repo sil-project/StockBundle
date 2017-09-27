@@ -1,0 +1,11 @@
+Sil\Bundle\StockBundle\Domain\Entity\UomQty:
+    type: embeddable
+    fields:
+        value: 
+            type: decimal
+    manyToOne:
+        uom: 
+            targetEntity: Uom
+            joinColumn:
+                name: uom_id
+                referencedColumnName: id

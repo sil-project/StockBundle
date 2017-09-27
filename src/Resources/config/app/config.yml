@@ -1,0 +1,7 @@
+doctrine:
+    orm:
+        mappings:
+            SilStockBundle:
+                type: yml
+                prefix: Sil\Bundle\StockBundle\Domain\Entity
+                dir: Resources/config/doctrine

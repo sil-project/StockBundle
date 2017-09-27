@@ -1,0 +1,3 @@
+Sil\Bundle\StockBundle\Domain\Entity\Uom:
+    type: mappedSuperclass
+    
