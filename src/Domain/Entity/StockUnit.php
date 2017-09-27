@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,8 +10,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
+use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
 use DomainException;
 
 /**
@@ -18,6 +21,8 @@ use DomainException;
  */
 class StockUnit
 {
+
+    use Guidable;
 
     /**
      *
@@ -64,7 +69,7 @@ class StockUnit
      * @param Batch $batch
      */
     public function __construct($code, StockItem $item, UomQty $qty,
-        Location $location, Batch $batch = null)
+            Location $location, Batch $batch = null)
     {
         $this->code = $code;
         $this->qty = $qty->convertTo($item->getUom());
@@ -179,4 +184,5 @@ class StockUnit
     {
         return null !== $this->reservationMovement;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,10 +10,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
 use InvalidArgumentException;
 
 /**
@@ -20,6 +23,8 @@ use InvalidArgumentException;
  */
 class Warehouse
 {
+
+    use Guidable;
 
     /**
      *
@@ -118,7 +123,7 @@ class Warehouse
     {
         if ( $this->locations->contains($location) ) {
             throw new \InvalidArgumentException(
-                'The same Location cannot be added twice');
+                    'The same Location cannot be added twice');
         }
         $location->setWarehouse($this);
         $this->locations->add($location);
@@ -134,9 +139,10 @@ class Warehouse
     {
         if ( !$this->locations->contains($location) ) {
             throw new \InvalidArgumentException(
-                'The location to remove does not exist');
+                    'The location to remove does not exist');
         }
         $location->setWarehouse(null);
         $this->locations->removeElement($location);
     }
+
 }
