@@ -13,7 +13,8 @@ namespace Sil\Bundle\StockBundle\Domain\Factory;
 
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 
@@ -40,18 +41,18 @@ class MovementFactory implements MovementFactoryInterface
 
     /**
      * 
-     * @param StockItem $stockItem
+     * @param StockItemInterface $stockItem
      * @param UomQty $qty
      * @param Location $srcLocation
      * @param Location $destLocation
-     * @param Batch $batch
+     * @param BatchInterface|null $batch
      * @return Movement
      */
-    public function createDraft(StockItem $stockItem, UomQty $qty,
-        Location $srcLocation, Location $destLocation): Movement
+    public function createDraft(StockItemInterface $stockItem, UomQty $qty,
+        Location $srcLocation, Location $destLocation, ?BatchInterface $batch = null): Movement
     {
         $code = $this->codeGenerator->generate($stockItem, $qty, $srcLocation,
             $destLocation);
-        return new Movement($code, $stockItem, $qty, $srcLocation, $destLocation);
+        return new Movement($code, $stockItem, $qty, $srcLocation, $destLocation, $batch);
     }
 }

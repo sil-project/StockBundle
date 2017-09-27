@@ -13,36 +13,15 @@ declare(strict_types=1);
 
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
-
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class Batch implements BatchInterface
+interface BatchInterface
 {
 
-    use Guidable;
-
     /**
-     *
-     * @var string
+     * 
+     * @return string
      */
-    private $code;
-
-    /**
-     *
-     * @var int
-     */
-    private $number;
-
-    public function __construct(string $code)
-    {
-        $this->code = $code;
-    }
-
-    public function getCode(): string
-    {
-        return $this->code;
-    }
-
+    public function getCode(): string;
 }

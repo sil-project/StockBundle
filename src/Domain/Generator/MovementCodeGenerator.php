@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace Sil\Bundle\StockBundle\Domain\Generator;
 
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 
@@ -23,13 +23,13 @@ class MovementCodeGenerator implements MovementCodeGeneratorInterface
 
     /**
      * 
-     * @param StockItem $stockItem
+     * @param StockItemInterface $stockItem
      * @param UomQty $qty
      * @param Location $srcLocation
      * @param Location $destLocation
      * @return string
      */
-    public function generate(StockItem $stockItem, UomQty $qty,
+    public function generate(StockItemInterface $stockItem, UomQty $qty,
         Location $srcLocation, Location $destLocation): string
     {
         return strtoupper(substr(md5((string)mt_rand()), 0, 7));

@@ -13,36 +13,36 @@ declare(strict_types=1);
 
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
+use Sil\Bundle\StockBundle\Domain\Entity\Uom;
+use Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class Batch implements BatchInterface
+interface StockItemInterface
 {
 
-    use Guidable;
+    /**
+     * 
+     * @return string
+     */
+    public function getName(): string;
 
     /**
-     *
-     * @var string
+     * 
+     * @return string
      */
-    private $code;
+    public function getCode(): string;
 
     /**
-     *
-     * @var int
+     * 
+     * @return Uom
      */
-    private $number;
+    public function getUom(): Uom;
 
-    public function __construct(string $code)
-    {
-        $this->code = $code;
-    }
-
-    public function getCode(): string
-    {
-        return $this->code;
-    }
-
+    /**
+     * 
+     * @return OutputStrategy
+     */
+    public function getOutputStrategy(): OutputStrategy;
 }

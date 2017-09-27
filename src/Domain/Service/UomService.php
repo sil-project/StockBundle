@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Uom;
 
 /**
@@ -38,10 +38,10 @@ class UomService implements UomServiceInterface
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param Uom $newUom
      */
-    public function updateUomForStockItem(StockItem $item, Uom $newUom): void
+    public function updateUomForStockItem(StockItemInterface $item, Uom $newUom): void
     {
 
         $stockUnits = $this->stockUnitRepository->findByStockItem($item);

@@ -15,7 +15,8 @@ use Sil\Bundle\StockBundle\Domain\Repository\MovementRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Factory\StockUnitFactoryInterface;
 use Sil\Bundle\StockBundle\Domain\Factory\MovementFactoryInterface;
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\StockUnit;
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
@@ -71,16 +72,16 @@ class MovementService implements MovementServiceInterface
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param UomQty $qty
      * @param Location $srcLoc
      * @param Location $destLoc
-     * @param Batch $batch
+     * @param BatchInterface|null $batch
      * 
      * @return Movement
      */
-    public function createDraft(StockItem $item, UomQty $qty, Location $srcLoc,
-        Location $destLoc, Batch $batch = null): Movement
+    public function createDraft(StockItemInterface $item, UomQty $qty, Location $srcLoc,
+        Location $destLoc, ?BatchInterface $batch = null): Movement
     {
         $mvt = $this->movementFactory
             ->createDraft($item, $qty, $srcLoc, $destLoc);

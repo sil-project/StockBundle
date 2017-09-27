@@ -10,7 +10,7 @@
  */
 namespace Sil\Bundle\StockBundle\Domain\Repository;
 
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
 
@@ -23,19 +23,19 @@ interface StockUnitRepositoryInterface
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
 
      * @return array|StockUnit[]
      */
-    public function findByStockItem(StockItem $item);
+    public function findByStockItem(StockItemInterface $item);
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param Location $location
      * @return array|StockUnit[]
      */
-    public function findByStockItemAndLocation(StockItem $item,
+    public function findByStockItemAndLocation(StockItemInterface $item,
         Location $location);
 
     /**

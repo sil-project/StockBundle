@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Uom;
 
 /**
@@ -22,9 +22,9 @@ interface UomServiceInterface
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param Uom $newUom
      * @return void
      */
-    public function updateUomForStockItem(StockItem $item, Uom $newUom): void;
+    public function updateUomForStockItem(StockItemInterface $item, Uom $newUom): void;
 }

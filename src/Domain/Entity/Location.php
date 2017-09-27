@@ -171,10 +171,10 @@ class Location
 
     /**
      * @deprecated
-     * @param StockItem $stockItem
+     * @param StockItemInterface $stockItem
      * @return boolean
      */
-    public function hasStockItem(StockItem $stockItem): boolean
+    public function hasStockItem(StockItemInterface $stockItem): boolean
     {
         return $this->stockUnits->exists(
                 function($i, $unit) use($stockItem) {
@@ -184,7 +184,7 @@ class Location
 
     /**
      * @deprecated
-     * @return array|StockItem[]
+     * @return array|StockItemInterface[]
      */
     public function getStockItems(): array
     {

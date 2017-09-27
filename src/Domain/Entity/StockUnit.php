@@ -38,7 +38,7 @@ class StockUnit
 
     /**
      *
-     * @var StockItem 
+     * @var StockItemInterface 
      */
     private $stockItem;
 
@@ -50,7 +50,7 @@ class StockUnit
 
     /**
      *
-     * @var Batch 
+     * @var BatchInterface 
      */
     private $batch;
 
@@ -63,13 +63,13 @@ class StockUnit
     /**
      * 
      * @param string $code
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param UomQty $qty
      * @param Location $location
-     * @param Batch $batch
+     * @param BatchInterface $batch
      */
-    public function __construct($code, StockItem $item, UomQty $qty,
-            Location $location, Batch $batch = null)
+    public function __construct($code, StockItemInterface $item, UomQty $qty,
+            Location $location, BatchInterface $batch = null)
     {
         $this->code = $code;
         $this->qty = $qty->convertTo($item->getUom());
@@ -99,9 +99,9 @@ class StockUnit
 
     /**
      * 
-     * @return StockItem
+     * @return StockItemInterface
      */
-    public function getStockItem(): StockItem
+    public function getStockItem(): StockItemInterface
     {
         return $this->stockItem;
     }
@@ -117,9 +117,9 @@ class StockUnit
 
     /**
      * 
-     * @return Batch|null
+     * @return BatchInterface|null
      */
-    public function getBatch(): ?Batch
+    public function getBatch(): ?BatchInterface
     {
         return $this->batch;
     }
@@ -145,10 +145,10 @@ class StockUnit
 
     /**
      * 
-     * @param Batch|null $batch
+     * @param BatchInterface|null $batch
      * @return void
      */
-    public function setBatch(?Batch $batch): void
+    public function setBatch(?BatchInterface $batch): void
     {
         $this->batch = $batch;
     }

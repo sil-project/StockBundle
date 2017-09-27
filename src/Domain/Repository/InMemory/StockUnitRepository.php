@@ -12,7 +12,7 @@ namespace Sil\Bundle\StockBundle\Domain\Repository\InMemory;
 
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\StockUnit;
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
 
@@ -29,11 +29,11 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param Location $location
      * @return array|StockUnit[]
      */
-    public function findByStockItem(StockItem $item)
+    public function findByStockItem(StockItemInterface $item)
     {
         return array_filter($this->findAll()
             ,
@@ -44,10 +44,10 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @return array|StockUnit[]
      */
-    public function findByStockItemAndLocation(StockItem $item,
+    public function findByStockItemAndLocation(StockItemInterface $item,
         Location $location)
     {
         return array_filter($this->findAll()

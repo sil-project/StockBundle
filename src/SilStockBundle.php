@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,14 +10,21 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use  Sil\Bundle\StockBundle\Infrastructure\DependencyInjection\SilStockExtension;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class SilStockBundle extends Bundle
 {
-    
+
+    public function getContainerExtension()
+    {
+        return new SilStockExtension();
+    }
+
 }

@@ -18,7 +18,7 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class StockItem
+class StockItem implements StockItemInterface
 {
 
     use Guidable;

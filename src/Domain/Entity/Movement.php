@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
@@ -49,7 +51,7 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      *
-     * @var StockItem 
+     * @var StockItemInterface 
      */
     private $stockItem;
 
@@ -79,7 +81,7 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      *
-     * @var Batch 
+     * @var BatchInterface
      */
     private $batch;
 
@@ -91,14 +93,15 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * @param string $code
-     * @param StockItem $stockItem
+     * @param StockItemInterface $stockItem
      * @param UomQty $qty
      * @param Location $srcLocation
      * @param Location $destLocation
-     * @param Batch $batch
+     * @param BatchInterface|null $batch
      */
-    public function __construct(string $code, StockItem $stockItem, UomQty $qty,
-        Location $srcLocation, Location $destLocation)
+    public function __construct(string $code, StockItemInterface $stockItem,
+            UomQty $qty, Location $srcLocation, Location $destLocation,
+            ?BatchInterface $batch = null)
     {
         $this->code = $code;
         $this->createdAt = new DateTime();
@@ -108,6 +111,7 @@ class Movement implements ProgressStateAwareInterface
         $this->stockItem = $stockItem;
         $this->qty = $qty;
         $this->state = ProgressState::draft();
+        $this->batch = $batch;
         $this->reservedStockUnits = new ArrayCollection();
     }
 
@@ -157,9 +161,9 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @return StockItem
+     * @return StockItemInterface
      */
-    public function getStockItem(): StockItem
+    public function getStockItem(): StockItemInterface
     {
         return $this->stockItem;
     }
@@ -175,9 +179,9 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @return Batch|null
+     * @return BatchInterface|null
      */
-    public function getBatch(): ?Batch
+    public function getBatch(): ?BatchInterface
     {
         return $this->batch;
     }
@@ -233,10 +237,10 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @param StockItem $stockItem
+     * @param StockItemInterface $stockItem
      * @return void
      */
-    public function setStockItem(StockItem $stockItem): void
+    public function setStockItem(StockItemInterface $stockItem): void
     {
         $this->stockItem = $stockItem;
     }
@@ -253,10 +257,10 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @param Batch|null $batch
+     * @param BatchInterface|null $batch
      * @return void
      */
-    public function setBatch(?Batch $batch): void
+    public function setBatch(?BatchInterface $batch): void
     {
         $this->batch = $batch;
     }
@@ -355,4 +359,5 @@ class Movement implements ProgressStateAwareInterface
     {
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
+
 }

@@ -13,10 +13,10 @@ namespace Sil\Bundle\StockBundle\Domain\Factory;
 
 use Sil\Bundle\StockBundle\Domain\Generator\StockUnitCodeGeneratorInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\StockUnit;
-use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
-use Sil\Bundle\StockBundle\Domain\Entity\Batch;
+use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -41,14 +41,14 @@ class StockUnitFactory implements StockUnitFactoryInterface
 
     /**
      * 
-     * @param StockItem $item
+     * @param StockItemInterface $item
      * @param UomQty $qty
      * @param Location $location
-     * @param Batch $batch
+     * @param BatchInterface|null $batch
      * @return StockUnit
      */
-    public function createNew(StockItem $item, UomQty $qty, Location $location,
-        Batch $batch = null): StockUnit
+    public function createNew(StockItemInterface $item, UomQty $qty, Location $location,
+        ?BatchInterface $batch = null): StockUnit
     {
         $code = $this->codeGenerator->generate($item, $qty, $location, $batch);
         return new StockUnit($code, $item, $qty, $location, $batch);
