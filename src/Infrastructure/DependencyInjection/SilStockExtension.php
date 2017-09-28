@@ -15,6 +15,7 @@ namespace Sil\Bundle\StockBundle\Infrastructure\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Blast\Bundle\ResourceBundle\DependencyInjection\Extension\ResourceExtensionTrait;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -22,10 +23,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class SilStockExtension extends Extension
 {
 
+    use ResourceExtensionTrait;
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        
+        $this->registerResources($config['resources'], $container);
     }
 
 }

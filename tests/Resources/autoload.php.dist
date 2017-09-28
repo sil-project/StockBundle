@@ -6,7 +6,7 @@ $files = array(
     //bundle level
     __DIR__.'/../../vendor/autoload.php',
     //platform level
-    __DIR__.'/../../../../vendor/autoload.php',
+    __DIR__.'/../../../../../../vendor/autoload.php',
 );
 
 $autoload = false;

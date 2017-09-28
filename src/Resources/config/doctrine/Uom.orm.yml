@@ -9,7 +9,7 @@ Sil\Bundle\StockBundle\Domain\Entity\Uom:
             type: decimal
             nullable: false
         rounding:
-            type: int
+            type: integer
             nullable: false
         active:
             type: boolean

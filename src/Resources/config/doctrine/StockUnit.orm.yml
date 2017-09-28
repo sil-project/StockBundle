@@ -14,7 +14,8 @@ Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
                 name: stockitem_id
                 referencedColumnName: id
         location: 
-            targetEntity: Location   
+            targetEntity: Location
+            inversedBy: stockUnits
             joinColumn:
                 name: location_id
                 referencedColumnName: id

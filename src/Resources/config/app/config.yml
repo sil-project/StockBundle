@@ -5,3 +5,7 @@ doctrine:
                 type: yml
                 prefix: Sil\Bundle\StockBundle\Domain\Entity
                 dir: Resources/config/doctrine
+        
+        resolve_target_entities:
+            Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface: Sil\Bundle\StockBundle\Domain\Entity\StockItem
+            Sil\Bundle\StockBundle\Domain\Entity\BatchInterface: Sil\Bundle\StockBundle\Domain\Entity\Batch
