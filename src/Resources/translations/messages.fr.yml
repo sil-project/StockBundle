@@ -1,0 +1,23 @@
+form_tab_general: 'Général'
+
+
+librinfo:
+    error:
+        invalid_batch_number: Le champ "Numéro de lot" n'est pas valide
+        
+    label:
+        
+        seedproducercode: Code producteur
+    link:
+        movement_list: Liste des Mouvements
+
+    help:
+        batchNumber: Nombre entre 1 et 99
+    placeholder:
+        seed_producer_code: Code producteur
+    stock:
+        movement_admin: Mouvements de stocks
+        operation_admin: Mouvements de stocks
+        
+Mr: M
+Mrs: Mme

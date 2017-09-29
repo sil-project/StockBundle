@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,10 +9,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\Operation;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -63,6 +62,12 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      *
+     * @var Operation
+     */
+    private $operation;
+
+    /**
+     *
      * @var Location 
      */
     private $srcLocation;
@@ -100,8 +105,8 @@ class Movement implements ProgressStateAwareInterface
      * @param BatchInterface|null $batch
      */
     public function __construct(string $code, StockItemInterface $stockItem,
-            UomQty $qty, Location $srcLocation, Location $destLocation,
-            ?BatchInterface $batch = null)
+        UomQty $qty, Location $srcLocation, Location $destLocation,
+        ?BatchInterface $batch = null)
     {
         $this->code = $code;
         $this->createdAt = new DateTime();
@@ -131,6 +136,15 @@ class Movement implements ProgressStateAwareInterface
     public function getExpectedAt(): DateTimeInterface
     {
         return $this->expectedAt;
+    }
+
+    /**
+     * 
+     * @return Operation
+     */
+    public function getOperation(): Operation
+    {
+        return $this->operation;
     }
 
     /**
@@ -213,6 +227,15 @@ class Movement implements ProgressStateAwareInterface
     public function setExpectedAt(DateTimeInterface $expectedAt): void
     {
         $this->expectedAt = $expectedAt;
+    }
+
+    /**
+     * 
+     * @param Operation $operation
+     */
+    public function setOperation(Operation $operation)
+    {
+        $this->operation = $operation;
     }
 
     /**
@@ -359,5 +382,4 @@ class Movement implements ProgressStateAwareInterface
     {
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
-
 }

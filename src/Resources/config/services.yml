@@ -1,0 +1,18 @@
+services:
+    
+    sil.stock.code_generator.movement:
+        class: Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGenerator
+    
+    sil.stock.code_generator.operation:
+        class: Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGenerator
+    
+    
+    sil.stock.factory.movement:
+        class: Sil\Bundle\StockBundle\Domain\Factory\MovementFactory
+        arguments:
+            - '@sil.stock.code_generator.movement'
+   
+    sil.stock.factory.operation:
+        class: Sil\Bundle\StockBundle\Domain\Factory\OperationFactory
+        arguments:
+            - '@sil.stock.code_generator.operation'

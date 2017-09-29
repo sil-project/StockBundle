@@ -15,6 +15,12 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
             joinColumn:
                 name: stockitem_id
                 referencedColumnName: id
+        operation: 
+            targetEntity: Operation
+            inversedBy: movements
+            joinColumn:
+                name: operation_id
+                referencedColumnName: id
         srcLocation: 
             targetEntity: Location   
             joinColumn:

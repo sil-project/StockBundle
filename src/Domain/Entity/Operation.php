@@ -63,14 +63,14 @@ class Operation implements ProgressStateAwareInterface
      *
      * @var Collection|Movement[]
      */
-    private $movemements;
+    private $movements;
 
     public function __construct(string $code)
     {
         $this->code = $code;
         $this->createdAt = new DateTime();
         $this->state = ProgressState::draft();
-        $this->movemements = new ArrayCollection();
+        $this->movements = new ArrayCollection();
     }
 
     /**
@@ -122,9 +122,9 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @return Collection
      */
-    public function getMovemements(): Collection
+    public function getMovements(): Collection
     {
-        return $this->movemements;
+        return $this->movements;
     }
 
     /**

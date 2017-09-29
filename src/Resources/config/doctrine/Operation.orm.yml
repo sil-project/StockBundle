@@ -20,7 +20,10 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             joinColumn:
                 name: location_dest_id
                 referencedColumnName: id
-   
+    oneToMany:
+        movements:
+          targetEntity: Movement
+          mappedBy: operation
             
     embedded:
         state:

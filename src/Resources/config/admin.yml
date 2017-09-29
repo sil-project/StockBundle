@@ -1,0 +1,24 @@
+services:
+    sil_stock.admin.movement:
+        class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
+        calls:
+            - ["setMovementFactory", ['@sil.stock.factory.movement']]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Customers Relationship Management
+                label: librinfo.stock.movement_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+                
+    sil_stock.admin.operation:
+        class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, BlastCoreBundle:CRUD]
+        calls:
+            - ["setOperationFactory", ['@sil.stock.factory.operation']]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Customers Relationship Management
+                label: librinfo.stock.operation_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
