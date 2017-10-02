@@ -1,16 +1,15 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-namespace Sil\Bubdle\StockBundle\Application\Form\ChoiceLoader;
+namespace Sil\Bundle\StockBundle\Application\Form\ChoiceLoader;
 
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\UomTypeRepositoryInterface;
 use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 
 /**
  * Description of UomTypeChoiceLoader
@@ -21,7 +20,7 @@ class UomTypeChoiceLoader implements ChoiceLoaderInterface
 {
 
     /**
-     * @param EntityManager $manager
+     * @param UomTypeRepositoryInterface $manager
      * @param array         $options
      */
     public function __construct(UomTypeRepositoryInterface $uomTypeRepository)
@@ -32,37 +31,21 @@ class UomTypeChoiceLoader implements ChoiceLoaderInterface
     //put your code here
     public function loadChoiceList($value = null): ChoiceListInterface
     {
-         
+
         $uomTypes = $this->uomTypeRepository->findAll();
-
-        $choices = $repository->findBy(['label' => $field]);
-        $choiceList = [];
-        foreach ($choices as $choice) {
-            $choiceList[$choice->getValue()] = $choice->getValue();
-        }
-        $this->choiceList = new ArrayChoiceList($choiceList, $value);
-
-        return $this->choiceList;
+        return new ArrayChoiceList($uomTypes,
+            function($ut) {
+            return $ut->getId();
+        });
     }
 
-    public function loadChoicesForValues(string $values, $value = null): array
+    public function loadChoicesForValues(array $values, $value = null): array
     {
-        
+        return [];
     }
 
     public function loadValuesForChoices(array $choices, $value = null): array
     {
-        $values = array();
-        foreach ($choices as $key => $choice) {
-            if (is_callable($value)) {
-                $values[$key] = (string) call_user_func($value, $choice, $key);
-            } else {
-                $values[$key] = $choice;
-            }
-        }
-        $this->choiceList = new ArrayChoiceList($values, $value);
-
-        return $values;
+        return [];
     }
-
 }

@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\UomType:
     type: mappedSuperclass
-    
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomTypeRepository
     fields:
         name:
             type: string(64)

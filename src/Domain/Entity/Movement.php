@@ -61,7 +61,7 @@ class Movement implements ProgressStateAwareInterface
      *
      * @var float 
      */
-    private $qtyValue;
+    private $qtyValue = 0;
 
     /**
      *
@@ -117,6 +117,7 @@ class Movement implements ProgressStateAwareInterface
     {
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
+        $this->qtyUom = new NullUom();
         $this->setState(ProgressState::draft());
         $this->reservedStockUnits = new ArrayCollection();
     }
@@ -187,7 +188,7 @@ class Movement implements ProgressStateAwareInterface
      * 
      * @return StockItemInterface
      */
-    public function getStockItem(): StockItemInterface
+    public function getStockItem(): ?StockItemInterface
     {
         return $this->stockItem;
     }

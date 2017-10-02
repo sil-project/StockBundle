@@ -23,21 +23,49 @@ services:
     
     sil.stock.repository.operation:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\Operation
+        
     sil.stock.repository.movement:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\Movement
+        
     sil.stock.repository.stockunit:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockUnitRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\StockUnit
+        
     sil.stock.repository.stockitem:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockItemRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\StockItem
+        
     sil.stock.repository.uomtype:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomTypeRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\UomType
+        
     
     
     ###################
     # FORM TYPES
     ###################
     
-    sil.stock.formtype.uomqty:
-        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyType
+    
+    sil.stock.form.choiceloader.uomtype:
+        class: Sil\Bundle\StockBundle\Application\Form\ChoiceLoader\UomTypeChoiceLoader
         arguments:
             - '@sil.stock.repository.uomtype'
+    
+    sil.stock.form.type.uomqty:
+        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyType
+        tags:
+            - {name: form.type, alias: form}
+        arguments:
+            - '@sil.stock.form.choiceloader.uomtype'

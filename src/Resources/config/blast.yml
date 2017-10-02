@@ -49,7 +49,8 @@ parameters:
                         form_group_general:
                             code: ~
                             stockItem: ~
-                            qty: ~
+                            qty:
+                                type: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyType
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
