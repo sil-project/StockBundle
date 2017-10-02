@@ -33,18 +33,33 @@ class UomType
      * 
      * @param string $name
      */
-    public function __construct(string $name)
+    public static function createDefault(string $name)
     {
-        $this->name = $name;
+        $o = new self();
+        $o->name = $name;
+        return $o;
+    }
+
+    /**
+     * 
+     */
+    public function __construct()
+    {
+        
     }
 
     /**
      * 
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 
 }

@@ -62,11 +62,18 @@ class Uom
      * @param string $name
      * @param float $factor
      */
-    public function __construct(UomType $type, string $name, float $factor)
+    public static function createDefault(UomType $type, string $name, float $factor)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->factor = $factor;
+        $o = new self();
+        $o->type = $type;
+        $o->name = $name;
+        $o->factor = $factor;
+        return $o;
+    }
+
+    public function __construct()
+    {
+        
     }
 
     /**
@@ -109,7 +116,7 @@ class Uom
      */
     public function getFactor(): float
     {
-        return $this->factor;
+        return floatval($this->factor);
     }
 
     /**

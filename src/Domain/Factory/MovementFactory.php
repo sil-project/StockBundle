@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Factory;
 
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
@@ -48,11 +50,10 @@ class MovementFactory implements MovementFactoryInterface
      * @param BatchInterface|null $batch
      * @return Movement
      */
-    public function createDraft(StockItemInterface $stockItem, UomQty $qty,
-        Location $srcLocation, Location $destLocation, ?BatchInterface $batch = null): Movement
+    public function createDraft(): Movement
     {
-        $code = $this->codeGenerator->generate($stockItem, $qty, $srcLocation,
-            $destLocation);
-        return new Movement($code, $stockItem, $qty, $srcLocation, $destLocation, $batch);
+
+        return new Movement();
     }
+
 }

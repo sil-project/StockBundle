@@ -1,0 +1,20 @@
+sonata_admin:
+    dashboard:
+        groups:
+            
+            lisem.menu.stock:
+                label: librinfo.menu_label.stock_management
+                icon:  '<i class="fa fa-list"></i>'
+                items:
+                    - label: librinfo.menu_label.operations
+                      route: admin_stock_operations_list
+                    - label: librinfo.menu_label.movements
+                      route: admin_stock_movements_list
+                    - label: librinfo.menu_label.warehouses
+                      route: admin_stock_warehouses_list
+                    - label: librinfo.menu_label.locations
+                      route: admin_stock_locations_list
+                    - label: librinfo.menu_label.uom_types
+                      route: admin_stock_uomtypes_list
+                    - label: librinfo.menu_label.uoms
+                      route: admin_stock_uoms_list

@@ -8,6 +8,8 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             nullable: false
         expectedAt: 
             type: datetime
+        stateValue:
+            type: string(64)
     
     manyToOne:
         srcLocation: 
@@ -24,8 +26,4 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
         movements:
           targetEntity: Movement
           mappedBy: operation
-            
-    embedded:
-        state:
-            class: ProgressState
-   
+    

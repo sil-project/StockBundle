@@ -12,7 +12,13 @@ parameters:
                 add:
                     form_tab_general:
                         form_group_general:
-                            code: ~
+                            expectedAt:
+                                type: sonata_type_datetime_picker
+                            srcLocation:
+                                choice_label: name
+                            destLocation:
+                                choice_label: name
+                        form_group_movements:
                             movements: 
                                 type: sonata_type_collection
                                 _options:
@@ -42,6 +48,8 @@ parameters:
                     form_tab_general:
                         form_group_general:
                             code: ~
+                            stockItem: ~
+                            qty: ~
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
@@ -55,4 +63,132 @@ parameters:
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: ~                   
                         
+##############
+# WAREHOUSES
+##############
+
+        Sil\Bundle\StockBundle\Domain\Entity\Warehouse:
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_tab_general:
+                        form_group_general:
+                            code: ~
+                            name: ~
+                            
+            Sonata\AdminBundle\Show\ShowMapper:
+                forceTabs: true
+                add:
+                    show_tab_general:
+                        show_group_general:
+                            code: ~
+                            name: ~
+                            
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                add: 
+                    code: ~
+                    name: ~
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add: 
+                    code: ~
+                    name: ~                 
+                        
+##############
+# LOCATIONS
+##############
+
+        Sil\Bundle\StockBundle\Domain\Entity\Location:
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_tab_general:
+                        form_group_general:
+                            code: ~
+                            name: ~
+                            warehouse:
+                                choice_label: name
+                            
+            Sonata\AdminBundle\Show\ShowMapper:
+                forceTabs: true
+                add:
+                    show_tab_general:
+                        show_group_general:
+                            code: ~
+                            name: ~                               
+                            
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                add: 
+                    code: ~
+                    name: 
+                        identifier: true
+                    warehouse.name: ~
+                     
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add: 
+                    code: ~
+                    name: ~   
+
+
+##############
+# UOM TYPES
+##############
+
+        Sil\Bundle\StockBundle\Domain\Entity\UomType:
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_tab_general:
+                        form_group_general:
+                            name: ~
+                            
+            Sonata\AdminBundle\Show\ShowMapper:
+                forceTabs: true
+                add:
+                    show_tab_general:
+                        show_group_general:
+                            name: ~                               
+                            
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                add: 
+                    name: 
+                        identifier: true
+                     
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add: 
+                    name: ~           
                     
+##############
+# UOMS
+##############
+
+        Sil\Bundle\StockBundle\Domain\Entity\Uom:
+            Sonata\AdminBundle\Form\FormMapper:
+                add:
+                    form_tab_general:
+                        form_group_general:
+                            name: ~
+                            type:
+                                choice_label: name
+                            factor: ~
+                            rounding: ~
+                            
+            Sonata\AdminBundle\Show\ShowMapper:
+                forceTabs: true
+                add:
+                    show_tab_general:
+                        show_group_general:
+                            name: ~
+                            type.name: ~
+                            factor: ~
+                            rounding: ~                              
+                            
+            Sonata\AdminBundle\Datagrid\ListMapper:
+                add: 
+                    name: ~
+                    type.name: ~
+                    factor: ~
+                    rounding: ~
+                     
+            Sonata\AdminBundle\Datagrid\DatagridMapper:
+                add: 
+                    name: ~
+                    type.name: ~
+                    factor: ~
+                    rounding: ~         

@@ -1,5 +1,5 @@
 Sil\Bundle\StockBundle\Domain\Entity\Movement:
-    type: mappedSuperclass
+    type: entity
 
     fields:
         code:
@@ -8,12 +8,23 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
             nullable: false
         expectedAt: 
             type: datetime
+        qtyValue:
+            type: decimal
+            precision: 15
+            scale: 5
+        stateValue:
+            type: string(64)
             
     manyToOne:
         stockItem: 
             targetEntity: StockItemInterface
             joinColumn:
                 name: stockitem_id
+                referencedColumnName: id
+        qtyUom: 
+            targetEntity: Uom
+            joinColumn:
+                name: qty_uom_id
                 referencedColumnName: id
         operation: 
             targetEntity: Operation
@@ -42,11 +53,5 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
         reservedStockUnits:
           targetEntity: StockUnit
           mappedBy: reservationMovement
-          
-    embedded:
-        state:
-            class: ProgressState
-        qty:
-            class: UomQty
-            
+    
     

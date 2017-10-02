@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
@@ -54,11 +56,18 @@ class Movement implements ProgressStateAwareInterface
      */
     private $stockItem;
 
+   
     /**
      *
-     * @var UomQty 
+     * @var float 
      */
-    private $qty;
+    private $qtyValue;
+
+    /**
+     *
+     * @var Uom 
+     */
+    private $qtyUom;
 
     /**
      *
@@ -80,9 +89,9 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      *
-     * @var ProgressState
+     * @var string
      */
-    private $state;
+    private $stateValue;
 
     /**
      *
@@ -104,20 +113,21 @@ class Movement implements ProgressStateAwareInterface
      * @param Location $destLocation
      * @param BatchInterface|null $batch
      */
-    public function __construct(string $code, StockItemInterface $stockItem,
-        UomQty $qty, Location $srcLocation, Location $destLocation,
-        ?BatchInterface $batch = null)
+    public function __construct()
     {
-        $this->code = $code;
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
-        $this->srcLocation = $srcLocation;
-        $this->destLocation = $destLocation;
-        $this->stockItem = $stockItem;
-        $this->qty = $qty;
-        $this->state = ProgressState::draft();
-        $this->batch = $batch;
+        $this->setState(ProgressState::draft());
         $this->reservedStockUnits = new ArrayCollection();
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
     }
 
     /**
@@ -170,7 +180,7 @@ class Movement implements ProgressStateAwareInterface
      */
     public function getState(): ProgressState
     {
-        return $this->state;
+        return new ProgressState($this->stateValue);
     }
 
     /**
@@ -188,7 +198,7 @@ class Movement implements ProgressStateAwareInterface
      */
     public function getQty(): UomQty
     {
-        return $this->qty;
+        return new UomQty($this->qtyUom, $this->qtyValue);
     }
 
     /**
@@ -207,6 +217,15 @@ class Movement implements ProgressStateAwareInterface
     public function getReservedStockUnits(): Collection
     {
         return $this->reservedStockUnits;
+    }
+
+    /**
+     * 
+     * @param string $code
+     */
+    public function setCode(string $code)
+    {
+        $this->code = $code;
     }
 
     /**
@@ -275,7 +294,8 @@ class Movement implements ProgressStateAwareInterface
      */
     public function setQty(UomQty $qty): void
     {
-        $this->qty = $qty;
+        $this->qtyValue = $qty->getValue();
+        $this->qtyUom = $qty->getUom();
     }
 
     /**
@@ -294,7 +314,7 @@ class Movement implements ProgressStateAwareInterface
      */
     private function setState(ProgressState $state)
     {
-        $this->state = $state;
+        $this->stateValue = $state->getValue();
     }
 
     /**
@@ -382,4 +402,5 @@ class Movement implements ProgressStateAwareInterface
     {
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
+
 }

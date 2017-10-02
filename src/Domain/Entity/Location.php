@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -48,15 +50,21 @@ class Location
      */
     private $stockUnits;
 
+    public static function createDefault(string $code, string $name)
+    {
+        $o = new self();
+        $o->code = $code;
+        $o->name = $name;
+        return $o;
+    }
+
     /**
      * 
-     * @param string $name
      * @param string $code
+     * @param string $name
      */
-    public function __construct(string $name, string $code)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->code = $code;
         $this->stockUnits = new ArrayCollection();
     }
 
@@ -64,7 +72,7 @@ class Location
      * 
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -73,7 +81,7 @@ class Location
      * 
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -154,7 +162,7 @@ class Location
     {
         if ( $this->hasStockUnit($unit) ) {
             throw new InvalidArgumentException(
-                'The same StockUnit cannot be added twice');
+                    'The same StockUnit cannot be added twice');
         }
 
         $this->stockUnits->add($unit);
@@ -164,7 +172,7 @@ class Location
     {
         if ( !$this->hasStockUnit($unit) ) {
             throw new InvalidArgumentException(
-                'The StockUnit is not at this Location and cannot be removed from there');
+                    'The StockUnit is not at this Location and cannot be removed from there');
         }
         $this->stockUnits->removeElement($unit);
     }
@@ -177,9 +185,9 @@ class Location
     public function hasStockItem(StockItemInterface $stockItem): boolean
     {
         return $this->stockUnits->exists(
-                function($i, $unit) use($stockItem) {
-                return $unit->getStockItem() == $stockItem;
-            });
+                        function($i, $unit) use($stockItem) {
+                    return $unit->getStockItem() == $stockItem;
+                });
     }
 
     /**
@@ -189,11 +197,12 @@ class Location
     public function getStockItems(): array
     {
         $items = array_map(
-            $this->stockUnits->toArray(),
-            function($unit) {
+                $this->stockUnits->toArray(),
+                function($unit) {
             return $unit->getStockItem();
         });
 
         return array_unique($items);
     }
+
 }

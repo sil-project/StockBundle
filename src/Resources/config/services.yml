@@ -16,3 +16,28 @@ services:
         class: Sil\Bundle\StockBundle\Domain\Factory\OperationFactory
         arguments:
             - '@sil.stock.code_generator.operation'
+    
+    ###################
+    # ORM REPOSITORIES
+    ###################
+    
+    sil.stock.repository.operation:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationRepository
+    sil.stock.repository.movement:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
+    sil.stock.repository.stockunit:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockUnitRepository
+    sil.stock.repository.stockitem:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockItemRepository
+    sil.stock.repository.uomtype:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomTypeRepository
+    
+    
+    ###################
+    # FORM TYPES
+    ###################
+    
+    sil.stock.formtype.uomqty:
+        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyType
+        arguments:
+            - '@sil.stock.repository.uomtype'

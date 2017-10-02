@@ -7,6 +7,8 @@ Sil\Bundle\StockBundle\Domain\Entity\Uom:
             nullable: false
         factor:
             type: decimal
+            precision: 15
+            scale: 5
             nullable: false
         rounding:
             type: integer

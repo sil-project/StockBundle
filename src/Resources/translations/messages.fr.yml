@@ -1,23 +1,24 @@
 form_tab_general: 'Général'
 
-
 librinfo:
     error:
-        invalid_batch_number: Le champ "Numéro de lot" n'est pas valide
-        
+    
     label:
-        
-        seedproducercode: Code producteur
+        expected_at: Date prévue
+        src_location: Emplacement d'origine
+        dest_location: Emplacement de destination
     link:
         movement_list: Liste des Mouvements
 
     help:
-        batchNumber: Nombre entre 1 et 99
-    placeholder:
-        seed_producer_code: Code producteur
-    stock:
-        movement_admin: Mouvements de stocks
-        operation_admin: Mouvements de stocks
         
-Mr: M
-Mrs: Mme
+    placeholder:
+        
+    stock:
+        operation_admin: Opérations sur les stocks
+        movement_admin: Mouvements de stocks
+        warehouse_admin: Entrepôts
+        location_admin: Emplacements
+        uomtype_admin: Catégories d'unité de mesure
+        uom_admin: Unités de mesure
+        

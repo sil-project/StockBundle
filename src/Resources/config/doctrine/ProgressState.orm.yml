@@ -1,5 +1,0 @@
-Sil\Bundle\StockBundle\Domain\Entity\ProgressState:
-    type: embeddable
-    fields:
-        value: 
-            type: string(128)

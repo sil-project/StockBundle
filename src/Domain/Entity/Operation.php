@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -43,9 +45,9 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      *
-     * @var ProgressState 
+     * @var string
      */
-    private $state;
+    private $stateValue;
 
     /**
      *
@@ -65,10 +67,10 @@ class Operation implements ProgressStateAwareInterface
      */
     private $movements;
 
-    public function __construct(string $code)
+    public function __construct()
     {
-        $this->code = $code;
         $this->createdAt = new DateTime();
+        $this->expectedAt = new DateTime();
         $this->state = ProgressState::draft();
         $this->movements = new ArrayCollection();
     }
@@ -77,7 +79,7 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -92,19 +94,18 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public function getState(): ProgressState
     {
-        return $this->state;
+        return new ProgressState($this->stateValue);
     }
 
     /**
      * 
      * @return Location
      */
-    public function getSrcLocation(): Location
+    public function getSrcLocation(): ?Location
     {
         return $this->srcLocation;
     }
@@ -113,7 +114,7 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @return Location
      */
-    public function getDestLocation(): Location
+    public function getDestLocation(): ?Location
     {
         return $this->destLocation;
     }
@@ -138,11 +139,20 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      * 
+     * @param string $code
+     */
+    public function setCode(string $code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * 
      * @param ProgressState $state
      */
     private function setState(ProgressState $state)
     {
-        $this->state = $state;
+        $this->stateValue = $state->getValue();
     }
 
     /**
@@ -185,12 +195,12 @@ class Operation implements ProgressStateAwareInterface
     {
         if ( !$mvt->getState()->isDraft() ) {
             throw new \InvalidArgumentException(
-                'Only Draft Movement can be added');
+                    'Only Draft Movement can be added');
         }
 
         if ( $this->hasMovement($mvt) ) {
             throw new \InvalidArgumentException(
-                'The same Movement cannot be added twice');
+                    'The same Movement cannot be added twice');
         }
 
         $this->movemements->add($mvt);
@@ -206,7 +216,7 @@ class Operation implements ProgressStateAwareInterface
     {
         if ( !$this->hasMovement($mvt) ) {
             throw new \InvalidArgumentException(
-                'The Movement is not part of this Operation and cannot be removed from there');
+                    'The Movement is not part of this Operation and cannot be removed from there');
         }
         $this->movemements->removeElement($mvt);
     }
@@ -218,7 +228,8 @@ class Operation implements ProgressStateAwareInterface
     public function isFullyReserved(): bool
     {
         return $this->getMovemements()->forAll(function($mvt) {
-                return $mvt->isFullyReserved();
-            });
+                    return $mvt->isFullyReserved();
+                });
     }
+
 }

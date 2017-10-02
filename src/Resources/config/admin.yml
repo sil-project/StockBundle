@@ -1,16 +1,6 @@
 services:
-    sil_stock.admin.movement:
-        class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
-        calls:
-            - ["setMovementFactory", ['@sil.stock.factory.movement']]
-        tags:
-            -   name: sonata.admin
-                manager_type: orm
-                group: Customers Relationship Management
-                label: librinfo.stock.movement_admin.label
-                label_translator_strategy: blast_core.label.strategy.librinfo
-                
+    
+    
     sil_stock.admin.operation:
         class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, BlastCoreBundle:CRUD]
@@ -19,6 +9,60 @@ services:
         tags:
             -   name: sonata.admin
                 manager_type: orm
-                group: Customers Relationship Management
+                group: Stock Management
                 label: librinfo.stock.operation_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+    
+    
+    sil_stock.admin.movement:
+        class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
+        calls:
+            - ["setMovementFactory", ['@sil.stock.factory.movement']]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.movement_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+            
+                
+    sil_stock.admin.warehouse:
+        class: Sil\Bundle\StockBundle\Application\Admin\WarehouseAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Warehouse, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.warehouse_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+    
+    sil_stock.admin.location:
+        class: Sil\Bundle\StockBundle\Application\Admin\LocationAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Location, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.location_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+    
+    sil_stock.admin.uomtype:
+        class: Sil\Bundle\StockBundle\Application\Admin\UomTypeAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\UomType, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.uomtype_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
+    
+    sil_stock.admin.uom:
+        class: Sil\Bundle\StockBundle\Application\Admin\UomAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Uom, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.uom_admin.label
                 label_translator_strategy: blast_core.label.strategy.librinfo

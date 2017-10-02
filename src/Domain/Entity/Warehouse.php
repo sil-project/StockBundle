@@ -44,15 +44,20 @@ class Warehouse
      */
     private $locations;
 
+    public static function createDefault(string $code, string $name)
+    {
+        $o = new self();
+        $o->code = $code;
+        $o->name = $name;
+
+        return $o;
+    }
+
     /**
      * 
-     * @param string $name
-     * @param string $code
      */
-    public function __construct(string $name, string $code)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->code = $code;
         $this->locations = new ArrayCollection();
     }
 
@@ -60,7 +65,7 @@ class Warehouse
      * 
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -69,7 +74,7 @@ class Warehouse
      * 
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }

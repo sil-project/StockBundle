@@ -27,14 +27,7 @@ interface MovementFactoryInterface
 
     /**
      * 
-     * @param StockItemInterface $stockItem
-     * @param UomQty $qty
-     * @param Location $srcLocation
-     * @param Location $destLocation
-     * @param BatchInterface|null $batch
      * @return Movement
      */
-    public function createDraft(StockItemInterface $stockItem, UomQty $qty,
-            Location $srcLocation, Location $destLocation,
-            ?BatchInterface $batch = null): Movement;
+    public function createDraft(): Movement;
 }
