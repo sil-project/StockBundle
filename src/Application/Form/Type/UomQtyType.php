@@ -1,13 +1,15 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 namespace Sil\Bundle\StockBundle\Application\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\BaseType;
-use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\UomRepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -25,13 +27,16 @@ class UomQtyType extends BaseType
 
     /**
      *
-     * @var ChoiceLoaderInterface 
+     * @var UomRepositoryInterface 
      */
-    protected $uomTypeChoiceLoader;
+    protected $uomRepository;
 
-    public function __construct(ChoiceLoaderInterface $choiceLoader)
+    /**
+     * @param UomRepositoryInterface $manager
+     */
+    public function __construct(UomRepositoryInterface $uomRepository)
     {
-        $this->uomTypeChoiceLoader = $choiceLoader;
+        $this->uomRepository = $uomRepository;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -46,7 +51,7 @@ class UomQtyType extends BaseType
     {
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            [$this, 'buildUomTypeChoices']);
+                [$this, 'buildUomTypeChoices']);
 
 
         $builder->add('value', NumberType::class);
@@ -56,13 +61,25 @@ class UomQtyType extends BaseType
     {
         $uomQty = $event->getData();
         $form = $event->getForm();
+        $choices = [];
+       
+        if(null !== $form->getParent()->getData()){
+            print_r($form->getParent()->getData()->getStockItem());
+    }
+        
+        
+        $uoms = $this->uomRepository->findAll();
+        foreach ( $uoms as $uom ) {
+            $choices[$uom->getName()] = $uom->getId();
+        }
 
         $form->add('uom', ChoiceType::class,
-            ['choice_loader' => $this->uomTypeChoiceLoader]);
+                ['choices' => $choices]);
     }
 
     public function getBlockPrefix()
     {
         return self::class;
     }
+
 }

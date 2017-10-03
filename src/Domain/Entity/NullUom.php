@@ -13,5 +13,8 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 class NullUom extends Uom
 {
-    
+    public function __toString(): string
+    {
+        return 'Unknown';
+    }
 }

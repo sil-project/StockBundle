@@ -33,19 +33,19 @@ class UomTypeChoiceLoader implements ChoiceLoaderInterface
     {
 
         $uomTypes = $this->uomTypeRepository->findAll();
-        return new ArrayChoiceList($uomTypes,
-            function($ut) {
-            return $ut->getId();
-        });
+       
+        return new ArrayChoiceList($uomTypes, function($ut){$ut->getId();});
     }
 
     public function loadChoicesForValues(array $values, $value = null): array
     {
+        throw new \Exception();
         return [];
     }
 
     public function loadValuesForChoices(array $choices, $value = null): array
     {
+        print_r($value);
         return [];
     }
 }

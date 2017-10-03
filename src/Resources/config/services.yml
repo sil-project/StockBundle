@@ -50,6 +50,12 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\UomType
+            
+    sil.stock.repository.uom:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\Uom
         
     
     
@@ -68,4 +74,4 @@ services:
         tags:
             - {name: form.type, alias: form}
         arguments:
-            - '@sil.stock.form.choiceloader.uomtype'
+            - '@sil.stock.repository.uom'

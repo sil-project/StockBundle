@@ -186,5 +186,10 @@ class Uom
     {
         $this->active = $active;
     }
+    
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 
 }
