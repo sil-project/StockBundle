@@ -29,9 +29,8 @@ class MovementCodeGenerator implements MovementCodeGeneratorInterface
      * @param Location $destLocation
      * @return string
      */
-    public function generate(StockItemInterface $stockItem, UomQty $qty,
-        Location $srcLocation, Location $destLocation): string
+    public function generate(StockItemInterface $stockItem, UomQty $qty): string
     {
-        return strtoupper(substr(md5((string)mt_rand()), 0, 7));
+        return strtoupper(substr(md5((string) mt_rand()), 0, 7));
     }
 }

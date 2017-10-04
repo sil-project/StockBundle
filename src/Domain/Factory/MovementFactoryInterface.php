@@ -29,5 +29,5 @@ interface MovementFactoryInterface
      * 
      * @return Movement
      */
-    public function createDraft(): Movement;
+    public function createDraft(StockItemInterface $stockItem, UomQty $qty): Movement;
 }

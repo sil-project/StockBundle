@@ -6,6 +6,8 @@ sonata_admin:
                 label: librinfo.menu_label.stock_management
                 icon:  '<i class="fa fa-list"></i>'
                 items:
+                    - label: librinfo.menu_label.items
+                      route: admin_stock_items_list
                     - label: librinfo.menu_label.operations
                       route: admin_stock_operations_list
                     - label: librinfo.menu_label.movements

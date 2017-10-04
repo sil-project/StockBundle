@@ -1,11 +1,9 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 namespace Sil\Bundle\StockBundle\Application\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\BaseType;
@@ -16,13 +14,18 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
+use Sil\Bundle\StockBundle\Domain\Entity\NullUomQty;
 
 /**
  * Description of UomQtyType
  *
  * @author glenn
  */
-class UomQtyType extends BaseType
+class UomQtyFormType extends BaseType
 {
 
     /**
@@ -43,15 +46,20 @@ class UomQtyType extends BaseType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults(array(
-            'data_class' => 'Sil\Bundle\StockBundle\Domain\Entity\UomQty'
+            'data_class' => 'Sil\Bundle\StockBundle\Domain\Entity\UomQty',
+            'empty_data' => function (FormInterface $form) {
+                
+                return new UomQty(
+                    $form->get('uom')->getData(), $form->get('value')->getData()
+                );
+            },
         ));
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA,
-                [$this, 'buildUomTypeChoices']);
+            [$this, 'buildUomTypeChoices']);
 
 
         $builder->add('value', NumberType::class);
@@ -61,25 +69,36 @@ class UomQtyType extends BaseType
     {
         $uomQty = $event->getData();
         $form = $event->getForm();
+        $movementData = $form->getParent()->getData();
         $choices = [];
-       
-        if(null !== $form->getParent()->getData()){
-            print_r($form->getParent()->getData()->getStockItem());
-    }
-        
-        
-        $uoms = $this->uomRepository->findAll();
+        $uoms = null;
+
+        if ( null !== $movementData ) {
+            /* @var $stockItem StockItem */
+            $stockItem = $movementData->getStockItem();
+            if ( null !== $stockItem ) {
+                $uoms = $stockItem->getUom()->getType()->getUoms();
+            }
+        }
+
+        if ( null == $uoms ) {
+            $uoms = $this->uomRepository->findAll();
+        }
+
         foreach ( $uoms as $uom ) {
             $choices[$uom->getName()] = $uom->getId();
         }
 
-        $form->add('uom', ChoiceType::class,
-                ['choices' => $choices]);
+        $form->add('uom', EntityType::class,
+            [
+                'class' => 'Sil\Bundle\StockBundle\Domain\Entity\Uom',
+                'choices' => $uoms,
+                'choice_label' => 'name',
+        ]);
     }
 
     public function getBlockPrefix()
     {
         return self::class;
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
@@ -56,7 +54,6 @@ class Movement implements ProgressStateAwareInterface
      */
     private $stockItem;
 
-   
     /**
      *
      * @var float 
@@ -109,15 +106,21 @@ class Movement implements ProgressStateAwareInterface
      * @param string $code
      * @param StockItemInterface $stockItem
      * @param UomQty $qty
-     * @param Location $srcLocation
-     * @param Location $destLocation
-     * @param BatchInterface|null $batch
      */
+    public static function createDefault(string $code, StockItemInterface $item,
+        UomQty $qty)
+    {
+        $o = new self();
+        $o->code = $code;
+        $o->stockItem = $item;
+        $o->setQty($qty);
+        return $o;
+    }
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
-        $this->qtyUom = new NullUom();
         $this->setState(ProgressState::draft());
         $this->reservedStockUnits = new ArrayCollection();
     }
@@ -162,7 +165,7 @@ class Movement implements ProgressStateAwareInterface
      * 
      * @return Location
      */
-    public function getSrcLocation(): Location
+    public function getSrcLocation(): ?Location
     {
         return $this->srcLocation;
     }
@@ -171,7 +174,7 @@ class Movement implements ProgressStateAwareInterface
      * 
      * @return Location
      */
-    public function getDestLocation(): Location
+    public function getDestLocation(): ?Location
     {
         return $this->destLocation;
     }
@@ -197,8 +200,11 @@ class Movement implements ProgressStateAwareInterface
      * 
      * @return UomQty
      */
-    public function getQty(): UomQty
+    public function getQty(): ?UomQty
     {
+        if ( null == $this->qtyUom ) {
+            return null;
+        }
         return new UomQty($this->qtyUom, $this->qtyValue);
     }
 
@@ -234,7 +240,7 @@ class Movement implements ProgressStateAwareInterface
      * @param DateTimeInterface $createdAt
      * @return void
      */
-    private function setCreatedAt(DateTimeInterface $createdAt): void
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -403,5 +409,4 @@ class Movement implements ProgressStateAwareInterface
     {
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
-
 }

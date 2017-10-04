@@ -20,6 +20,7 @@ Sil\Bundle\StockBundle\Domain\Entity\Uom:
     manyToOne:
         type: 
             targetEntity: UomType
+            inversedBy: uoms
             joinColumn:
                 name: uom_type_id
                 referencedColumnName: id

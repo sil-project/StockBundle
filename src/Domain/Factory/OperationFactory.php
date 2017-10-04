@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,10 +9,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Factory;
 
 use Sil\Bundle\StockBundle\Domain\Entity\Operation;
+use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGeneratorInterface;
 
 /**
@@ -41,9 +40,9 @@ class OperationFactory implements OperationFactoryInterface
      * 
      * @return Operation
      */
-    public function createDraft(): Operation
+    public function createDraft(Location $srcLocation, Location $destLocation): Operation
     {
-        return new Operation();
+        $code = $this->codeGenerator->generate();
+        return Operation::createDefault($code, $srcLocation, $destLocation);
     }
-
 }

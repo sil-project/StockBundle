@@ -29,6 +29,5 @@ interface MovementCodeGeneratorInterface
      * @param Location $destLocation
      * @return string
      */
-    public function generate(StockItemInterface $stockItem, UomQty $qty,
-        Location $srcLocation, Location $destLocation): string;
+    public function generate(StockItemInterface $stockItem, UomQty $qty): string;
 }

@@ -29,14 +29,25 @@ class SilStockExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        
-        $loader = new YamlFileLoader($container,
-            new FileLocator(__DIR__ . '/../../Resources/config'));
+
+        $fileLocator = new FileLocator(__DIR__ . '/../../Resources/config');
+        $loader = new YamlFileLoader($container, $fileLocator);
         $loader->load('admin.yml');
-        $loader->load('blast.yml');
+
         $loader->load('services.yml');
-        
-        
+
+        $newContainer = new ContainerBuilder();
+        $blastLoader = new YamlFileLoader($newContainer, $fileLocator);
+        $blastLoader->load('blast.yml');
+
+        /**
+         * @todo refacto stop using parameters
+         */
+        $container->setParameter('blast',
+            array_merge($container->getParameter('blast'),
+                $newContainer->getParameter('blast')));
+
+
         $this->registerResources($config['resources'], $container);
     }
 }

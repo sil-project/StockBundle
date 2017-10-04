@@ -46,7 +46,18 @@ class UomQty
     {
         return $this->value;
     }
+    
+    public function setUom(Uom $uom): void
+    {
+        $this->uom = $uom;
+    }
 
+    public function setValue($value): void
+    {
+        $this->value = $value;
+    }
+
+    
     /**
      * 
      * @param float $value

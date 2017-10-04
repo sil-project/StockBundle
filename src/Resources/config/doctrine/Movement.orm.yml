@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\Movement:
     type: entity
-
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
     fields:
         code:
             type: string(64)

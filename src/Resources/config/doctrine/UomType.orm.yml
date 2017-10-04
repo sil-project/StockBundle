@@ -6,3 +6,8 @@ Sil\Bundle\StockBundle\Domain\Entity\UomType:
             type: string(64)
             unique: true
             nullable: false
+    
+    oneToMany:
+        uoms:
+          targetEntity: Uom
+          mappedBy: type

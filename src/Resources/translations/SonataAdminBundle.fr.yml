@@ -2,6 +2,7 @@ librinfo:
    
     menu_label:
         stock_management: Gestion des stocks
+        items: Articles
         operations: Opératons sur les stocks
         movements: Mouvements de stock
         warehouses: Entrepôts

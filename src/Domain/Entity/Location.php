@@ -181,19 +181,19 @@ class Location
      * @deprecated
      * @param StockItemInterface $stockItem
      * @return boolean
-     */
+     
     public function hasStockItem(StockItemInterface $stockItem): boolean
     {
         return $this->stockUnits->exists(
                         function($i, $unit) use($stockItem) {
                     return $unit->getStockItem() == $stockItem;
                 });
-    }
+    }*/
 
     /**
      * @deprecated
      * @return array|StockItemInterface[]
-     */
+     
     public function getStockItems(): array
     {
         $items = array_map(
@@ -203,6 +203,6 @@ class Location
         });
 
         return array_unique($items);
-    }
+    }*/
 
 }

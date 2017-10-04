@@ -57,7 +57,16 @@ services:
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Uom
         
+        
+        
+    ###################
+    # CONTROLLERS
+    ###################
     
+    sil.stock.controller.movement:
+        class: Sil\Bundle\StockBundle\Application\Controller\MovementCRUDController
+        calls:
+            - ["setContainer", ['@service_container']]
     
     ###################
     # FORM TYPES
@@ -70,8 +79,12 @@ services:
             - '@sil.stock.repository.uomtype'
     
     sil.stock.form.type.uomqty:
-        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyType
+        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
         tags:
             - {name: form.type, alias: form}
         arguments:
             - '@sil.stock.repository.uom'
+            
+            
+            
+     

@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\Operation:
     type: mappedSuperclass
-    
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationRepository
     fields:
         code:
             type: string(64)
@@ -26,4 +26,5 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
         movements:
           targetEntity: Movement
           mappedBy: operation
+          cascade: ["persist"]
     

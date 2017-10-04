@@ -1,11 +1,21 @@
 services:
     
+    sil_stock.admin.item:
+        class: Sil\Bundle\StockBundle\Application\Admin\StockItemAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockItem, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: librinfo.stock.item_admin.label
+                label_translator_strategy: blast_core.label.strategy.librinfo
     
     sil_stock.admin.operation:
         class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, BlastCoreBundle:CRUD]
         calls:
             - ["setOperationFactory", ['@sil.stock.factory.operation']]
+            - ["setResourceRepository", ['@sil.stock.repository.operation']]
         tags:
             -   name: sonata.admin
                 manager_type: orm
@@ -16,9 +26,10 @@ services:
     
     sil_stock.admin.movement:
         class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, sil.stock.controller.movement]
         calls:
             - ["setMovementFactory", ['@sil.stock.factory.movement']]
+            - ["setResourceRepository", ['@sil.stock.repository.movement']]
         tags:
             -   name: sonata.admin
                 manager_type: orm

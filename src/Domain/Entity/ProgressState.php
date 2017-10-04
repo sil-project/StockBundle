@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DomainException;
@@ -169,7 +167,7 @@ class ProgressState
     {
         if ( !$this->isConfimed() ) {
             throw new DomainException('Movement with reserved units'
-                    . ' cannot return in the DRAFT state');
+                . ' cannot return in the DRAFT state');
         }
         return self::waitingForAvailability();
     }
@@ -196,7 +194,7 @@ class ProgressState
     {
         if ( !$this->isConfirmed() && !$this->isPartiallyAvailable() ) {
             throw new DomainException('Movement which is not confirmed '
-                    . 'or partially available cannot be marked as partially available');
+                . 'or partially available cannot be marked as partially available');
         }
         return self::partiallyAvailable();
     }
@@ -210,7 +208,7 @@ class ProgressState
     {
         if ( !$this->isConfirmed() && !$this->isPartiallyAvailable() ) {
             throw new DomainException('Movement which is not confirmed '
-                    . 'or partially available cannot be marked as available');
+                . 'or partially available cannot be marked as available');
         }
         return self::available();
     }
@@ -224,7 +222,7 @@ class ProgressState
     {
         if ( !$this->isAvailable() ) {
             throw new DomainException('Movement which is not '
-                    . 'available connot be done');
+                . 'available connot be done');
         }
         return self::done();
     }
@@ -251,4 +249,12 @@ class ProgressState
         return $this->value;
     }
 
+    /**
+     * 
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getValue();
+    }
 }

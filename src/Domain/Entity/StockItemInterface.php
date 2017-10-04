@@ -26,23 +26,23 @@ interface StockItemInterface
      * 
      * @return string
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * 
      * @return string
      */
-    public function getCode(): string;
+    public function getCode(): ?string;
 
     /**
      * 
      * @return Uom
      */
-    public function getUom(): Uom;
+    public function getUom(): ?Uom;
 
     /**
      * 
      * @return OutputStrategy
      */
-    public function getOutputStrategy(): OutputStrategy;
+    public function getOutputStrategy(): ?OutputStrategy;
 }

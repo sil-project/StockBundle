@@ -11,13 +11,15 @@ declare(strict_types=1);
  */
 namespace Sil\Bundle\StockBundle\Application\Admin;
 
-use Blast\CoreBundle\Admin\CoreAdmin;
+use Blast\Bundle\ResourceBundle\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Factory\MovementFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Sonata\AdminBundle\Form\FormMapper;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class MovementAdmin extends CoreAdmin
+class MovementAdmin extends ResourceAdmin
 {
 
     protected $baseRouteName = 'admin_stock_movements';
@@ -29,12 +31,16 @@ class MovementAdmin extends CoreAdmin
      */
     protected $movementFactory;
 
-    public function getNewInstance()
+    /**
+     * 
+     * @return MovementFactoryInterface
+     */
+    public function getMovementFactory(): MovementFactoryInterface
     {
-        return $this->movementFactory->createDraft();
+        return $this->movementFactory;
     }
 
-    public function setMovementFactory(MovementFactoryInterface $movementFactory)
+    public function setMovementFactory(MovementFactoryInterface $movementFactory): void
     {
         $this->movementFactory = $movementFactory;
     }

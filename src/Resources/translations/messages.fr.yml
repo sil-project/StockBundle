@@ -21,4 +21,5 @@ librinfo:
         location_admin: Emplacements
         uomtype_admin: Catégories d'unité de mesure
         uom_admin: Unités de mesure
+        item_admin: Articles
         
