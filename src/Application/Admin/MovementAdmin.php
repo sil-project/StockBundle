@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,12 +10,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Application\Admin;
 
-use Blast\Bundle\ResourceBundle\Admin\ResourceAdmin;
-use Sil\Bundle\StockBundle\Domain\Factory\MovementFactoryInterface;
+use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
+use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Symfony\Component\Form\FormInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sil\Bundle\StockBundle\Application\Form\DataMapper\MovementDataMapper;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -27,21 +30,32 @@ class MovementAdmin extends ResourceAdmin
 
     /**
      *
-     * @var MovementFactoryInterface 
+     * @var MovementCodeGeneratorInterface 
      */
-    protected $movementFactory;
+    protected $movementCodeGenerator;
 
-    /**
-     * 
-     * @return MovementFactoryInterface
-     */
-    public function getMovementFactory(): MovementFactoryInterface
+    public function prePersist($object)
     {
-        return $this->movementFactory;
+        $this->preUpdate($object);
     }
 
-    public function setMovementFactory(MovementFactoryInterface $movementFactory): void
+    public function preUpdate($object)
     {
-        $this->movementFactory = $movementFactory;
+        $code = $this->getMovementCodeGenerator()
+                ->generate($object->getStockItem(), $object->getQty());
+        $object->setCode($code);
+        
+        parent::preUpdate($object);
     }
+
+    public function getMovementCodeGenerator(): MovementCodeGeneratorInterface
+    {
+        return $this->movementCodeGenerator;
+    }
+
+    public function setMovementCodeGenerator(MovementCodeGeneratorInterface $codeGenerator)
+    {
+        $this->movementCodeGenerator = $codeGenerator;
+    }
+
 }

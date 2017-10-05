@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
@@ -108,7 +110,7 @@ class Movement implements ProgressStateAwareInterface
      * @param UomQty $qty
      */
     public static function createDefault(string $code, StockItemInterface $item,
-        UomQty $qty)
+            UomQty $qty)
     {
         $o = new self();
         $o->code = $code;
@@ -119,6 +121,7 @@ class Movement implements ProgressStateAwareInterface
 
     public function __construct()
     {
+
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
         $this->setState(ProgressState::draft());
@@ -167,7 +170,7 @@ class Movement implements ProgressStateAwareInterface
      */
     public function getSrcLocation(): ?Location
     {
-        return $this->srcLocation;
+        return $this->srcLocation ?: $this->getOperation()->getSrcLocation();
     }
 
     /**
@@ -176,7 +179,7 @@ class Movement implements ProgressStateAwareInterface
      */
     public function getDestLocation(): ?Location
     {
-        return $this->destLocation;
+        return $this->destLocation ?: $this->getOperation()->getDestLocation();
     }
 
     /**
@@ -205,7 +208,7 @@ class Movement implements ProgressStateAwareInterface
         if ( null == $this->qtyUom ) {
             return null;
         }
-        return new UomQty($this->qtyUom, $this->qtyValue);
+        return new UomQty($this->qtyUom, floatval($this->qtyValue));
     }
 
     /**
@@ -409,4 +412,11 @@ class Movement implements ProgressStateAwareInterface
     {
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
+
+    public function diplayString()
+    {
+        return '[' . $this->getCode() . '] ' . $this->getStockItem()->getCode()
+                . ' ' . $this->getStockItem()->getName() . ' ' . $this->getQty();
+    }
+
 }

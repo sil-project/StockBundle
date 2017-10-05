@@ -59,14 +59,7 @@ services:
         
         
         
-    ###################
-    # CONTROLLERS
-    ###################
-    
-    sil.stock.controller.movement:
-        class: Sil\Bundle\StockBundle\Application\Controller\MovementCRUDController
-        calls:
-            - ["setContainer", ['@service_container']]
+   
     
     ###################
     # FORM TYPES

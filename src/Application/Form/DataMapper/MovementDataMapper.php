@@ -8,16 +8,16 @@ namespace Sil\Bundle\StockBundle\Application\Form\DataMapper;
 
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\DataMapper\PropertyPathMapper;
-use Sil\Bundle\StockBundle\Domain\Entity\Operation;
-use Sil\Bundle\StockBundle\Domain\Factory\OperationFactory;
-use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGenerator;
+use Sil\Bundle\StockBundle\Domain\Entity\Movement;
+use Sil\Bundle\StockBundle\Domain\Factory\MovementFactory;
+use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGenerator;
 
 /**
  * Description of OperationDataMapper
  *
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class OperationDataMapper extends PropertyPathMapper
+class MovementDataMapper extends PropertyPathMapper
 {
 
     public function mapDataToForms($data, $forms)
@@ -27,14 +27,14 @@ class OperationDataMapper extends PropertyPathMapper
 
     public function mapFormsToData($forms, &$data)
     {
-        $factory = new OperationFactory(new OperationCodeGenerator());
+        $factory = new MovementFactory(new MovementCodeGenerator());
         $forms = iterator_to_array($forms);
 
         if ( null === $data ) {
-            $srcLocation = $forms['destLocation']->getData();
-            $destLocation = $forms['srcLocation']->getData();
+            $item = $forms['stockItem']->getData();
+            $qty = $forms['qty']->getData();
             
-            $data = $factory->createDraft($srcLocation, $destLocation);
+            $data = $factory->createDraft($item, $qty);
            
         } else {
             parent::mapFormsToData($forms, $data);

@@ -14,8 +14,10 @@ services:
         class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, BlastCoreBundle:CRUD]
         calls:
-            - ["setOperationFactory", ['@sil.stock.factory.operation']]
+            - ["setOperationCodeGenerator", ['@sil.stock.code_generator.operation']]
+            - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
             - ["setResourceRepository", ['@sil.stock.repository.operation']]
+            - [ setTemplate, [edit, SilStockBundle:OperationAdmin:edit.html.twig]]
         tags:
             -   name: sonata.admin
                 manager_type: orm
@@ -26,9 +28,9 @@ services:
     
     sil_stock.admin.movement:
         class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, sil.stock.controller.movement]
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
         calls:
-            - ["setMovementFactory", ['@sil.stock.factory.movement']]
+            - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
             - ["setResourceRepository", ['@sil.stock.repository.movement']]
         tags:
             -   name: sonata.admin

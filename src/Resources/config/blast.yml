@@ -38,10 +38,18 @@ parameters:
                         show_group_general:
                             code: ~
                             state: ~
+                            srcLocation:
+                                associated_property: name
+                            destLocation:
+                                associated_property: name
+                        form_group_movements:
+                            movements: 
+                                associated_property: diplayString
+                            
                     _options:
                         tabsOrder:
-                            - form_tab_general
-                            - form_tab_history
+                            - show_tab_general
+                            - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add:
@@ -61,6 +69,9 @@ parameters:
 
         Sil\Bundle\StockBundle\Domain\Entity\Movement:
             Sonata\AdminBundle\Form\FormMapper:
+                remove:
+                    createdAt: ~
+                    updatedAt: ~
                 add:
                     form_tab_general:
                         form_group_general:
@@ -68,6 +79,10 @@ parameters:
                                 choice_label: name
                             qty:
                                 type: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
+                    _options:
+                        tabsOrder:
+                            - form_tab_general
+                            - form_tab_history
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
@@ -80,6 +95,10 @@ parameters:
                             qtyUom.name: ~
                             srcLocation.name: ~
                             destLocation.name: ~
+                    _options:
+                        tabsOrder:
+                            - form_tab_general
+                            - form_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 

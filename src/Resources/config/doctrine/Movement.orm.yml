@@ -21,27 +21,32 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
             joinColumn:
                 name: stockitem_id
                 referencedColumnName: id
+                nullable: false
         qtyUom: 
             targetEntity: Uom
             joinColumn:
                 name: qty_uom_id
                 referencedColumnName: id
+                nullable: false
         operation: 
             targetEntity: Operation
             inversedBy: movements
             joinColumn:
                 name: operation_id
                 referencedColumnName: id
+                nullable: false
         srcLocation: 
             targetEntity: Location   
             joinColumn:
                 name: location_src_id
                 referencedColumnName: id
+                nullable: true
         destLocation: 
             targetEntity: Location
             joinColumn:
                 name: location_dest_id
                 referencedColumnName: id
+                nullable: true
         batch: 
             targetEntity: BatchInterface
             joinColumn:

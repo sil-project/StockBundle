@@ -26,5 +26,5 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
         movements:
           targetEntity: Movement
           mappedBy: operation
-          cascade: ["persist"]
+          cascade: ["remove", "persist"]
     
