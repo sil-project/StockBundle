@@ -12,12 +12,13 @@ services:
     
     sil_stock.admin.operation:
         class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, BlastCoreBundle:CRUD]
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, sil.stock.controller.operation]
         calls:
             - ["setOperationCodeGenerator", ['@sil.stock.code_generator.operation']]
             - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
             - ["setResourceRepository", ['@sil.stock.repository.operation']]
             - [ setTemplate, [edit, SilStockBundle:OperationAdmin:edit.html.twig]]
+            - [ setTemplate, [show, SilStockBundle:OperationAdmin:show.html.twig]]
         tags:
             -   name: sonata.admin
                 manager_type: orm

@@ -71,7 +71,7 @@ class OperationService implements OperationServiceInterface
      */
     public function confirm(Operation $op): void
     {
-        foreach ( $op->getMovemements() as $mvt ) {
+        foreach ( $op->getMovements() as $mvt ) {
             $this->movementService->confirm($mvt);
         }
 
@@ -84,7 +84,7 @@ class OperationService implements OperationServiceInterface
      */
     public function reserveUnits(Operation $op): void
     {
-        foreach ( $op->getMovemements() as $mvt ) {
+        foreach ( $op->getMovements() as $mvt ) {
             $this->movementService->reserveUnits($mvt);
         }
 
@@ -101,7 +101,7 @@ class OperationService implements OperationServiceInterface
      */
     public function apply(Operation $op): void
     {
-        foreach ( $op->getMovemements() as $mvt ) {
+        foreach ( $op->getMovements() as $mvt ) {
             $this->movementService->apply($mvt);
         }
 
@@ -114,7 +114,7 @@ class OperationService implements OperationServiceInterface
      */
     public function cancel(Operation $op): void
     {
-        foreach ( $op->getMovemements() as $mvt ) {
+        foreach ( $op->getMovements() as $mvt ) {
             $this->movementService->cancel($mvt);
         }
 

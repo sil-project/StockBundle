@@ -1,13 +1,43 @@
 form_tab_general: 'Général'
 
+show_group_infos: Informations
+show_group_locations: Emplacements
+show_group_movements: Mouvements de stock
+
+
 librinfo:
+    
+    btn:
+        edit_draft: Modifier le brouillon
+        return_draft: Retour au brouillon
+        confirm: Confirmer l'opération
+        reserve: Réserver les stocks
+        apply: Valider l'opération
+        cancel: Annuler l'opération
+        delete: Supprimer le brouillon
+        
     error:
     
+    operation_state:
+        draft: Brouillon
+        confirmed: À faire
+        partially_available: Partiellement disponible
+        available: Disponible
+        done: Effectué
+        cancel: Annulé
+    
     label:
+        operation: Opération
         expected_at: Date prévue
+        stock_item: Article
         src_location: Emplacement d'origine
         dest_location: Emplacement de destination
+        state: État
+        qty: Qantité
+        location_from: De
+        location_to: À
     link:
+        operation_list: Liste des Opérations
         movement_list: Liste des Mouvements
 
     help:

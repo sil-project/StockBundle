@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Application\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
@@ -19,6 +17,8 @@ use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\FormInterface;
 use Sil\Bundle\StockBundle\Application\Form\DataMapper\OperationDataMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
+
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -41,6 +41,16 @@ class OperationAdmin extends ResourceAdmin
      */
     protected $operationCodeGenerator;
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('cancel', $this->getRouterIdParameter() . '/cancel');
+        $collection->add('confirm', $this->getRouterIdParameter() . '/confirm');
+        $collection->add('reserve', $this->getRouterIdParameter() . '/reserve');
+        $collection->add('apply', $this->getRouterIdParameter() . '/apply');
+    }
 
     /**
      * {@inheritdoc}
@@ -56,13 +66,13 @@ class OperationAdmin extends ResourceAdmin
     public function preUpdate($object)
     {
         $code = $this->getOperationCodeGenerator()
-                ->generate();
+            ->generate();
         $object->setCode($code);
 
         foreach ( $object->getMovements() as $m ) {
             $m->setCode(
-                    $this->getMovementCodeGenerator()->generate(
-                            $m->getStockItem(), $m->getQty())
+                $this->getMovementCodeGenerator()->generate(
+                    $m->getStockItem(), $m->getQty())
             );
         }
 
@@ -88,5 +98,4 @@ class OperationAdmin extends ResourceAdmin
     {
         $this->movementCodeGenerator = $codeGenerator;
     }
-
 }

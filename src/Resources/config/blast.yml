@@ -11,14 +11,18 @@ parameters:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     form_tab_general:
-                        form_group_general:
+                        form_group_infos:
                             expectedAt:
                                 type: sonata_type_datetime_picker
+                        form_group_locations:
                             srcLocation:
                                 choice_label: name
                             destLocation:
                                 choice_label: name
+                        
                         form_group_movements:
+                            _options:
+                                class: col-md-12
                             movements: 
                                 type: sonata_type_collection
                                 by_reference: false
@@ -32,19 +36,25 @@ parameters:
                             - form_tab_history
                             
             Sonata\AdminBundle\Show\ShowMapper:
+                titleTemplate: SilStockBundle:OperationAdmin/Show:show_title.html.twig
                 forceTabs: true
                 add:
                     show_tab_general:
-                        show_group_general:
+                        show_group_infos:
                             code: ~
-                            state: ~
+                            state:
+                                template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
+                            expectedAt: ~
+                        show_group_locations:
                             srcLocation:
                                 associated_property: name
                             destLocation:
                                 associated_property: name
-                        form_group_movements:
+                        show_group_movements:
+                            _options:
+                                class: col-md-12
                             movements: 
-                                associated_property: diplayString
+                                template: SilStockBundle:OperationAdmin/Show:show_movements.html.twig
                             
                     _options:
                         tabsOrder:
@@ -54,7 +64,8 @@ parameters:
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add:
                     code: ~
-                    state: ~
+                    state:
+                        template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
                     expectedAt: ~
                     srcLocation.name: ~
                     destLocation.name: ~
@@ -77,6 +88,8 @@ parameters:
                         form_group_general:
                             stockItem:
                                 choice_label: name
+                            batch:
+                                choice_label: code
                             qty:
                                 type: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
                     _options:
@@ -95,6 +108,8 @@ parameters:
                             qtyUom.name: ~
                             srcLocation.name: ~
                             destLocation.name: ~
+                            state:
+                                template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
                     _options:
                         tabsOrder:
                             - form_tab_general
