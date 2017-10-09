@@ -1,4 +1,4 @@
-{% extends 'BlastCoreBundle:CRUD:base_show.html.twig' %}
+{% extends 'SilStockBundle:CRUD:show.html.twig' %}
 
 {% block show %}
 
@@ -7,13 +7,10 @@
 
         {% if  object.isDraft() %}
             <a class="btn btn-default" href="{{ admin.generateObjectUrl('edit', object) }}">
-                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'librinfo.btn.edit_draft'|trans }}
+                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'sil.stock.action.edit_draft'|trans }}
             </a>
             <a class="btn btn-primary" href="{{ admin.generateObjectUrl('confirm', object) }}">
-                <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ 'librinfo.btn.confirm'|trans}}
-            </a>
-            <a class="btn btn-danger" href="{{ admin.generateObjectUrl('delete', object) }}">
-                <i class="fa fa-minus-circle" aria-hidden="true"></i> {{ 'librinfo.btn.delete'|trans}}
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ 'sil.stock.action.confirm'|trans}}
             </a>
         {% endif %}
 
@@ -22,22 +19,30 @@
 
         {% if  object.isTodo() %}
             <a class="btn btn-default" href="{{ admin.generateObjectUrl('edit', object) }}">
-                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'librinfo.btn.return_draft'|trans }}
+                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'sil.stock.action.return_draft'|trans }}
             </a>
-            <a class="btn btn-default" href="{{ admin.generateObjectUrl('reserve', object) }}">
-                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'librinfo.btn.reserve'|trans }}
+            <a class="btn btn-primary" href="{{ admin.generateObjectUrl('reserve', object) }}">
+                <i class="fa fa-cubes" aria-hidden="true"></i> {{ 'sil.stock.action.reserve'|trans }}
             </a>
             {% if object.isAvailable() %}
                 <a class="btn btn-default" href="{{ admin.generateObjectUrl('apply', object) }}">
-                    <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'librinfo.btn.apply'|trans }}
+                    <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'sil.stock.action.apply'|trans }}
                 </a>
             {% endif %}
-            <a class="btn btn-danger" href="{{ admin.generateObjectUrl('cancel', object) }}">
-                <i class="fa fa-minus-circle" aria-hidden="true"></i> {{ 'librinfo.btn.cancel'|trans }}
-            </a>
+
+
         {% endif %}
 
+        {% if  object.isInProgress() %}
+            <a class="btn btn-danger" href="{{ admin.generateObjectUrl('cancel', object) }}">
+                <i class="fa fa-minus-circle" aria-hidden="true"></i> {{ 'sil.stock.action.cancel'|trans }}
+            </a>
+        {% else %}
+            <a class="btn btn-danger" href="{{ admin.generateObjectUrl('delete', object) }}">
+                <i class="fa fa-minus-circle" aria-hidden="true"></i> {{ 'sil.stock.action.delete'|trans}}
+            </a>
 
+        {% endif %}
     </div>
 {% endblock %}
 

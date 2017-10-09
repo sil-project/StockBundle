@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
@@ -50,11 +52,14 @@ class StockItem implements StockItemInterface
      * @param string $name
      * @param Uom $uom
      */
-    public static function creatDefault(string $name, Uom $uom)
+    public static function creatDefault(string $code, string $name, Uom $uom,
+            OutputStrategy $strategy)
     {
         $o = new self();
+        $o->code = $code;
         $o->name = $name;
         $o->uom = $uom;
+        $o->outputStrategy = $strategy;
         return $o;
     }
 
@@ -138,4 +143,5 @@ class StockItem implements StockItemInterface
     {
         $this->outputStrategy = $outputStrategy;
     }
+
 }

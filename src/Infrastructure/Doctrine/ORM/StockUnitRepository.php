@@ -9,7 +9,7 @@
 namespace Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM;
 
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
-use Doctrine\ORM\EntityRepository;
+use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
@@ -19,13 +19,14 @@ use Sil\Bundle\StockBundle\Domain\Entity\Location;
  *
  * @author glenn
  */
-class StockUnitRepository extends EntityRepository implements StockUnitRepositoryInterface
+class StockUnitRepository extends ResourceRepository implements StockUnitRepositoryInterface
 {
 
     //put your code here
     public function findAllAvailableBy(array $criteria)
     {
-        
+
+        return $this->findBy(array_merge($criteria, ['reservationMovement' => null]));
     }
 
     public function findAllReservedBy(Movement $mvt)
@@ -38,7 +39,8 @@ class StockUnitRepository extends EntityRepository implements StockUnitRepositor
         
     }
 
-    public function findByStockItemAndLocation(StockItemInterface $item, Location $location)
+    public function findByStockItemAndLocation(StockItemInterface $item,
+            Location $location)
     {
         
     }

@@ -1,0 +1,5 @@
+{% extends 'BlastCoreBundle:CRUD:base_list.html.twig' %}
+
+{% block title %}
+    {{ admin.getLabelTranslatorStrategy().getLabel('%s', 'list', 'label') |format(admin.classnameLabel|lower) |trans() }}
+{% endblock %}

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,12 +10,14 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Repository\OperationRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Service\MovementServiceInterface;
 use Sil\Bundle\StockBundle\Domain\Factory\OperationFactoryInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Operation;
+use DomainException;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -46,8 +49,8 @@ class OperationService implements OperationServiceInterface
      * @param MovementServiceInterface $movementService
      */
     public function __construct(OperationRepositoryInterface $operationRepository,
-        MovementServiceInterface $movementService,
-        OperationFactoryInterface $operationFactory)
+            MovementServiceInterface $movementService,
+            OperationFactoryInterface $operationFactory)
     {
         $this->operationRepository = $operationRepository;
         $this->movementService = $movementService;
@@ -63,6 +66,20 @@ class OperationService implements OperationServiceInterface
         $op = $this->operationFactory->createDraft();
         $this->operationRepository->add($op);
         return $op;
+    }
+
+    public function makeItDraft(Operation $op): void
+    {
+        if ( $op->isInProgress() ) {
+            throw new DomainException('Operation with reserved units'
+                    . ' cannot return in the DRAFT state');
+        }
+
+        foreach ( $op->getMovements() as $mvt ) {
+            $mvt->beDraft();
+        }
+
+        $op->beDraft();
     }
 
     /**
@@ -91,7 +108,11 @@ class OperationService implements OperationServiceInterface
         if ( $op->isFullyReserved() ) {
             $op->beAvailable();
         } else {
-            $op->bePartiallyAvailable();
+            if ( $op->hasReservedStockUnits() ) {
+                $op->bePartiallyAvailable();
+            } else {
+                $op->beConfirmed();
+            }
         }
     }
 
@@ -120,4 +141,5 @@ class OperationService implements OperationServiceInterface
 
         $op->beCancel();
     }
+
 }

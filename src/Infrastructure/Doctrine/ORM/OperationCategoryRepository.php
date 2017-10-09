@@ -8,15 +8,15 @@
 
 namespace Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM;
 
-use Sil\Bundle\StockBundle\Domain\Repository\UomRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\OperationCategoryRepositoryInterface;
 use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 
 /**
- * Description of UomRepository
- *
  * @author glenn
  */
-class UomRepository extends ResourceRepository implements UomRepositoryInterface
+class OperationCategoryRepository extends ResourceRepository implements OperationCategoryRepositoryInterface
 {
-    //put your code here
+
+    
+
 }

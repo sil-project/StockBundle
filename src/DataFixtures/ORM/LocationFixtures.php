@@ -29,16 +29,21 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        $wh = $this->getReference('wh-1');
+        
+        $loc1 = Location::createDefault('SUPPLIER-1', 'Emplacement fournisseur');
+        $wh->addLocation($loc1);
 
-        $loc = Location::createDefault('SUPPLIER-1', 'Emplacement fournisseur');
-        $wh = $this->getReference('WH1');
-        $wh->addLocation($loc);
+        $loc2 = Location::createDefault('STOCK-1', 'Emplacement Stock');
+        $wh->addLocation($loc2);
 
-        $manager->persist($loc);
+        $manager->persist($loc1);
+        $manager->persist($loc2);
         $manager->flush();
 
         // other fixtures can get this object using the 'admin-user' name
-        $this->addReference('supplier-1', $loc);
+        $this->addReference('supplier-1', $loc1);
+        $this->addReference('stock-1', $loc2);
     }
 
     public function setContainer(ContainerInterface $container = null)

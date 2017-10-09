@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Repository\MovementRepositoryInterface;
@@ -60,9 +62,9 @@ class MovementService implements MovementServiceInterface
      * @param StockUnitFactoryInterface $stockUnitFactory
      */
     public function __construct(MovementRepositoryInterface $movementRepository,
-        StockUnitRepositoryInterface $stockUnitRepository,
-        MovementFactoryInterface $movementFactory,
-        StockUnitFactoryInterface $stockUnitFactory)
+            StockUnitRepositoryInterface $stockUnitRepository,
+            MovementFactoryInterface $movementFactory,
+            StockUnitFactoryInterface $stockUnitFactory)
     {
         $this->movementRepository = $movementRepository;
         $this->stockUnitRepository = $stockUnitRepository;
@@ -80,11 +82,11 @@ class MovementService implements MovementServiceInterface
      * 
      * @return Movement
      */
-    public function createDraft(StockItemInterface $item, UomQty $qty, Location $srcLoc,
-        Location $destLoc, ?BatchInterface $batch = null): Movement
+    public function createDraft(StockItemInterface $item, UomQty $qty,
+            Location $srcLoc, Location $destLoc, ?BatchInterface $batch = null): Movement
     {
         $mvt = $this->movementFactory
-            ->createDraft($item, $qty, $srcLoc, $destLoc);
+                ->createDraft($item, $qty, $srcLoc, $destLoc);
 
         if ( null == $batch ) {
             $mvt->setBatch($mvt->getBatch());
@@ -142,7 +144,11 @@ class MovementService implements MovementServiceInterface
             }
         }
         //all the qty is not reserved yet, a new pass will be necessary
-        $mvt->bePartiallyAvailable();
+        if ( $mvt->hasReservedStockUnits() ) {
+            $mvt->bePartiallyAvailable();
+        } else {
+            $mvt->beConfirmed();
+        }
     }
 
     /**
@@ -157,7 +163,7 @@ class MovementService implements MovementServiceInterface
             $mvt->getSrcLocation()->removeStockUnit($srcUnit);
 
             $destUnit = $this->stockUnitFactory
-                ->createFrom($srcUnit, $mvt->getDestLocation());
+                    ->createFrom($srcUnit, $mvt->getDestLocation());
 
             $this->stockUnitRepository->remove($srcUnit);
             $this->stockUnitRepository->add($destUnit);
@@ -194,7 +200,7 @@ class MovementService implements MovementServiceInterface
         }
 
         return $this->stockUnitRepository->findAllAvailableBy(
-                $options, $outStrategy->getOrderBy());
+                        $options, $outStrategy->getOrderBy());
     }
 
     /**
@@ -209,8 +215,8 @@ class MovementService implements MovementServiceInterface
         $unit->setQty($newQty);
 
         return $this->stockUnitFactory->createNew(
-                $unit->getStockItem(), $qty, $unit->getLocation(),
-                $unit->getBatch());
+                        $unit->getStockItem(), $qty, $unit->getLocation(),
+                        $unit->getBatch());
     }
 
     /**
@@ -232,4 +238,5 @@ class MovementService implements MovementServiceInterface
 
         return implode("\n", $result);
     }
+
 }

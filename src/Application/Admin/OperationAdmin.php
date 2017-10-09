@@ -14,9 +14,6 @@ namespace Sil\Bundle\StockBundle\Application\Admin;
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGeneratorInterface;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
-use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\FormInterface;
-use Sil\Bundle\StockBundle\Application\Form\DataMapper\OperationDataMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 
@@ -50,6 +47,8 @@ class OperationAdmin extends ResourceAdmin
         $collection->add('confirm', $this->getRouterIdParameter() . '/confirm');
         $collection->add('reserve', $this->getRouterIdParameter() . '/reserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
+        
+         
     }
 
     /**

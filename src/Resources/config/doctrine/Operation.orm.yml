@@ -22,6 +22,11 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             joinColumn:
                 name: location_dest_id
                 referencedColumnName: id
+        category: 
+            targetEntity: OperationCategory
+            joinColumn:
+                name: category_id
+                referencedColumnName: id
     oneToMany:
         movements:
           targetEntity: Movement

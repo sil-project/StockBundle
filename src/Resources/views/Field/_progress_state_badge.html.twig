@@ -20,7 +20,7 @@
     {% set state = value.value %}
     <span class="label bg-{{ colors[state]|default('black')  }}">
         <i class="fa fa-{{ icons[state]|default('question') }}"></i>
-        {{ ('librinfo.operation_state.' ~ state)|trans }}
+        {{ ('sil.stock.progress_state.' ~ state)|trans }}
     </span>
 
 {% endblock %}

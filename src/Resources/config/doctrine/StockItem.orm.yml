@@ -17,9 +17,11 @@ Sil\Bundle\StockBundle\Domain\Entity\StockItem:
             joinColumn:
                 name: uom_id
                 referencedColumnName: id
+                nullable: false
         outputStrategy: 
             targetEntity: OutputStrategy
             joinColumn:
                 name: strategy_output_id
                 referencedColumnName: id
+                nullable: false
    

@@ -9,14 +9,14 @@
 namespace Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM;
 
 use Sil\Bundle\StockBundle\Domain\Repository\UomTypeRepositoryInterface;
-use Doctrine\ORM\EntityRepository;
+use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 
 /**
  * Description of UomTypeRepository
  *
  * @author glenn
  */
-class UomTypeRepository extends EntityRepository implements UomTypeRepositoryInterface
+class UomTypeRepository extends ResourceRepository implements UomTypeRepositoryInterface
 {
     //put your code here
 }

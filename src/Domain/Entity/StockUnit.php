@@ -32,9 +32,15 @@ class StockUnit
 
     /**
      *
-     * @var UomQty 
+     * @var float 
      */
-    private $qty;
+    private $qtyValue = 0;
+
+    /**
+     *
+     * @var Uom 
+     */
+    private $qtyUom;
 
     /**
      *
@@ -92,10 +98,14 @@ class StockUnit
      * 
      * @return UomQty
      */
-    public function getQty(): UomQty
+    public function getQty(): ?UomQty
     {
-        return $this->qty;
+        if ( null == $this->qtyUom ) {
+            return null;
+        }
+        return new UomQty($this->qtyUom, floatval($this->qtyValue));
     }
+
 
     /**
      * 
@@ -140,7 +150,8 @@ class StockUnit
      */
     public function setQty(UomQty $qty): void
     {
-        $this->qty = $qty;
+        $this->qtyValue = $qty->getValue();
+        $this->qtyUom = $qty->getUom();
     }
 
     /**

@@ -12,6 +12,8 @@ parameters:
                 add:
                     form_tab_general:
                         form_group_infos:
+                            category:
+                                choice_label: name
                             expectedAt:
                                 type: sonata_type_datetime_picker
                         form_group_locations:
@@ -23,7 +25,7 @@ parameters:
                         form_group_movements:
                             _options:
                                 class: col-md-12
-                            movements: 
+                            movements:
                                 type: sonata_type_collection
                                 by_reference: false
                                 _options:
@@ -41,10 +43,13 @@ parameters:
                 add:
                     show_tab_general:
                         show_group_infos:
-                            code: ~
+                            category:
+                                associated_property: name
+                            code:
+                                identifier: true
                             state:
-                                template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
-                            expectedAt: ~
+                                template: SilStockBundle:Field:show_progress_state_field.html.twig
+                            expectedAt:
                         show_group_locations:
                             srcLocation:
                                 associated_property: name
@@ -62,13 +67,20 @@ parameters:
                             - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
+                remove:
+                    createdAt: ~
+                    updatedAt: ~
                 add:
                     code: ~
+                    category:
+                        associated_property: name
                     state:
-                        template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
+                        template: SilStockBundle:Field:list_progress_state_field.html.twig
                     expectedAt: ~
-                    srcLocation.name: ~
-                    destLocation.name: ~
+                    srcLocation:
+                        associated_property: name
+                    destLocation:
+                        associated_property: name
                     
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: ~
@@ -103,26 +115,32 @@ parameters:
                     show_tab_general:
                         show_group_general:
                             code: ~
-                            stockItem.name: ~
-                            qtyValue: ~
-                            qtyUom.name: ~
-                            srcLocation.name: ~
-                            destLocation.name: ~
+                            stockItem:
+                                associated_property: name
+                            qty: ~
+                            srcLocation:
+                                associated_property: name
+                            destLocation:
+                                associated_property: name
                             state:
-                                template: SilStockBundle:OperationAdmin/Show:show_operation_state.html.twig
+                                template: SilStockBundle:Field:show_progress_state_field.html.twig
                     _options:
                         tabsOrder:
-                            - form_tab_general
-                            - form_tab_history
+                            - show_tab_general
+                            - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
                     code: ~
-                    stockItem.name: ~
-                    qtyValue: ~
-                    qtyUom.name: ~
-                    srcLocation.name: ~
-                    destLocation.name: ~
+                    state:
+                        template: SilStockBundle:Field:list_progress_state_field.html.twig
+                    stockItem:
+                        associated_property: name
+                    qty: ~
+                    srcLocation:
+                        associated_property: name
+                    destLocation:
+                        associated_property: name
                     
                         
             Sonata\AdminBundle\Datagrid\DatagridMapper:
@@ -190,7 +208,8 @@ parameters:
                     code: ~
                     name: 
                         identifier: true
-                    warehouse.name: ~
+                    warehouse:
+                        associated_property: name
                      
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: 
@@ -246,21 +265,23 @@ parameters:
                     show_tab_general:
                         show_group_general:
                             name: ~
-                            type.name: ~
+                            type:
+                                associated_property: name
                             factor: ~
                             rounding: ~                              
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
                     name: ~
-                    type.name: ~
-                    factor: ~
+                    type:
+                        associated_property: name
                     rounding: ~
                      
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: 
                     name: ~
-                    type.name: ~
+                    type:
+                        associated_property: name
                     factor: ~
                     rounding: ~
                     
@@ -288,19 +309,23 @@ parameters:
                         show_group_general:
                             name: ~
                             code: ~    
-                            uom.name: ~
-                            outputStrategy.name: ~
+                            uom:
+                                associated_property: name
+                            outputStrategy:
+                                associated_property: name
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
                     name: ~
                     code: ~    
-                    uom.name: ~
-                    outputStrategy.name: ~
+                    uom:
+                        associated_property: name
+                    outputStrategy:
+                        associated_property: name
                      
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: 
                     name: ~
                     code: ~    
                     uom.name: ~
-                    outputStrategy.name: ~  
+                    outputStrategy.name: ~

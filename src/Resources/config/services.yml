@@ -34,6 +34,12 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Operation
+            
+    sil.stock.repository.operation_category:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationCategoryRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\OperationCategory
         
     sil.stock.repository.movement:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
@@ -90,8 +96,7 @@ services:
     ###################
     # FORM TYPES
     ###################
-    
-    
+
     sil.stock.form.choiceloader.uomtype:
         class: Sil\Bundle\StockBundle\Application\Form\ChoiceLoader\UomTypeChoiceLoader
         arguments:
@@ -109,9 +114,10 @@ services:
     # CONTROLLERS
     ###################
     
-    
     sil.stock.controller.operation:
         class: Sil\Bundle\StockBundle\Application\Controller\OperationCRUDController
         calls:
             - ['setContainer', ['@service_container']]
             - ['setOperationService', ['@sil.stock.domain_service.operation']]
+      
+   

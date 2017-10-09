@@ -1,0 +1,13 @@
+Sil\Bundle\StockBundle\Domain\Entity\OperationCategory:
+    type: mappedSuperclass
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationCategoryRepository
+    fields:
+        name:
+            type: string(64)
+            unique: true
+            nullable: false
+    
+    oneToMany:
+        operations:
+          targetEntity: Operation
+          mappedBy: category

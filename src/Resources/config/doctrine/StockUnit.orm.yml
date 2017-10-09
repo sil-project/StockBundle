@@ -6,6 +6,10 @@ Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
             type: string(64)
             unique: true
             nullable: false
+        qtyValue:
+            type: decimal
+            precision: 15
+            scale: 5
             
     manyToOne:
         stockItem: 
@@ -19,6 +23,13 @@ Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
             joinColumn:
                 name: location_id
                 referencedColumnName: id
+        qtyUom: 
+            targetEntity: Uom
+            joinColumn:
+                name: qty_uom_id
+                referencedColumnName: id
+                nullable: false
+                
         reservationMovement: 
             targetEntity: Movement
             inversedBy: reservedStockUnits
@@ -26,9 +37,6 @@ Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
                 name: movement_id
                 referencedColumnName: id
                 nullable: true
-                
-    embedded:
-        qty:
-            class: UomQty
+     
             
     

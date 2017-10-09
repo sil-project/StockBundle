@@ -15,9 +15,7 @@ namespace Sil\Bundle\StockBundle\Application\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
-use Symfony\Component\Form\FormInterface;
-use Sonata\AdminBundle\Form\FormMapper;
-use Sil\Bundle\StockBundle\Application\Form\DataMapper\MovementDataMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -34,6 +32,7 @@ class MovementAdmin extends ResourceAdmin
      */
     protected $movementCodeGenerator;
 
+
     public function prePersist($object)
     {
         $this->preUpdate($object);
@@ -44,7 +43,7 @@ class MovementAdmin extends ResourceAdmin
         $code = $this->getMovementCodeGenerator()
                 ->generate($object->getStockItem(), $object->getQty());
         $object->setCode($code);
-        
+
         parent::preUpdate($object);
     }
 

@@ -7,7 +7,7 @@
 namespace Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM;
 
 use Sil\Bundle\StockBundle\Domain\Repository\OperationRepositoryInterface;
-use Blast\Bundle\ResourceBundle\Doctrine\ORM\ResourceRepository;
+use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 
 /**
  * Description of UomTypeRepository

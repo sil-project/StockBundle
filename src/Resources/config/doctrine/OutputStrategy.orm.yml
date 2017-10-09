@@ -8,6 +8,8 @@ Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy:
             nullable: false
         description:
             type: string(255)
+            nullable: true
         orderBy:
             type: simple_array
+            nullable: false
 

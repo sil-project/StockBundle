@@ -1,9 +1,11 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 namespace Sil\Bundle\StockBundle\Application\Controller;
 
 use Blast\CoreBundle\Controller\CRUDController;
@@ -19,6 +21,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OperationCRUDController extends CRUDController
 {
+
+    public function preEdit(Request $request, $operation)
+    {
+        $this->getOperationService()->makeItDraft($operation);
+        $this->admin->update($operation);
+        parent::preEdit($request, $operation);
+    }
 
     /**
      *
@@ -44,6 +53,14 @@ class OperationCRUDController extends CRUDController
 
         $this->getOperationService()->reserveUnits($operation);
         $this->admin->update($operation);
+
+        //nothing has been reserved because no stock available
+        if ( $operation->isConfirmed() ) {
+            $this->addFlash('sonata_flash_info',
+                    $this->trans(
+                            'sil.stock.operation.message.no_available_stock_for_reservation'));
+        }
+
 
         return $this->redirectTo($operation);
     }
@@ -105,7 +122,7 @@ class OperationCRUDController extends CRUDController
         if ( !$url ) {
             foreach ( array('show', 'edit') as $route ) {
                 if ( $this->admin->hasRoute($route) && $this->admin->hasAccess($route,
-                        $object) ) {
+                                $object) ) {
                     $url = $this->admin->generateObjectUrl($route, $object);
 
                     break;
@@ -137,4 +154,5 @@ class OperationCRUDController extends CRUDController
     {
         $this->operationService = $operationService;
     }
+
 }

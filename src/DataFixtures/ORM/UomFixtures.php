@@ -52,6 +52,8 @@ class UomFixtures extends Fixture implements ContainerAwareInterface
         $manager->persist($uomUnit);
 
         $manager->flush();
+        // other fixtures can get this object using the 'admin-user' name
+        $this->addReference('uom-kg', $uomKg);
     }
 
     public function setContainer(ContainerInterface $container = null)

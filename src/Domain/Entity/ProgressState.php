@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DomainException;
@@ -158,6 +160,11 @@ class ProgressState
         return !($this->isCancel() || $this->isDone() || $this->isDraft());
     }
 
+    public function isInProgress(): bool
+    {
+        return ($this->isPartiallyAvailable() || $this->isAvailable());
+    }
+
     /**
      * 
      * @return ProgressState
@@ -165,11 +172,15 @@ class ProgressState
      */
     public function toDraft(): ProgressState
     {
-        if ( !$this->isConfimed() ) {
-            throw new DomainException('Movement with reserved units'
-                . ' cannot return in the DRAFT state');
+        if ( $this->isDraft() ) {
+            return $this;
         }
-        return self::waitingForAvailability();
+
+        if ( !$this->isConfirmed() ) {
+            throw new DomainException('Movement with reserved units'
+                    . ' cannot return in the DRAFT state');
+        }
+        return self::draft();
     }
 
     /**
@@ -179,6 +190,9 @@ class ProgressState
      */
     public function toConfirmed(): ProgressState
     {
+        if ( $this->isConfirmed() ) {
+            return $this;
+        }
         if ( !$this->isDraft() ) {
             throw new DomainException();
         }
@@ -192,9 +206,12 @@ class ProgressState
      */
     public function toPartiallyAvailable(): ProgressState
     {
+        if ( $this->isPartiallyAvailable() ) {
+            return $this;
+        }
         if ( !$this->isConfirmed() && !$this->isPartiallyAvailable() ) {
             throw new DomainException('Movement which is not confirmed '
-                . 'or partially available cannot be marked as partially available');
+                    . 'or partially available cannot be marked as partially available');
         }
         return self::partiallyAvailable();
     }
@@ -206,9 +223,12 @@ class ProgressState
      */
     public function toAvailable(): ProgressState
     {
+        if ( $this->isAvailable() ) {
+            return $this;
+        }
         if ( !$this->isConfirmed() && !$this->isPartiallyAvailable() ) {
             throw new DomainException('Movement which is not confirmed '
-                . 'or partially available cannot be marked as available');
+                    . 'or partially available cannot be marked as available');
         }
         return self::available();
     }
@@ -220,9 +240,12 @@ class ProgressState
      */
     public function toDone(): ProgressState
     {
+        if ( $this->isDone() ) {
+            return $this;
+        }
         if ( !$this->isAvailable() ) {
             throw new DomainException('Movement which is not '
-                . 'available connot be done');
+                    . 'available connot be done');
         }
         return self::done();
     }
@@ -234,6 +257,9 @@ class ProgressState
      */
     public function toCancel(): ProgressState
     {
+        if ( $this->isCancel() ) {
+            return $this;
+        }
         if ( $this->isDone() ) {
             throw new DomainException('Movement which is done cannot be cancelled');
         }
@@ -257,4 +283,5 @@ class ProgressState
     {
         return $this->getValue();
     }
+
 }

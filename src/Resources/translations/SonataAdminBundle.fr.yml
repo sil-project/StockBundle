@@ -2,11 +2,13 @@ librinfo:
    
     menu_label:
         stock_management: Gestion des stocks
+        stock_management_settings: Configuration des stocks
         items: Articles
-        operations: Opératons sur les stocks
+        operations: Opérations sur les stocks
         movements: Mouvements de stock
         warehouses: Entrepôts
         locations: Emplacements
         uom_types: Catégories d'unité de mesure
         uoms: Unités de mesure
+        operation_categories: Catégories d'opération
 

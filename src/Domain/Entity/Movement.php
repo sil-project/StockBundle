@@ -413,6 +413,11 @@ class Movement implements ProgressStateAwareInterface
         return $this->getRemainingQtyToBeReserved()->isZero();
     }
 
+    public function hasReservedStockUnits(): bool
+    {
+        return !$this->reservedStockUnits->isEmpty();
+    }
+
     public function diplayString()
     {
         return '[' . $this->getCode() . '] ' . $this->getStockItem()->getCode()

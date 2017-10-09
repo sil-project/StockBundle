@@ -4,52 +4,185 @@ show_group_infos: Informations
 show_group_locations: Emplacements
 show_group_movements: Mouvements de stock
 
-
-librinfo:
-    
-    btn:
-        edit_draft: Modifier le brouillon
-        return_draft: Retour au brouillon
-        confirm: Confirmer l'opération
-        reserve: Réserver les stocks
-        apply: Valider l'opération
-        cancel: Annuler l'opération
-        delete: Supprimer le brouillon
-        
-    error:
-    
-    operation_state:
-        draft: Brouillon
-        confirmed: À faire
-        partially_available: Partiellement disponible
-        available: Disponible
-        done: Effectué
-        cancel: Annulé
-    
-    label:
-        operation: Opération
-        expected_at: Date prévue
-        stock_item: Article
-        src_location: Emplacement d'origine
-        dest_location: Emplacement de destination
-        state: État
-        qty: Qantité
-        location_from: De
-        location_to: À
-    link:
-        operation_list: Liste des Opérations
-        movement_list: Liste des Mouvements
-
-    help:
-        
-    placeholder:
-        
+sil:
     stock:
-        operation_admin: Opérations sur les stocks
-        movement_admin: Mouvements de stocks
-        warehouse_admin: Entrepôts
-        location_admin: Emplacements
-        uomtype_admin: Catégories d'unité de mesure
-        uom_admin: Unités de mesure
-        item_admin: Articles
         
+        error:
+        
+        action:
+            edit_draft: Modifier le brouillon
+            return_draft: Retour au brouillon
+            confirm: Planifier l'opération
+            reserve: Réserver les stocks
+            apply: Valider l'opération
+            cancel: Annuler l'opération
+            cancel_edit: Annuler la modification
+            delete: Supprimer l'opération
+            save: Enregistrer
+            
+        link:
+            operation_list: Liste des Opérations
+            movement_list: Liste des Mouvements
+            
+        progress_state:
+            draft: Brouillon
+            confirmed: À faire
+            partially_available: Partiellement disponible
+            available: Disponible
+            done: Effectué
+            cancel: Annulé
+        show:
+            label:
+                operation: Opération
+                operations: Opérations
+                movement: Mouvement de stock
+                movements: Mouvements de stock
+            
+        help:
+
+        placeholder:
+
+            
+        ##############
+        # OPERATIONS
+        ##############
+
+        operation:
+            breadcrumb:
+                link:
+                    list: Opérations sur les stocks
+            message:
+                no_available_stock_for_reservation: Aucun stock n'est disponible pour cette opération
+            list:
+                label:
+                    action: Actions
+                    code: Code
+                    operation: List des opérations sur les stocks
+                    movements: Mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    category: Catégorie
+                    state: État
+                    qty: Qantité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+            show:
+                label:
+                    code: Code
+                    operation: Opération
+                    movements: Mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    category: Catégorie
+                    state: État
+                    qty: Qantité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+            form:
+                label:
+                    code: Code
+                    operation: Opération
+                    movements: Mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    category: Catégorie
+                    state: État
+                    qty: Qantité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+                    
+        ##############
+        # MOVEMENTS
+        ##############
+        movement: 
+            breadcrumb:
+                link:
+                    list: Mouvements de stocks
+            list:
+                label:
+                    action: Actions
+                    code: Code
+                    movement: Liste des mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    state: État
+                    qty: Qantité
+                    qty_value: Qantité
+                    qty_uom: Unité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+            show:
+                label:
+                    code: Code
+                    operation: Opération
+                    movement: Mouvement
+                    movements: Mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    state: État
+                    qty: Qantité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+            form:
+                label:
+                    code: Code
+                    operation: Opération
+                    movements: Mouvements de stock
+                    created_at: Date de création
+                    expected_at: Date prévue
+                    stock_item: Article
+                    src_location: Emplacement d'origine
+                    dest_location: Emplacement de destination
+                    state: État
+                    qty: Qantité
+                    location_from: De
+                    location_to: À
+                    batch: N° de Lot
+        warehouse: 
+            breadcrumb:
+                link:
+                    list: Entrepôts
+        location:
+            breadcrumb:
+                link:
+                    list: Emplacements
+        uomtype:
+            breadcrumb:
+                link:
+                    list: Catégories d'unité de mesure
+        uom: 
+            breadcrumb:
+                link:
+                    list: Unités de mesure
+        item: 
+            breadcrumb:
+                link:
+                    list: Articles
+                
+        operation_category: 
+            breadcrumb:
+                link:
+                    list: Catégories d'opération
+            show:
+                label:
+                    name: Nom
