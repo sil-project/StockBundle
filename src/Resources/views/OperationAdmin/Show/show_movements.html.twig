@@ -23,6 +23,7 @@
                         <th>{{ 'sil.stock.movement.show.label.location_from'|trans }}</th>
                         <th>{{ 'sil.stock.movement.show.label.location_to'|trans }}</th>
                         <th>{{ 'sil.stock.movement.show.label.qty'|trans }}</th>
+                        <th>{{ 'sil.stock.movement.show.label.reserved_qty'|trans }}</th>
                         <th>{{ 'sil.stock.movement.show.label.state'|trans }}</th>
                     </tr>   
                 </thead>
@@ -36,6 +37,7 @@
                             <td>{{ movement.srcLocation.name }}</td>
                             <td>{{ movement.destLocation.name }}</td>
                             <td>{{ movement.qty }}</td>
+                            <td>{{ movement_admin.getReservedQty(movement) }}</td>
                             <td>{% include('SilStockBundle:Field:_progress_state_badge.html.twig') with {'value': movement.state} %}</td>
                         </tr>
                     {% endfor %}

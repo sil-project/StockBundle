@@ -29,6 +29,12 @@ Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
                 name: qty_uom_id
                 referencedColumnName: id
                 nullable: false
+        batch: 
+            targetEntity: BatchInterface
+            joinColumn:
+                name: batch_id
+                referencedColumnName: id
+                nullable: true
                 
         reservationMovement: 
             targetEntity: Movement

@@ -51,7 +51,7 @@ class StockUnitFactory implements StockUnitFactoryInterface
         ?BatchInterface $batch = null): StockUnit
     {
         $code = $this->codeGenerator->generate($item, $qty, $location, $batch);
-        return new StockUnit($code, $item, $qty, $location, $batch);
+        return StockUnit::createDefault($code, $item, $qty, $location, $batch);
     }
 
     /**
@@ -64,7 +64,7 @@ class StockUnitFactory implements StockUnitFactoryInterface
     {
         $code = $this->codeGenerator->generate($srcUnit->getStockItem(),
             $srcUnit->getQty(), $location, $srcUnit->getBatch());
-        return new StockUnit($code, $srcUnit->getStockItem(),
+        return StockUnit::createDefault($code, $srcUnit->getStockItem(),
             $srcUnit->getQty(), $location, $srcUnit->getBatch());
     }
 }

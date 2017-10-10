@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\StockItem:
     type: mappedSuperclass
-    
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockItemRepository
        
     fields:
         name:

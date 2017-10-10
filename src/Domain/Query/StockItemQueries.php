@@ -13,6 +13,7 @@ namespace Sil\Bundle\StockBundle\Domain\Query;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
+use Sil\Bundle\StockBundle\Domain\Entity\Movement;
 use Sil\Bundle\StockBundle\Domain\Entity\Uom;
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
@@ -20,7 +21,7 @@ use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class StockItemQueries
+class StockItemQueries implements StockItemQueriesInterface
 {
 
     /**
@@ -54,10 +55,51 @@ class StockItemQueries
     /**
      * 
      * @param StockItemInterface $item
+     * @return UomQty
+     */
+    public function getReservedQty(StockItemInterface $item): UomQty
+    {
+        $units = $this->stockUnitRepository
+            ->findReservedByStockItem($item);
+
+        return $this->computeQtyForUnits($item->getUom(), $units);
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @return UomQty
+     */
+    public function getAvailableQty(StockItemInterface $item): UomQty
+    {
+        $units = $this->stockUnitRepository
+            ->findAvailableByStockItem($item);
+
+        return $this->computeQtyForUnits($item->getUom(), $units);
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @return UomQty
+     */
+    public function getReservedQtyByMovement(StockItemInterface $item,
+        Movement $mvt): UomQty
+    {
+        $units = $this->stockUnitRepository
+            ->findBy(['stockItem' => $item, 'reservationMovement' => $mvt]);
+
+        return $this->computeQtyForUnits($item->getUom(), $units);
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
      * @param Location $location
      * @return UomQty
      */
-    public function getQtyByLocation(StockItemInterface $item, Location $location): UomQty
+    public function getQtyByLocation(StockItemInterface $item,
+        Location $location): UomQty
     {
         $units = $this->stockUnitRepository
             ->findByStockItemAndLocation($item, $location);
@@ -71,7 +113,7 @@ class StockItemQueries
      * @param array|StockUnit[] $stockUnits
      * @return UomQty
      */
-    protected function computeQtyForUnits(Uom $uom, $stockUnits): UomQty
+    protected function computeQtyForUnits(Uom $uom, array $stockUnits): UomQty
     {
         $unitQties = array_map(function($q) {
             return $q->getQty()->getValue();

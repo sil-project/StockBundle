@@ -1,5 +1,4 @@
 <?php
-
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -13,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
+use Sil\Bundle\StockBundle\Domain\Entity\LocationType;
 
 /**
  * Description of WarehouseFixtures
@@ -30,11 +30,13 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $wh = $this->getReference('wh-1');
-        
-        $loc1 = Location::createDefault('SUPPLIER-1', 'Emplacement fournisseur');
+
+        $loc1 = Location::createDefault('SUPPLIER-1', 'Emplacement fournisseur',
+                LocationType::supplier());
         $wh->addLocation($loc1);
 
-        $loc2 = Location::createDefault('STOCK-1', 'Emplacement Stock');
+        $loc2 = Location::createDefault('STOCK-1', 'Emplacement Stock',
+                LocationType::internal());
         $wh->addLocation($loc2);
 
         $manager->persist($loc1);
@@ -57,5 +59,4 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
             WarehouseFixtures::class,
         );
     }
-
 }

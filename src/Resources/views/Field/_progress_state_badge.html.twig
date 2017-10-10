@@ -2,20 +2,20 @@
 
     {% set colors = {
         'draft': 'gray', 
-        'confirmed':      'maroon', 
+        'confirmed': 'maroon', 
         'partially_available': 'orange', 
-        'available':       'blue',
-        'done':       'green',
-        'cancel':       'red'
+        'available': 'blue',
+        'done': 'green',
+        'cancel': 'red'
     } %}
 
     {% set icons = {
-         'draft': 'pencil-square-o ', 
+         'draft': 'pencil-square-o', 
         'confirmed': 'calendar-check-o', 
         'partially_available': 'hourglass-3', 
-        'available': 'thumbs-o-up ',
-        'done':       'check',
-        'cancel':       'ban'
+        'available': 'thumbs-o-up',
+        'done': 'check',
+        'cancel': 'ban'
     } %}
     {% set state = value.value %}
     <span class="label bg-{{ colors[state]|default('black')  }}">

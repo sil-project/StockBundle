@@ -1,6 +1,6 @@
-Sil\Bundle\StockBundle\Domain\Entity\OperationCategory:
+Sil\Bundle\StockBundle\Domain\Entity\OperationType:
     type: mappedSuperclass
-    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationCategoryRepository
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationTypeRepository
     fields:
         name:
             type: string(64)
@@ -10,4 +10,4 @@ Sil\Bundle\StockBundle\Domain\Entity\OperationCategory:
     oneToMany:
         operations:
           targetEntity: Operation
-          mappedBy: category
+          mappedBy: type

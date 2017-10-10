@@ -10,5 +10,6 @@ librinfo:
         locations: Emplacements
         uom_types: Catégories d'unité de mesure
         uoms: Unités de mesure
-        operation_categories: Catégories d'opération
+        operation_types: Types d'opération
+        location_types: Types d'emplacement
 

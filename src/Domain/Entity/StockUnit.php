@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
@@ -74,22 +72,24 @@ class StockUnit
      * @param Location $location
      * @param BatchInterface $batch
      */
-    public function __construct($code, StockItemInterface $item, UomQty $qty,
-            Location $location, BatchInterface $batch = null)
+    public static function createDefault($code, StockItemInterface $item,
+        UomQty $qty, Location $location, BatchInterface $batch = null)
     {
-        $this->code = $code;
-        $this->qty = $qty->convertTo($item->getUom());
-        $this->stockItem = $item;
-        $this->location = $location;
-        $this->batch = $batch;
-        $location->addStockUnit($this);
+        $o = new self();
+        $o->code = $code;
+        $o->setQty($qty->convertTo($item->getUom()));
+        $o->stockItem = $item;
+        $o->location = $location;
+        $o->batch = $batch;
+        $location->addStockUnit($o);
+        return $o;
     }
 
     /**
      * 
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -106,12 +106,11 @@ class StockUnit
         return new UomQty($this->qtyUom, floatval($this->qtyValue));
     }
 
-
     /**
      * 
      * @return StockItemInterface
      */
-    public function getStockItem(): StockItemInterface
+    public function getStockItem(): ?StockItemInterface
     {
         return $this->stockItem;
     }
@@ -120,7 +119,7 @@ class StockUnit
      * 
      * @return Location
      */
-    public function getLocation(): Location
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
@@ -141,6 +140,34 @@ class StockUnit
     public function getReservationMovement(): ?Movement
     {
         return $this->reservationMovement;
+    }
+
+    /**
+     * 
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $stockItem
+     */
+    public function setStockItem(StockItemInterface $stockItem): void
+    {
+        $this->stockItem = $stockItem;
+    }
+
+    /**
+     * 
+     * @param Location $location
+     * @return void
+     */
+    public function setLocation(Location $location): void
+    {
+        $this->location = $location;
     }
 
     /**
@@ -195,5 +222,4 @@ class StockUnit
     {
         return null !== $this->reservationMovement;
     }
-
 }

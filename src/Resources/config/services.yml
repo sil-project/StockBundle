@@ -35,11 +35,11 @@ services:
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Operation
             
-    sil.stock.repository.operation_category:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationCategoryRepository
+    sil.stock.repository.operation_type:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationTypeRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
-            - Sil\Bundle\StockBundle\Domain\Entity\OperationCategory
+            - Sil\Bundle\StockBundle\Domain\Entity\OperationType
         
     sil.stock.repository.movement:
         class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
@@ -70,6 +70,18 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Uom
+            
+    sil.stock.repository.location:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\Location
+            
+    sil.stock.repository.location_type:
+        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationTypeRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\LocationType
      
     ###################
     # DOMAIN SERVICE
@@ -90,7 +102,16 @@ services:
             - '@sil.stock.domain_service.movement'
             - '@sil.stock.factory.operation'
      
-        
+    ###################
+    # DOMAIN QUERIES
+    ###################
+    
+    sil.stock.domain_query.stockitem:
+        class: Sil\Bundle\StockBundle\Domain\Query\StockItemQueries
+        arguments:
+            - '@sil.stock.repository.stockunit'
+    
+    
    
     
     ###################
@@ -108,6 +129,13 @@ services:
             - {name: form.type, alias: form}
         arguments:
             - '@sil.stock.repository.uom'
+            
+    sil.stock.form.type.stockunit:
+        class: Sil\Bundle\StockBundle\Application\Form\Type\StockUnitFormType
+        tags:
+            - {name: form.type, alias: form}
+        arguments:
+            - '@sil.stock.repository.location'
 
 
     ###################
@@ -119,5 +147,11 @@ services:
         calls:
             - ['setContainer', ['@service_container']]
             - ['setOperationService', ['@sil.stock.domain_service.operation']]
+    
+    
+    sil.stock.controller.stockitem:
+        class: Sil\Bundle\StockBundle\Application\Controller\StockItemCRUDController
+        calls:
+            - ['setContainer', ['@service_container']]
       
    

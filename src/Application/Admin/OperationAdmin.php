@@ -15,7 +15,7 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGeneratorInterface;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
-
+use Symfony\Component\Form\FormError;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -47,16 +47,15 @@ class OperationAdmin extends ResourceAdmin
         $collection->add('confirm', $this->getRouterIdParameter() . '/confirm');
         $collection->add('reserve', $this->getRouterIdParameter() . '/reserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
-        
-         
     }
 
     /**
      * {@inheritdoc}
      */
-    public function prePersist($object)
+    public function prePersist($operation)
     {
-        $this->preUpdate($object);
+
+        $this->preUpdate($operation);
     }
 
     /**
@@ -96,5 +95,18 @@ class OperationAdmin extends ResourceAdmin
     public function setMovementCodeGenerator(MovementCodeGeneratorInterface $codeGenerator)
     {
         $this->movementCodeGenerator = $codeGenerator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toString($object)
+    {
+        if ( !is_object($object) ) {
+            return '';
+        }
+
+        return sprintf('%s : %s', $object->getType()->getName(),
+            $object->getCode());
     }
 }

@@ -20,7 +20,7 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class OperationCategory
+class OperationType
 {
 
     use Guidable;

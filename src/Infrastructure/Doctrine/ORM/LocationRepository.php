@@ -8,13 +8,13 @@
 
 namespace Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM;
 
-use Sil\Bundle\StockBundle\Domain\Repository\OperationCategoryRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
 use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 
 /**
  * @author glenn
  */
-class OperationCategoryRepository extends ResourceRepository implements OperationCategoryRepositoryInterface
+class LocationRepository extends ResourceRepository implements LocationRepositoryInterface
 {
 
     

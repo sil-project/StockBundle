@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -40,6 +38,12 @@ class Location
 
     /**
      *
+     * @var string 
+     */
+    private $typeValue;
+
+    /**
+     *
      * @var Warehouse 
      */
     private $warehouse;
@@ -50,11 +54,13 @@ class Location
      */
     private $stockUnits;
 
-    public static function createDefault(string $code, string $name)
+    public static function createDefault(string $code, string $name,
+        LocationType $type)
     {
         $o = new self();
         $o->code = $code;
         $o->name = $name;
+        $o->setType($type);
         return $o;
     }
 
@@ -65,6 +71,7 @@ class Location
      */
     public function __construct()
     {
+        $this->setType(LocationType::internal());
         $this->stockUnits = new ArrayCollection();
     }
 
@@ -84,6 +91,15 @@ class Location
     public function getCode(): ?string
     {
         return $this->code;
+    }
+
+    /**
+     * 
+     * @return LocationType
+     */
+    public function getType(): LocationType
+    {
+        return LocationType::{$this->typeValue}();
     }
 
     /**
@@ -120,6 +136,15 @@ class Location
     public function setCode(string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * 
+     * @param LocationType $type
+     */
+    public function setType(LocationType $type): void
+    {
+        $this->typeValue = $type->getValue();
     }
 
     /**
@@ -162,7 +187,7 @@ class Location
     {
         if ( $this->hasStockUnit($unit) ) {
             throw new InvalidArgumentException(
-                    'The same StockUnit cannot be added twice');
+                'The same StockUnit cannot be added twice');
         }
 
         $this->stockUnits->add($unit);
@@ -172,37 +197,34 @@ class Location
     {
         if ( !$this->hasStockUnit($unit) ) {
             throw new InvalidArgumentException(
-                    'The StockUnit is not at this Location and cannot be removed from there');
+                'The StockUnit is not at this Location and cannot be removed from there');
         }
         $this->stockUnits->removeElement($unit);
     }
-
     /**
      * @deprecated
      * @param StockItemInterface $stockItem
      * @return boolean
-     
-    public function hasStockItem(StockItemInterface $stockItem): boolean
-    {
-        return $this->stockUnits->exists(
-                        function($i, $unit) use($stockItem) {
-                    return $unit->getStockItem() == $stockItem;
-                });
-    }*/
 
+      public function hasStockItem(StockItemInterface $stockItem): boolean
+      {
+      return $this->stockUnits->exists(
+      function($i, $unit) use($stockItem) {
+      return $unit->getStockItem() == $stockItem;
+      });
+      } */
     /**
      * @deprecated
      * @return array|StockItemInterface[]
-     
-    public function getStockItems(): array
-    {
-        $items = array_map(
-                $this->stockUnits->toArray(),
-                function($unit) {
-            return $unit->getStockItem();
-        });
 
-        return array_unique($items);
-    }*/
+      public function getStockItems(): array
+      {
+      $items = array_map(
+      $this->stockUnits->toArray(),
+      function($unit) {
+      return $unit->getStockItem();
+      });
 
+      return array_unique($items);
+      } */
 }

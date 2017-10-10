@@ -46,11 +46,12 @@ class UomQtyFormType extends BaseType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults(array(
-            'attr'=>['class'=>'form-inline'],
+            'attr' => ['class' => 'form-inline'],
             'data_class' => 'Sil\Bundle\StockBundle\Domain\Entity\UomQty',
             'empty_data' => function (FormInterface $form) {
                 return new UomQty(
-                    $form->get('uom')->getData(), floatval($form->get('value')->getData())
+                    $form->get('uom')->getData(),
+                    floatval($form->get('value')->getData())
                 );
             },
         ));
@@ -62,10 +63,12 @@ class UomQtyFormType extends BaseType
             [$this, 'buildUomTypeChoices']);
 
 
-        $builder->add('value', NumberType::class, [
-            'required' =>true,
-            'attr'=>['placeholder' =>'Quantité'],
-            'label'=>false]);
+        $builder->add('value', NumberType::class,
+            [
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Quantité'],
+                'label' => false]);
     }
 
     public function buildUomTypeChoices(FormEvent $event)
@@ -94,7 +97,7 @@ class UomQtyFormType extends BaseType
 
         $form->add('uom', EntityType::class,
             [
-                'label'=>false,
+                'label' => false,
                 'class' => 'Sil\Bundle\StockBundle\Domain\Entity\Uom',
                 'choices' => $uoms,
                 'choice_label' => 'name',

@@ -1,12 +1,15 @@
 Sil\Bundle\StockBundle\Domain\Entity\Location:
     type: mappedSuperclass
-    
+    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationRepository
     fields:
         name:
             type: string
         code:
             type: string(64)
             unique: true
+            nullable: false
+        typeValue:
+            type: string(64)
             nullable: false
     
     manyToOne:
@@ -21,3 +24,4 @@ Sil\Bundle\StockBundle\Domain\Entity\Location:
         stockUnits:
           targetEntity: StockUnit
           mappedBy: location
+          cascade: ["remove", "persist"]

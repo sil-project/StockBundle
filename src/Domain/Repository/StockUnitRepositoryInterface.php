@@ -27,7 +27,7 @@ interface StockUnitRepositoryInterface
 
      * @return array|StockUnit[]
      */
-    public function findByStockItem(StockItemInterface $item);
+    public function findByStockItem(StockItemInterface $item): array;
 
     /**
      * 
@@ -36,19 +36,28 @@ interface StockUnitRepositoryInterface
      * @return array|StockUnit[]
      */
     public function findByStockItemAndLocation(StockItemInterface $item,
-        Location $location);
+        Location $location): array;
 
     /**
      * 
-     * @param array $criteria
+     * @param StockItemInterface $item
+     * @param array $orderBy
      * @return array|StockUnit[]
      */
-    public function findAllAvailableBy(array $criteria);
+    public function findAvailableByStockItem(StockItemInterface $item, array $orderBy = []): array;
+
+    /**
+     * 
+     * @param StockItemInterface $item
+
+     * @return array|StockUnit[]
+     */
+    public function findReservedByStockItem(StockItemInterface $item): array;
 
     /**
      * 
      * @param Movement $mvt
      * @return array|StockUnit[]
      */
-    public function findAllReservedBy(Movement $mvt);
+    public function findReservedByMovement(Movement $mvt): array;
 }

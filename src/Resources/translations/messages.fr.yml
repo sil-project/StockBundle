@@ -7,23 +7,6 @@ show_group_movements: Mouvements de stock
 sil:
     stock:
         
-        error:
-        
-        action:
-            edit_draft: Modifier le brouillon
-            return_draft: Retour au brouillon
-            confirm: Planifier l'opération
-            reserve: Réserver les stocks
-            apply: Valider l'opération
-            cancel: Annuler l'opération
-            cancel_edit: Annuler la modification
-            delete: Supprimer l'opération
-            save: Enregistrer
-            
-        link:
-            operation_list: Liste des Opérations
-            movement_list: Liste des Mouvements
-            
         progress_state:
             draft: Brouillon
             confirmed: À faire
@@ -31,18 +14,15 @@ sil:
             available: Disponible
             done: Effectué
             cancel: Annulé
-        show:
-            label:
-                operation: Opération
-                operations: Opérations
-                movement: Mouvement de stock
-                movements: Mouvements de stock
-            
-        help:
-
-        placeholder:
-
-            
+        
+        location_type:
+            internal: Emplacement interne
+            supplier: Emplacement fournisseur
+            customer: Emplacement client
+            scrap: Emplacement de rebut
+       
+        
+        
         ##############
         # OPERATIONS
         ##############
@@ -51,26 +31,34 @@ sil:
             breadcrumb:
                 link:
                     list: Opérations sur les stocks
+                    create: Nouvelle opération
+            
             message:
                 no_available_stock_for_reservation: Aucun stock n'est disponible pour cette opération
             list:
                 label:
                     action: Actions
                     code: Code
-                    operation: List des opérations sur les stocks
+                    operation: Liste des opérations sur les stocks
                     movements: Mouvements de stock
                     created_at: Date de création
                     expected_at: Date prévue
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
-                    category: Catégorie
+                    type: Type d'opération
                     state: État
                     qty: Qantité
                     location_from: De
                     location_to: À
                     batch: N° de Lot
             show:
+                tab:
+                    general: Général
+                group:
+                    description: Description de l'opération
+                    locations: Emplacements
+                    movements: Mouvements de stocks à réaliser
                 label:
                     code: Code
                     operation: Opération
@@ -80,13 +68,28 @@ sil:
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
-                    category: Catégorie
+                    type: Type d'opération
                     state: État
                     qty: Qantité
                     location_from: De
                     location_to: À
                     batch: N° de Lot
+                action:
+                    edit_draft: Modifier le brouillon
+                    return_to_draft: Retour au brouillon
+                    confirm: Planifier l'opération
+                    reserve: Réserver les stocks
+                    apply: Valider l'opération
+                    cancel: Annuler l'opération
+                    cancel_edit: Annuler la modification
+                    delete: Supprimer l'opération
             form:
+                tab:
+                    general: Général
+                group:
+                    description: Description de l'opération
+                    locations: Emplacements
+                    movements: Mouvements de stocks à réaliser
                 label:
                     code: Code
                     operation: Opération
@@ -96,12 +99,16 @@ sil:
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
-                    category: Catégorie
+                    type: Type d'opération
                     state: État
                     qty: Qantité
                     location_from: De
                     location_to: À
                     batch: N° de Lot
+                action:
+                    create: Créer l'opération
+                    cancel_edit: Annuler
+                    save: Enregistrer
                     
         ##############
         # MOVEMENTS
@@ -121,8 +128,8 @@ sil:
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     state: État
-                    qty: Qantité
-                    qty_value: Qantité
+                    qty: Quantité
+                    qty_value: Quantité
                     qty_uom: Unité
                     location_from: De
                     location_to: À
@@ -139,7 +146,8 @@ sil:
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     state: État
-                    qty: Qantité
+                    qty: Quantité
+                    reserved_qty: Quantité réservée
                     location_from: De
                     location_to: À
                     batch: N° de Lot
@@ -154,10 +162,29 @@ sil:
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     state: État
-                    qty: Qantité
+                    qty: Quantité
                     location_from: De
                     location_to: À
                     batch: N° de Lot
+        
+        ##############
+        # STOCK ITEM
+        ##############
+        stockitem:
+            show:
+                action:
+                    update_stock: Mettre à jour le stock disponible
+                    
+                label:
+                    name: Nom
+                    code: Code
+                    uom: Unité de référence
+                    output_strategy: Stratégie de sortie de stock
+                    qty: Quantité
+                    in_stock_qty: Quantité en stock
+                    reserved_qty: Quantité réservée
+                    available_qty: Quantité disponible
+        
         warehouse: 
             breadcrumb:
                 link:

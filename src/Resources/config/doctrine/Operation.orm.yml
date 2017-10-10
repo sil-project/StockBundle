@@ -17,15 +17,17 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             joinColumn:
                 name: location_src_id
                 referencedColumnName: id
+                nullable: true
         destLocation: 
             targetEntity: Location
             joinColumn:
                 name: location_dest_id
                 referencedColumnName: id
-        category: 
-            targetEntity: OperationCategory
+                nullable: true
+        type: 
+            targetEntity: OperationType
             joinColumn:
-                name: category_id
+                name: operation_type_id
                 referencedColumnName: id
     oneToMany:
         movements:

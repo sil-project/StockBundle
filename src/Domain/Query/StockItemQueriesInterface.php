@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Sil\Bundle\StockBundle\Domain\Query;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 
 /**
@@ -27,6 +28,12 @@ interface StockItemQueriesInterface
      * @return UomQty
      */
     public function getQty(StockItemInterface $item): UomQty;
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @return UomQty
+     */
+    public function getReservedQty(StockItemInterface $item): UomQty;
 
     /**
      * 
@@ -35,5 +42,6 @@ interface StockItemQueriesInterface
      * 
      * @return UomQty
      */
-    public function getQtyByLocation(StockItemInterface $item, Location $location): UomQty;
+    public function getQtyByLocation(StockItemInterface $item,
+        Location $location): UomQty;
 }

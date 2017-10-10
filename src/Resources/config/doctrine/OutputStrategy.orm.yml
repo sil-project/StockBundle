@@ -10,6 +10,6 @@ Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy:
             type: string(255)
             nullable: true
         orderBy:
-            type: simple_array
+            type: array
             nullable: false
 

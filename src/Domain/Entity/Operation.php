@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -63,9 +61,9 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      *
-     * @var OperationCategory 
+     * @var OperationType
      */
-    private $category;
+    private $type;
 
     /**
      *
@@ -74,7 +72,7 @@ class Operation implements ProgressStateAwareInterface
     private $movements;
 
     public static function createDefault(string $code, Location $srcLocation,
-            Location $destLocation)
+        Location $destLocation)
     {
         $o = new self();
         $o->code = $code;
@@ -137,11 +135,11 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      * 
-     * @return OperationCategory
+     * @return OperationType
      */
-    public function getCategory(): ?OperationCategory
+    public function getType(): ?OperationType
     {
-        return $this->category;
+        return $this->type;
     }
 
     /**
@@ -202,11 +200,11 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      * 
-     * @param OperationCategory $category
+     * @param OperationType $type
      */
-    public function setCategory(OperationCategory $category)
+    public function setType(OperationType $type)
     {
-        $this->category = $category;
+        $this->type = $type;
     }
 
     /**
@@ -230,12 +228,12 @@ class Operation implements ProgressStateAwareInterface
 
         if ( !$mvt->getState()->isDraft() ) {
             throw new \InvalidArgumentException(
-                    'Only Draft Movement can be added');
+                'Only Draft Movement can be added');
         }
 
         if ( $this->hasMovement($mvt) ) {
             throw new \InvalidArgumentException(
-                    'The same Movement cannot be added twice');
+                'The same Movement cannot be added twice');
         }
 
         $mvt->setOperation($this);
@@ -252,7 +250,7 @@ class Operation implements ProgressStateAwareInterface
     {
         if ( !$this->hasMovement($mvt) ) {
             throw new \InvalidArgumentException(
-                    'The Movement is not part of this Operation and cannot be removed from there');
+                'The Movement is not part of this Operation and cannot be removed from there');
         }
         $this->movements->removeElement($mvt);
     }
@@ -264,8 +262,8 @@ class Operation implements ProgressStateAwareInterface
     public function isFullyReserved(): bool
     {
         return $this->getMovements()->forAll(function($i, $mvt) {
-                    return $mvt->isFullyReserved();
-                });
+                return $mvt->isFullyReserved();
+            });
     }
 
     public function hasReservedStockUnits(): bool
@@ -276,5 +274,4 @@ class Operation implements ProgressStateAwareInterface
 
         return ($noStockUnitReserved == false);
     }
-
 }

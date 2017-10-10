@@ -1,14 +1,25 @@
 services:
     
+    ##############
+    # STOCK ITEM
+    ##############
     sil_stock.admin.stock_item:
         class: Sil\Bundle\StockBundle\Application\Admin\StockItemAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockItem, BlastCoreBundle:CRUD]
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockItem, sil.stock.controller.stockitem]
+        calls:
+            - ["setResourceRepository", ['@sil.stock.repository.stockitem']]
+            - ["setStockItemQueries", ['@sil.stock.domain_query.stockitem']]
+            - [ setTemplate, [show, SilStockBundle:StockItemAdmin:show.html.twig]]
         tags:
             -   name: sonata.admin
                 manager_type: orm
                 group: Stock Management
-                label: sil.stock.item
+                label: sil.stock.stockitem
+                label_translator_strategy: blast.resource.sonata.label_strategy.prefix
     
+    ##############
+    # OPERATION
+    ##############
     sil_stock.admin.operation:
         class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, sil.stock.controller.operation]
@@ -27,13 +38,16 @@ services:
                 label: sil.stock.operation
                 label_translator_strategy: blast.resource.sonata.label_strategy.prefix
     
-    
+    ##############
+    # MOVEMENT
+    ##############
     sil_stock.admin.movement:
         class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
         calls:
             - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
             - ["setResourceRepository", ['@sil.stock.repository.movement']]
+            - ["setStockItemQueries", ['@sil.stock.domain_query.stockitem']]
             - [ setTemplate, [list, SilStockBundle:CRUD:list.html.twig]]
         tags:
             -   name: sonata.admin
@@ -42,7 +56,9 @@ services:
                 label: sil.stock.movement
                 label_translator_strategy: blast.resource.sonata.label_strategy.prefix
             
-                
+    ##############
+    # WAREHOUSE
+    ##############            
     sil_stock.admin.warehouse:
         class: Sil\Bundle\StockBundle\Application\Admin\WarehouseAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Warehouse, BlastCoreBundle:CRUD]
@@ -52,6 +68,9 @@ services:
                 group: Stock Management
                 label: sil.stock.warehouse
     
+    ##############
+    # LOCATION
+    ##############  
     sil_stock.admin.location:
         class: Sil\Bundle\StockBundle\Application\Admin\LocationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Location, BlastCoreBundle:CRUD]
@@ -61,6 +80,21 @@ services:
                 group: Stock Management
                 label: sil.stock.location
     
+    ##############
+    # UOM
+    ##############  
+    sil_stock.admin.uom:
+        class: Sil\Bundle\StockBundle\Application\Admin\UomAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Uom, BlastCoreBundle:CRUD]
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: sil.stock.uom
+    
+    ##############
+    # UOM TYPE
+    ##############  
     sil_stock.admin.uom_type:
         class: Sil\Bundle\StockBundle\Application\Admin\UomTypeAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\UomType, BlastCoreBundle:CRUD]
@@ -71,25 +105,39 @@ services:
                 label: sil.stock.uomtype
                 
     
-    sil_stock.admin.uom:
-        class: Sil\Bundle\StockBundle\Application\Admin\UomAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Uom, BlastCoreBundle:CRUD]
-        tags:
-            -   name: sonata.admin
-                manager_type: orm
-                group: Stock Management
-                label: sil.stock.uom
                 
-                
-    sil_stock.admin.operation_category:
-        class: Sil\Bundle\StockBundle\Application\Admin\OperationCategoryAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\OperationCategory, BlastCoreBundle:CRUD]
+    ################
+    # OPERATION TYPE
+    ################            
+    sil_stock.admin.operation_type:
+        class: Sil\Bundle\StockBundle\Application\Admin\OperationTypeAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\OperationType, BlastCoreBundle:CRUD]
         calls:
-            - ["setResourceRepository", ['@sil.stock.repository.operation_category']]
+            - ["setResourceRepository", ['@sil.stock.repository.operation_type']]
             - [ setTemplate, [list, SilStockBundle:CRUD:list.html.twig]]
         tags:
             -   name: sonata.admin
                 manager_type: orm
                 group: Stock Management
-                label: sil.stock.operation_category
+                label: sil.stock.operation_type
                 label_translator_strategy: blast.resource.sonata.label_strategy.prefix
+    
+    ##############
+    # STOCK UNIT
+    ##############
+    sil_stock.admin.stock_unit:
+        class: Sil\Bundle\StockBundle\Application\Admin\StockUnitAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockUnit, BlastCoreBundle:CRUD]
+        calls:
+            - ["setStockUnitCodeGenerator", ['@sil.stock.code_generator.stockunit']]
+            - ["setResourceRepository", ['@sil.stock.repository.stockunit']]
+          
+            
+        tags:
+            -   name: sonata.admin
+                manager_type: orm
+                group: Stock Management
+                label: sil.stock.stockunit
+                label_translator_strategy: blast.resource.sonata.label_strategy.prefix
+           
+    
