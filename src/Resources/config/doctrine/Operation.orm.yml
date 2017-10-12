@@ -26,6 +26,7 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
                 nullable: true
         type: 
             targetEntity: OperationType
+            inversedBy: operations
             joinColumn:
                 name: operation_type_id
                 referencedColumnName: id

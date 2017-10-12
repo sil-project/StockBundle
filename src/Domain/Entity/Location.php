@@ -14,6 +14,7 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
+use Blast\BaseEntitiesBundle\Entity\Traits\NestedTreeable;
 use InvalidArgumentException;
 
 /**
@@ -23,6 +24,7 @@ class Location
 {
 
     use Guidable;
+    use NestedTreeable;
 
     /**
      *
@@ -73,6 +75,9 @@ class Location
     {
         $this->setType(LocationType::internal());
         $this->stockUnits = new ArrayCollection();
+
+        //from NestedTreeable 
+        $this->initCollections();
     }
 
     /**
@@ -108,7 +113,46 @@ class Location
      */
     public function getWarehouse(): ?Warehouse
     {
+        if ( $this->hasParent() ) {
+            return $this->getParent()->getWarehouse();
+        }
         return $this->warehouse;
+    }
+
+    /**
+     * 
+     * @return Location
+     */
+    public function getParent(): ?Location
+    {
+        return $this->getTreeParent();
+    }
+
+    /**
+     * 
+     * @return bool
+     */
+    public function hasParent(): bool
+    {
+        return null !== $this->getParent();
+    }
+
+    /**
+     * 
+     * @return Collection|Location[]
+     */
+    public function getChildren(): Collection
+    {
+        return $this->getTreeChildren();
+    }
+
+    /**
+     * 
+     * @return Collection
+     */
+    public function getOwnedStockUnits(): Collection
+    {
+        return $this->stockUnits;
     }
 
     /**
@@ -117,7 +161,15 @@ class Location
      */
     public function getStockUnits(): Collection
     {
-        return $this->stockUnits;
+
+        $result = [];
+        if ( !$this->stockUnits->isEmpty() ) {
+            $result = array_merge($result, $this->stockUnits->toArray());
+        }
+        foreach ( $this->getChildren() as $child ) {
+            $result = array_merge($result, $child->getStockUnits()->toArray());
+        }
+        return new ArrayCollection($result);
     }
 
     /**
@@ -154,7 +206,65 @@ class Location
      */
     public function setWarehouse(?Warehouse $warehouse): void
     {
+        if ( $this->hasParent() ) {
+            throw new InvalidArgumentException(
+                'The warehouse cannot be update for a child location');
+        }
         $this->warehouse = $warehouse;
+    }
+
+    /**
+     * 
+     * @param Location $parent
+     */
+    public function setParent(?Location $parent): void
+    {
+        $this->setTreeParent($parent);
+    }
+
+    /**
+     * 
+     * @param StockUnit $unit
+     * @return bool
+     */
+    public function hasChild(Location $location): bool
+    {
+        return $this->getChildren()->contains($location);
+    }
+
+    /**
+     * 
+     * @param Location $location
+     * @return void
+     * @throws InvalidArgumentException
+     */
+    public function addChild(Location $location): void
+    {
+        if ( $this->hasChild($location) ) {
+            throw new InvalidArgumentException(
+                'The same Location cannot be added twice');
+        }
+
+        $location->setWarehouse(null);
+        $location->setParent($this);
+
+        $this->addTreeChild($location);
+    }
+
+    /**
+     * 
+     * @param Location $location
+     * @return void
+     * @throws InvalidArgumentException
+     */
+    public function removeChild(Location $location): void
+    {
+        if ( !$this->hasChild($location) ) {
+            throw new InvalidArgumentException(
+                'The Location is not a child and cannot be removed from there');
+        }
+        $location->setParent(null);
+        $this->getChildren()->removeElement($location);
     }
 
     /**
@@ -173,6 +283,26 @@ class Location
      * @return bool
      */
     public function hasStockUnit(StockUnit $unit): bool
+    {
+        if ( $this->hasOwnedStockUnit($unit) ) {
+            return true;
+        }
+
+        foreach ( $this->getChildren() as $child ) {
+            if ( $child->hasStockUnit($unit) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 
+     * @param StockUnit $unit
+     * @return bool
+     */
+    public function hasOwnedStockUnit(StockUnit $unit): bool
     {
         return $this->stockUnits->contains($unit);
     }
@@ -197,9 +327,34 @@ class Location
     {
         if ( !$this->hasStockUnit($unit) ) {
             throw new InvalidArgumentException(
-                'The StockUnit is not at this Location and cannot be removed from there');
+                'The StockUnit is not at this Location hierarchy and cannot be removed from there');
+        }
+        $unit->getLocation()->removeOwnedStockUnit($unit);
+    }
+
+    public function removeOwnedStockUnit(StockUnit $unit): void
+    {
+        if ( !$this->hasOwnedStockUnit($unit) ) {
+            throw new InvalidArgumentException(
+                'The StockUnit is not at this specific Location and cannot be removed from there');
         }
         $this->stockUnits->removeElement($unit);
+    }
+
+    public function getIndentedName(): string
+    {
+        return str_repeat('  ', $this->getTreeLvl()) . $this->getName();
+    }
+
+    public function getCodePath()
+    {
+        $path = '';
+        if ( $this->hasParent() ) {
+            $path .= $this->getParent()->getCodePath();
+        } else {
+            $path .= $this->getWarehouse()->getCode();
+        }
+        return $path . '/' . $this->getCode();
     }
     /**
      * @deprecated

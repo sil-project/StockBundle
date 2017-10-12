@@ -13,6 +13,9 @@ namespace Sil\Bundle\StockBundle\Application\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Query\StockItemQueriesInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\Location;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -29,21 +32,46 @@ class StockItemAdmin extends ResourceAdmin
      */
     protected $stockItemQueries;
 
-    public function getInStockQty($object)
+    /**
+     *
+     * @var LocationRepositoryInterface 
+     */
+    protected $locationRepository;
+
+    public function getQtyByItemAndLocation(StockItemInterface $item,
+        Location $location)
     {
-        return $this->getStockItemQueries()->getQty($object);
+        return $this->getStockItemQueries()->getQtyByLocation($item, $location);
     }
-    
-    
-    
-    public function getReservedQty($object)
+
+    public function getLocationsByItem(StockItemInterface $item)
     {
-        return $this->getStockItemQueries()->getReservedQty($object);
+        return $this->getLocationRepository()->findByOwnedItem($item);
     }
-    
-    public function getAvailableQty($object)
+
+    public function getInStockQty(StockItemInterface $item)
     {
-        return $this->getStockItemQueries()->getAvailableQty($object);
+        return $this->getStockItemQueries()->getQty($item);
+    }
+
+    public function getReservedQty(StockItemInterface $item)
+    {
+        return $this->getStockItemQueries()->getReservedQty($item);
+    }
+
+    public function getAvailableQty(StockItemInterface $item)
+    {
+        return $this->getStockItemQueries()->getAvailableQty($item);
+    }
+
+    public function getLocationRepository(): LocationRepositoryInterface
+    {
+        return $this->locationRepository;
+    }
+
+    public function setLocationRepository(LocationRepositoryInterface $locationRepository)
+    {
+        $this->locationRepository = $locationRepository;
     }
 
     public function getStockItemQueries(): StockItemQueriesInterface
@@ -54,5 +82,10 @@ class StockItemAdmin extends ResourceAdmin
     public function setStockItemQueries(StockItemQueriesInterface $stockItemQueries)
     {
         $this->stockItemQueries = $stockItemQueries;
+    }
+
+    public function toString($item)
+    {
+        return $item->getCode() . ' | ' . $item->getName();
     }
 }

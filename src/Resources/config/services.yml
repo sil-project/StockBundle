@@ -136,6 +136,13 @@ services:
             - {name: form.type, alias: form}
         arguments:
             - '@sil.stock.repository.location'
+            
+    sil.stock.form.type.location_choice:
+        class: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+        tags:
+            - {name: form.type, alias: form}
+        arguments:
+            - '@sil.stock.repository.location'
 
 
     ###################

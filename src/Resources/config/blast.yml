@@ -22,10 +22,12 @@ parameters:
                                 
                         sil.stock.operation.form.group.locations:
                             srcLocation:
-                                choice_label: name
+                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                choice_label: getIndentedName
                                 required: true
                             destLocation:
-                                choice_label: name
+                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                choice_label: getIndentedName
                                 required: true
                         
                         sil.stock.operation.form.group.movements:
@@ -248,27 +250,46 @@ parameters:
                                 required: true
                             type:
                                 type: Sil\Bundle\StockBundle\Application\Form\Type\LocationTypeFormType
+                            treeParent:
+                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                choice_label: getIndentedName
                             warehouse:
                                 choice_label: name
+                        
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.location.show.tab.general:
+                        
+                        sil.stock.location.show.group.general:
                             code: ~
                             name: ~
                             type:
                                 template: SilStockBundle:Field:show_location_type_field.html.twig
+                            treeParent:
+                                associated_property: name
                             warehouse:
                                 associated_property: name
-                                required: true
+                                
+                        sil.stock.location.show.group.children:
+                            children:
+                                label: false
+                                mapped: false
+                                template: SilStockBundle:LocationAdmin\Show:show_children.html.twig
+                    
+                    sil.stock.location.show.tab.stocks:
+                        
+                        sil.stock.location.show.group.stockunits:
+                            stockUnits:
+                                template: SilStockBundle:LocationAdmin\Show:show_stock_units.html.twig 
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
-                    code:
+                    codePath:
                         identifier: true
-                    name: ~
+                        
+                    indentedName: ~
                     type:
                         template: SilStockBundle:Field:list_location_type_field.html.twig
                     warehouse:
@@ -353,8 +374,8 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\StockItem:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.stockitem.form.tab.general:
+                        sil.stock.stockitem.form.group.general:
                             name: ~
                             code: ~
                             uom:
@@ -366,8 +387,9 @@ parameters:
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.stockitem.show.tab.general:
+                        
+                        sil.stock.stockitem.show.group.general:
                             name: ~
                             code: ~    
                             uom:
@@ -383,6 +405,14 @@ parameters:
                             availableQty:
                                 mapped: false
                                 template: SilStockBundle:StockItemAdmin/Show:show_computed_qty.html.twig
+                    
+                    sil.stock.stockitem.show.tab.stocks:
+                        sil.stock.stockitem.show.group.stocks:
+                            locations:
+                                mapped: false
+                                template: SilStockBundle:StockItemAdmin/Show:show_stock_locations.html.twig
+                        
+                                
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 

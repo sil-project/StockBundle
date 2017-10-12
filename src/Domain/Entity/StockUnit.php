@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
+use Blast\BaseEntitiesBundle\Entity\Traits\Timestampable;
 use DomainException;
 
 /**
@@ -20,7 +21,8 @@ use DomainException;
 class StockUnit
 {
 
-    use Guidable;
+    use Guidable,
+        Timestampable;
 
     /**
      *

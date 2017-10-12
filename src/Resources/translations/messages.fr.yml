@@ -171,12 +171,22 @@ sil:
         # STOCK ITEM
         ##############
         stockitem:
+            breadcrumb:
+                link:
+                    list: Articles
             show:
+                tab:
+                    general: Général
+                    stocks: Stocks
+                group:
+                    general: Général
+                    stocks: Stocks
                 action:
                     update_stock: Mettre à jour le stock disponible
                     
                 label:
-                    name: Nom
+                    stockitem: Article
+                    name: Libellé
                     code: Code
                     uom: Unité de référence
                     output_strategy: Stratégie de sortie de stock
@@ -184,7 +194,14 @@ sil:
                     in_stock_qty: Quantité en stock
                     reserved_qty: Quantité réservée
                     available_qty: Quantité disponible
-        
+            list:
+                label:
+                    name: Libellé
+                    code: Code
+                    uom: Unité de référence
+                    output_strategy: Stratégie de sortie de stock
+                    action: Actions
+                
         warehouse: 
             breadcrumb:
                 link:
@@ -193,6 +210,22 @@ sil:
             breadcrumb:
                 link:
                     list: Emplacements
+            message:
+                no_children: Il n'y a pas de sous-emplacements 
+            show:
+                tab:
+                    general: Général
+                    stocks: Stocks
+                group:
+                    general: Général
+                    children: Sous-emplacements
+                    stockunits: Unités de stock
+                label:
+                    type: Type
+                    code: Code
+                    name: Libellé
+                    warehouse: Entrepôt
+                    tree_parent: Emplacement parent
         uomtype:
             breadcrumb:
                 link:
@@ -201,10 +234,18 @@ sil:
             breadcrumb:
                 link:
                     list: Unités de mesure
-        item: 
+        stockunit: 
             breadcrumb:
                 link:
-                    list: Articles
+                    list: Unités de stock
+            show:
+                label:
+                    created_at: Date de création
+                    code: Code
+                    stock_item: Article
+                    batch: N° de lot
+                    qty: Quantité
+        
                 
         operation_category: 
             breadcrumb:
@@ -212,4 +253,4 @@ sil:
                     list: Catégories d'opération
             show:
                 label:
-                    name: Nom
+                    name: Libellé

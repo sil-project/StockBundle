@@ -37,8 +37,13 @@
                             <td>{{ movement.srcLocation.name }}</td>
                             <td>{{ movement.destLocation.name }}</td>
                             <td>{{ movement.qty }}</td>
-                            <td>{{ movement_admin.getReservedQty(movement) }}</td>
+                            {% if not movement.isDone()  %}
+                                <td>{{ movement_admin.getReservedQty(movement) }}</td>
+                            {% else %}
+                                <td> - </td>
+                            {% endif %}
                             <td>{% include('SilStockBundle:Field:_progress_state_badge.html.twig') with {'value': movement.state} %}</td>
+
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -13,6 +13,7 @@ namespace Sil\Bundle\StockBundle\Domain\Repository;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
+use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 
 /**
  *
@@ -27,7 +28,8 @@ interface StockUnitRepositoryInterface
 
      * @return array|StockUnit[]
      */
-    public function findByStockItem(StockItemInterface $item): array;
+    public function findByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null): array;
 
     /**
      * 
@@ -36,7 +38,7 @@ interface StockUnitRepositoryInterface
      * @return array|StockUnit[]
      */
     public function findByStockItemAndLocation(StockItemInterface $item,
-        Location $location): array;
+        Location $location, ?BatchInterface $batch = null): array;
 
     /**
      * 
@@ -44,7 +46,8 @@ interface StockUnitRepositoryInterface
      * @param array $orderBy
      * @return array|StockUnit[]
      */
-    public function findAvailableByStockItem(StockItemInterface $item, array $orderBy = []): array;
+    public function findAvailableByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null, array $orderBy = []): array;
 
     /**
      * 
@@ -52,7 +55,8 @@ interface StockUnitRepositoryInterface
 
      * @return array|StockUnit[]
      */
-    public function findReservedByStockItem(StockItemInterface $item): array;
+    public function findReservedByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null): array;
 
     /**
      * 

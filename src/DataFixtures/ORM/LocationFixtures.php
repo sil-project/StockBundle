@@ -31,21 +31,40 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
     {
         $wh = $this->getReference('wh-1');
 
-        $loc1 = Location::createDefault('SUPPLIER-1', 'Emplacement fournisseur',
+        $supp = Location::createDefault('SUPPLIER', 'Emplacement Fournisseur',
                 LocationType::supplier());
-        $wh->addLocation($loc1);
+        
+        $supp1 = Location::createDefault('SUP-1', 'Fournisseur 1',
+                LocationType::supplier());
+        
+        $supp2 = Location::createDefault('SUP-2', 'Fournisseur 2',
+                LocationType::supplier());
 
-        $loc2 = Location::createDefault('STOCK-1', 'Emplacement Stock',
+        $supp->addChild($supp1);
+        $supp->addChild($supp2);
+        
+        $wh->addLocation($supp);
+
+        $int = Location::createDefault('INTERNAL', 'Emplacement Stock',
                 LocationType::internal());
-        $wh->addLocation($loc2);
 
-        $manager->persist($loc1);
-        $manager->persist($loc2);
+        $int1 = Location::createDefault('STOCK-1', 'Stock 1',
+                LocationType::internal());
+       
+        $int2 = Location::createDefault('STOCK-2', 'Stock 2',
+                LocationType::internal());
+        
+        $int->addChild($int1);
+        $int->addChild($int2);
+        $wh->addLocation($int);
+
+        $manager->persist($supp);
+        $manager->persist($int);
         $manager->flush();
 
         // other fixtures can get this object using the 'admin-user' name
-        $this->addReference('supplier-1', $loc1);
-        $this->addReference('stock-1', $loc2);
+        $this->addReference('supplier-1', $supp1);
+        $this->addReference('stock-1', $int2);
     }
 
     public function setContainer(ContainerInterface $container = null)

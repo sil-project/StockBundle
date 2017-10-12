@@ -190,8 +190,8 @@ class MovementService implements MovementServiceInterface
         $srcLoc = $mvt->getSrcLocation();
         $outStrategy = $item->getOutputStrategy();
 
-        return $this->stockUnitRepository->findAvailableBy(
-                $item, $mvt->getBatch(), $outStrategy->getOrderBy());
+        return $this->stockUnitRepository->findAvailableByStockItemAndLocation(
+                $item, $srcLoc, $mvt->getBatch(), $outStrategy->getOrderBy());
     }
 
     /**

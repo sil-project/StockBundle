@@ -9,6 +9,7 @@ services:
         calls:
             - ["setResourceRepository", ['@sil.stock.repository.stockitem']]
             - ["setStockItemQueries", ['@sil.stock.domain_query.stockitem']]
+            - ["setLocationRepository", ['@sil.stock.repository.location']]
             - [ setTemplate, [show, SilStockBundle:StockItemAdmin:show.html.twig]]
         tags:
             -   name: sonata.admin
@@ -74,11 +75,16 @@ services:
     sil_stock.admin.location:
         class: Sil\Bundle\StockBundle\Application\Admin\LocationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Location, BlastCoreBundle:CRUD]
+        calls:
+            - ["setResourceRepository", ['@sil.stock.repository.location']]
+            - ["setStockItemRepository", ['@sil.stock.repository.stockitem']]
+            - ["setStockItemQueries", ['@sil.stock.domain_query.stockitem']]
         tags:
             -   name: sonata.admin
                 manager_type: orm
                 group: Stock Management
                 label: sil.stock.location
+                label_translator_strategy: blast.resource.sonata.label_strategy.prefix
     
     ##############
     # UOM

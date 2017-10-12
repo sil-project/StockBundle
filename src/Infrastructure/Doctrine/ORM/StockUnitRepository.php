@@ -13,6 +13,7 @@ use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\LocationType;
 use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Description of UomTypeRepository
@@ -22,70 +23,227 @@ use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 class StockUnitRepository extends ResourceRepository implements StockUnitRepositoryInterface
 {
 
-    private function createInternalStockQueryBuilder($alias, $indexBy = null)
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @param BatchInterface|null $batch
+     * @param array $orderBy
+     * @return array|StockUnit[]
+     */
+    public function findAvailableByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null, array $orderBy = []): array
     {
-        return $this->createQueryBuilder($alias, $indexBy)
-                ->leftJoin('su.location', 'l')
-                ->andWhere('l.name = :locationType')
-                ->setParameter('locationType', LocationType::INTERNAL);
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, null, LocationType::INTERNAL);
+        $this->filterByAvailability($qb);
+        $this->filterByStockItem($qb, $item, $batch);
+        $this->addOrderBy($qb, $orderBy);
+
+
+        return $qb->getQuery()->getResult();
     }
 
-    //put your code here
-    public function findAvailableByStockItem(StockItemInterface $item,
-        ?BatchInterface $batch, array $orderBy = []): array
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @param BatchInterface|null $batch
+     * @param array $orderBy
+     * @return array|StockUnit[]
+     */
+    public function findAvailableByStockItemAndLocation(StockItemInterface $item,
+        Location $location, ?BatchInterface $batch = null, array $orderBy = []): array
     {
-        $q = $this->createInternalStockQueryBuilder('su')
-            ->andWhere('su.reservationMovement IS NULL')
-            ->andWhere('su.stockItem = :item')
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, $location, LocationType::INTERNAL);
+        $this->filterByAvailability($qb);
+        $this->filterByStockItem($qb, $item, $batch);
+        $this->addOrderBy($qb, $orderBy);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @return array|StockUnit[]
+     */
+    public function findReservedByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null): array
+    {
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, null, LocationType::INTERNAL);
+        $this->filterByUnavailability($qb);
+        $this->filterByStockItem($qb, $item, $batch);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     * @param Movement $mvt
+     * @return array|StockUnit[]
+     */
+    public function findReservedByMovement(Movement $mvt): array
+    {
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, null, LocationType::INTERNAL);
+        $this->filterByMovement($qb, $mvt);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @return array|StockUnit[]
+     */
+    public function findByStockItem(StockItemInterface $item,
+        ?BatchInterface $batch = null): array
+    {
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, null, LocationType::INTERNAL);
+        $this->filterByStockItem($qb, $item, $batch);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     * @param StockItemInterface $item
+     * @param Location $location
+     * @return array|StockUnit[]
+     */
+    public function findByStockItemAndLocation(StockItemInterface $item,
+        Location $location, ?BatchInterface $batch = null): array
+    {
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByStockItem($qb, $item, $batch);
+        $this->filterByLocation($qb, $location);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @param Location|null $location
+     * @param LocationType|null $locationType
+     * @return QueryBuilder
+     */
+    private function filterByLocation(QueryBuilder $qb,
+        ?Location $location = null, ?string $locationType = null)
+    {
+
+        if ( null == $locationType && null == $location ) {
+            return $qb;
+        }
+
+        $alias = $qb->getAllAliases()[0];
+        $qb
+            ->leftJoin($alias . '.location', 'l');
+
+        if ( null !== $locationType ) {
+            $qb
+                ->andWhere('l.typeValue = :locationType')
+                ->setParameter('locationType', $locationType);
+        }
+        if ( null !== $location ) {
+            $qb
+                ->andWhere('l.treeLft >= :treeLeft')
+                ->andWhere('l.treeRgt <= :treeRight')
+                ->setParameter('treeLeft', $location->getTreeLft())
+                ->setParameter('treeRight', $location->getTreeRgt());
+        }
+
+
+
+        return $qb;
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @return QueryBuilder
+     */
+    private function filterByAvailability(QueryBuilder $qb)
+    {
+        $alias = $qb->getAllAliases()[0];
+        $qb->andWhere($alias . '.reservationMovement IS NULL');
+
+        return $qb;
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @return QueryBuilder
+     */
+    private function filterByUnavailability(QueryBuilder $qb)
+    {
+        $alias = $qb->getAllAliases()[0];
+        $qb->andWhere($alias . '.reservationMovement IS NOT NULL');
+
+        return $qb;
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @param StockItemInterface $item
+     * @param BatchInterface $batch
+     * @return QueryBuilder
+     */
+    private function filterByStockItem(QueryBuilder $qb, $item, $batch = null)
+    {
+        $alias = $qb->getAllAliases()[0];
+        $qb
+            ->andWhere($alias . '.stockItem = :item')
             ->setParameter('item', $item);
 
         if ( null !== $batch ) {
-            $q
-                ->addWhere('su.batch = :batch')
-                ->setParameter('item', $item);
+            $qb
+                ->andWhere($alias . '.batch = :batch')
+                ->setParameter('batch', $batch);
         }
 
+        return $qb;
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @param Movement $mvt
+     * @return QueryBuilder
+     */
+    private function filterByMovement(QueryBuilder $qb, Movement $mvt)
+    {
+        $alias = $qb->getAllAliases()[0];
+        $qb
+            ->andWhere($alias . '.reservationMovement = :mvt')
+            ->setParameter('mvt', $mvt);
+
+        return $qb;
+    }
+
+    /**
+     * 
+     * @param QueryBuilder $qb
+     * @param array $orderBy
+     * @return QueryBuilder
+     */
+    private function addOrderBy(QueryBuilder $qb, array $orderBy = [])
+    {
         if ( count($orderBy) ) {
-            $q->orderBy('su.batch = :batch');
+            $alias = $qb->getAllAliases()[0];
+            foreach ( $orderBy as $sortCol => $order ) {
+                $qb->orderBy($alias . '.' . $sortCol, $order);
+            }
         }
-
-        return $q->getQuery()->getResult();
-    }
-
-    public function findReservedByStockItem(StockItemInterface $item): array
-    {
-
-        return $this->createInternalStockQueryBuilder('su')
-                ->andWhere('su.reservationMovement IS NOT NULL')
-                ->andWhere('su.stockItem = :item')
-                ->setParameter('item', $item)
-                ->getQuery()->getResult();
-    }
-
-    public function findReservedByMovement(Movement $mvt): array
-    {
-        return $this->createInternalStockQueryBuilder('su')
-                ->andWhere('su.reservationMovement = :mvt')
-                ->setParameter('mvt', $mvt)
-                ->getQuery()->getResult();
-    }
-
-    public function findByStockItem(StockItemInterface $item): array
-    {
-        return $this->createInternalStockQueryBuilder('su')
-                ->andWhere('su.stockItem = :item')
-                ->setParameter('item', $item)
-                ->getQuery()->getResult();
-    }
-
-    public function findByStockItemAndLocation(StockItemInterface $item,
-        Location $location): array
-    {
-        return $this->createQueryBuilder('su')
-                ->andWhere('su.stockItem = :item')
-                ->andWhere('su.location = :location')
-                ->setParameter('item', $item)
-                ->setParameter('location', $location)
-                ->getQuery()->getResult();
+        return $qb;
     }
 }
