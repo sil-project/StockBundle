@@ -30,55 +30,55 @@ services:
     ###################
     
     sil.stock.repository.operation:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\OperationRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Operation
             
     sil.stock.repository.operation_type:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationTypeRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\OperationTypeRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\OperationType
         
     sil.stock.repository.movement:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\MovementRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\MovementRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Movement
         
     sil.stock.repository.stockunit:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockUnitRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\StockUnitRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\StockUnit
         
     sil.stock.repository.stockitem:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockItemRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\StockItemRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\StockItem
         
     sil.stock.repository.uomtype:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomTypeRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\UomTypeRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\UomType
             
     sil.stock.repository.uom:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\UomRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\UomRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Uom
             
     sil.stock.repository.location:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\LocationRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Location
             
     sil.stock.repository.location_type:
-        class:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationTypeRepository
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\LocationTypeRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\LocationType
@@ -119,26 +119,26 @@ services:
     ###################
 
     sil.stock.form.choiceloader.uomtype:
-        class: Sil\Bundle\StockBundle\Application\Form\ChoiceLoader\UomTypeChoiceLoader
+        class: Sil\Bundle\StockBundle\Form\ChoiceLoader\UomTypeChoiceLoader
         arguments:
             - '@sil.stock.repository.uomtype'
     
     sil.stock.form.type.uomqty:
-        class: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
+        class: Sil\Bundle\StockBundle\Form\Type\UomQtyFormType
         tags:
             - {name: form.type, alias: form}
         arguments:
             - '@sil.stock.repository.uom'
             
     sil.stock.form.type.stockunit:
-        class: Sil\Bundle\StockBundle\Application\Form\Type\StockUnitFormType
+        class: Sil\Bundle\StockBundle\Form\Type\StockUnitFormType
         tags:
             - {name: form.type, alias: form}
         arguments:
             - '@sil.stock.repository.location'
             
     sil.stock.form.type.location_choice:
-        class: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+        class: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
         tags:
             - {name: form.type, alias: form}
         arguments:
@@ -150,14 +150,14 @@ services:
     ###################
     
     sil.stock.controller.operation:
-        class: Sil\Bundle\StockBundle\Application\Controller\OperationCRUDController
+        class: Sil\Bundle\StockBundle\Controller\OperationCRUDController
         calls:
             - ['setContainer', ['@service_container']]
             - ['setOperationService', ['@sil.stock.domain_service.operation']]
     
     
     sil.stock.controller.stockitem:
-        class: Sil\Bundle\StockBundle\Application\Controller\StockItemCRUDController
+        class: Sil\Bundle\StockBundle\Controller\StockItemCRUDController
         calls:
             - ['setContainer', ['@service_container']]
       

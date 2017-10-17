@@ -9,4 +9,4 @@ doctrine:
         resolve_target_entities:
             Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface: Sil\Bundle\StockBundle\Domain\Entity\StockItem
             Sil\Bundle\StockBundle\Domain\Entity\BatchInterface: Sil\Bundle\StockBundle\Domain\Entity\Batch
-            Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface:  Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\StockUnitRepository
+            Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface:  Sil\Bundle\StockBundle\Doctrine\ORM\StockUnitRepository

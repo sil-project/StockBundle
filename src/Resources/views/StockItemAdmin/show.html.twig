@@ -4,7 +4,7 @@
 
     {{ parent()}}
     <div class="sonata-ba-form-actions well well-small form-actions">
-            <a class="btn btn-default openInModal" href="{{ path('admin_stock_units_create') }}">
+            <a class="btn btn-default openInModal" href="{{ path('admin_stock_units_update_stock',{item_id:object.id}) }}">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i> {{ 'sil.stock.stockitem.show.action.update_stock'|trans }}
             </a>
         

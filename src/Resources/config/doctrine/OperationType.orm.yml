@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\OperationType:
     type: mappedSuperclass
-    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\OperationTypeRepository
+    repositoryClass: Sil\Bundle\StockBundle\Doctrine\ORM\OperationTypeRepository
     fields:
         name:
             type: string(64)

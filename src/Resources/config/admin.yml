@@ -4,7 +4,7 @@ services:
     # STOCK ITEM
     ##############
     sil_stock.admin.stock_item:
-        class: Sil\Bundle\StockBundle\Application\Admin\StockItemAdmin
+        class: Sil\Bundle\StockBundle\Admin\StockItemAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockItem, sil.stock.controller.stockitem]
         calls:
             - ["setResourceRepository", ['@sil.stock.repository.stockitem']]
@@ -22,7 +22,7 @@ services:
     # OPERATION
     ##############
     sil_stock.admin.operation:
-        class: Sil\Bundle\StockBundle\Application\Admin\OperationAdmin
+        class: Sil\Bundle\StockBundle\Admin\OperationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Operation, sil.stock.controller.operation]
         calls:
             - ["setOperationCodeGenerator", ['@sil.stock.code_generator.operation']]
@@ -43,7 +43,7 @@ services:
     # MOVEMENT
     ##############
     sil_stock.admin.movement:
-        class: Sil\Bundle\StockBundle\Application\Admin\MovementAdmin
+        class: Sil\Bundle\StockBundle\Admin\MovementAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Movement, BlastCoreBundle:CRUD]
         calls:
             - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
@@ -61,7 +61,7 @@ services:
     # WAREHOUSE
     ##############            
     sil_stock.admin.warehouse:
-        class: Sil\Bundle\StockBundle\Application\Admin\WarehouseAdmin
+        class: Sil\Bundle\StockBundle\Admin\WarehouseAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Warehouse, BlastCoreBundle:CRUD]
         tags:
             -   name: sonata.admin
@@ -73,7 +73,7 @@ services:
     # LOCATION
     ##############  
     sil_stock.admin.location:
-        class: Sil\Bundle\StockBundle\Application\Admin\LocationAdmin
+        class: Sil\Bundle\StockBundle\Admin\LocationAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Location, BlastCoreBundle:CRUD]
         calls:
             - ["setResourceRepository", ['@sil.stock.repository.location']]
@@ -90,7 +90,7 @@ services:
     # UOM
     ##############  
     sil_stock.admin.uom:
-        class: Sil\Bundle\StockBundle\Application\Admin\UomAdmin
+        class: Sil\Bundle\StockBundle\Admin\UomAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\Uom, BlastCoreBundle:CRUD]
         tags:
             -   name: sonata.admin
@@ -102,7 +102,7 @@ services:
     # UOM TYPE
     ##############  
     sil_stock.admin.uom_type:
-        class: Sil\Bundle\StockBundle\Application\Admin\UomTypeAdmin
+        class: Sil\Bundle\StockBundle\Admin\UomTypeAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\UomType, BlastCoreBundle:CRUD]
         tags:
             -   name: sonata.admin
@@ -116,7 +116,7 @@ services:
     # OPERATION TYPE
     ################            
     sil_stock.admin.operation_type:
-        class: Sil\Bundle\StockBundle\Application\Admin\OperationTypeAdmin
+        class: Sil\Bundle\StockBundle\Admin\OperationTypeAdmin
         arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\OperationType, BlastCoreBundle:CRUD]
         calls:
             - ["setResourceRepository", ['@sil.stock.repository.operation_type']]
@@ -132,8 +132,8 @@ services:
     # STOCK UNIT
     ##############
     sil_stock.admin.stock_unit:
-        class: Sil\Bundle\StockBundle\Application\Admin\StockUnitAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockUnit, BlastCoreBundle:CRUD]
+        class: Sil\Bundle\StockBundle\Admin\StockUnitAdmin
+        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\StockUnit, SilStockBundle:StockUnitCRUD]
         calls:
             - ["setStockUnitCodeGenerator", ['@sil.stock.code_generator.stockunit']]
             - ["setResourceRepository", ['@sil.stock.repository.stockunit']]

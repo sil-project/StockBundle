@@ -1,5 +1,3 @@
-
-
 parameters:
     blast:
 
@@ -22,11 +20,11 @@ parameters:
                                 
                         sil.stock.operation.form.group.locations:
                             srcLocation:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
                                 choice_label: getIndentedName
                                 required: true
                             destLocation:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
                                 choice_label: getIndentedName
                                 required: true
                         
@@ -96,8 +94,6 @@ parameters:
                     
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: ~
-
-
 ##################
 # OPERATION TYPES
 ##################
@@ -157,7 +153,7 @@ parameters:
                             batch:
                                 choice_label: code
                             qty:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\UomQtyFormType
                     _options:
                         tabsOrder:
                             - form_tab_general
@@ -249,9 +245,9 @@ parameters:
                             name: 
                                 required: true
                             type:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationTypeFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\LocationTypeFormType
                             treeParent:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\LocationChoiceFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
                                 choice_label: getIndentedName
                             warehouse:
                                 choice_label: name
@@ -306,15 +302,17 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\UomType:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.uomtype.form.tab.general:
+                        
+                        sil.stock.uomtype.form.group.general:
                             name: ~
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.uomtype.show.tab.general:
+                        
+                        sil.stock.uomtype.show.group.general:
                             name: ~                               
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
@@ -333,24 +331,36 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\Uom:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.uom.form.tab.general:
+                        
+                        sil.stock.uom.form.group.general:
                             name: ~
                             type:
                                 choice_label: name
                             factor: ~
                             rounding: ~
+                    
+                    _options:
+                        tabsOrder:
+                            - sil.stock.uom.form.tab.general
+                            - show_tab_history
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.uom.show.tab.general:
+                        
+                        sil.stock.uom.show.group.general:
                             name: ~
                             type:
                                 associated_property: name
                             factor: ~
                             rounding: ~                              
+                    
+                    _options:
+                        tabsOrder:
+                            - sil.stock.uom.show.tab.general
+                            - show_tab_history   
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
@@ -375,14 +385,19 @@ parameters:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
                     sil.stock.stockitem.form.tab.general:
+                        
                         sil.stock.stockitem.form.group.general:
-                            name: ~
                             code: ~
+                            name: ~
                             uom:
                                 choice_label: name
                             outputStrategy:
                                 choice_label: name
-                            
+                    
+                    _options:
+                        tabsOrder:
+                            - sil.stock.stockitem.form.tab.general
+                            - show_tab_history        
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
@@ -390,8 +405,8 @@ parameters:
                     sil.stock.stockitem.show.tab.general:
                         
                         sil.stock.stockitem.show.group.general:
+                            code: ~   
                             name: ~
-                            code: ~    
                             uom:
                                 associated_property: name
                             outputStrategy:
@@ -407,17 +422,25 @@ parameters:
                                 template: SilStockBundle:StockItemAdmin/Show:show_computed_qty.html.twig
                     
                     sil.stock.stockitem.show.tab.stocks:
+                        
                         sil.stock.stockitem.show.group.stocks:
                             locations:
                                 mapped: false
                                 template: SilStockBundle:StockItemAdmin/Show:show_stock_locations.html.twig
+                                
+                    _options:
+                        tabsOrder:
+                            - sil.stock.stockitem.show.tab.general
+                            - sil.stock.stockitem.show.tab.stocks
+                            - show_tab_history
                         
                                 
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
+                    code:
+                        identifier: true
                     name: ~
-                    code: ~    
                     uom:
                         associated_property: name
                     outputStrategy:
@@ -437,8 +460,9 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.stockunit.form.tab.general:
+                         
+                        sil.stock.stockunit.form.group.general:
                             stockItem:
                                 choice_label: name
                                 attr:
@@ -455,17 +479,22 @@ parameters:
                                     class: inline-block
                                     width: 50
                             qty:
-                                type: Sil\Bundle\StockBundle\Application\Form\Type\UomQtyFormType
+                                type: Sil\Bundle\StockBundle\Form\Type\UomQtyFormType
                                 attr:
                                     class: inline-block form-inline
                                     width: 50
+                    _options:
+                        tabsOrder:
+                            - sil.stock.stockunit.form.tab.general
+                            - show_tab_history
                              
             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.stockunit.show.tab.general:
+                         
+                        sil.stock.stockunit.show.group.general:
                             code: ~
                             stockItem:
                                 associated_property: name
@@ -478,7 +507,7 @@ parameters:
                             
                     _options:
                         tabsOrder:
-                            - show_tab_general
+                            - sil.stock.stockunit.show.tab.general
                             - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:

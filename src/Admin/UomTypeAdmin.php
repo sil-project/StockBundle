@@ -11,20 +11,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Sil\Bundle\StockBundle;
+namespace Sil\Bundle\StockBundle\Admin;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use  Sil\Bundle\StockBundle\DependencyInjection\SilStockExtension;
+use Blast\CoreBundle\Admin\CoreAdmin;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class SilStockBundle extends Bundle
+class UomTypeAdmin extends CoreAdmin
 {
 
-    public function getContainerExtension()
-    {
-        return new SilStockExtension();
-    }
+    protected $baseRouteName = 'admin_stock_uomtypes';
+    protected $baseRoutePattern = 'stock/uomtypes';
 
 }

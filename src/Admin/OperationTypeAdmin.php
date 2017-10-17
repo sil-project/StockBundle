@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,21 +9,17 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+namespace Sil\Bundle\StockBundle\Admin;
 
-namespace Sil\Bundle\StockBundle;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use  Sil\Bundle\StockBundle\DependencyInjection\SilStockExtension;
+use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class SilStockBundle extends Bundle
+class OperationTypeAdmin extends ResourceAdmin
 {
 
-    public function getContainerExtension()
-    {
-        return new SilStockExtension();
-    }
+    protected $baseRouteName = 'admin_stock_operationtypes';
+    protected $baseRoutePattern = 'stock/operationtypes';
 
 }

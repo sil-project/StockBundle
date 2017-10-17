@@ -1,6 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\Location:
     type: mappedSuperclass
-    repositoryClass: Sil\Bundle\StockBundle\Infrastructure\Doctrine\ORM\LocationRepository
+    repositoryClass: Sil\Bundle\StockBundle\Doctrine\ORM\LocationRepository
     fields:
         name:
             type: string
