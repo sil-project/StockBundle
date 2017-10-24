@@ -16,5 +16,6 @@ namespace Sil\Bundle\StockBundle\Domain\Repository;
  */
 interface LocationRepositoryInterface
 {
-    //put your code here
+
+    public function findInternals(): array;
 }

@@ -18,19 +18,5 @@ use Sil\Bundle\StockBundle\Form\Type\StockUnitFormType;
 class StockItemCRUDController extends CRUDController
 {
 
-    public function updateStockAction()
-    {
-
-        $form = $this->createForm(StockUnitFormType::class, null,
-            array('method' => 'POST'));
-
-        $view = $form->createView();
-
-        return $this->render($this->admin->getTemplate('edit'),
-                array(
-                    'action' => 'create',
-                    'form' => $view,
-                    'object' => new StockUnit(),
-                ), null);
-    }
+    
 }

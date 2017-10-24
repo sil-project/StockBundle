@@ -112,13 +112,13 @@ class MovementService implements MovementServiceInterface
     public function reserveUnits(Movement $mvt): void
     {
 
-        if ( !$mvt->getState()->isToDo() ) {
+        if ( !$mvt->isToDo() ) {
             throw new \DomainException('The Movement is not in the right state to be applied');
         }
-        if ( $mvt->getState()->isAvailable() ) {
+        if ( $mvt->isAvailable() ) {
             return;
         }
-
+        
         $availableUnits = $this->getAvailableStockUnits($mvt);
 
         //reserve needed StockUnits and split the last if necessary
@@ -131,6 +131,7 @@ class MovementService implements MovementServiceInterface
                 $unit = $this->splitAndGetNew($unit, $remainingQtyToBeRes);
                 $this->stockUnitRepository->add($unit);
             }
+
             //reserve the unit 
             $mvt->reserve($unit);
 
@@ -175,7 +176,14 @@ class MovementService implements MovementServiceInterface
      */
     public function cancel(Movement $mvt): void
     {
-        $mvt->unreserveAllUnits();
+        if ( $mvt->getSrcLocation()->isManaged() ) {
+            $mvt->unreserveAllUnits();
+        } else {
+            //if src location is not managed temporary reserved units have to be removed
+            foreach ( $mvt->getReservedStockUnits() as $su ) {
+                $this->stockUnitRepository->remove($su);
+            }
+        }
         $mvt->beCancel();
     }
 
@@ -186,12 +194,16 @@ class MovementService implements MovementServiceInterface
      */
     protected function getAvailableStockUnits(Movement $mvt): array
     {
-        $item = $mvt->getStockItem();
-        $srcLoc = $mvt->getSrcLocation();
-        $outStrategy = $item->getOutputStrategy();
 
-        return $this->stockUnitRepository->findAvailableByStockItemAndLocation(
-                $item, $srcLoc, $mvt->getBatch(), $outStrategy->getOrderBy());
+        //if source location is not managed, just create and return the needed stockUnit to be reserved
+        if ( !$mvt->getSrcLocation()->isManaged() ) {
+            $unit = $this->stockUnitFactory->createNew($mvt->getStockItem(),
+                $mvt->getQty(), $mvt->getSrcLocation(), $mvt->getBatch());
+            $this->stockUnitRepository->add($unit);
+            return [$unit];
+        }
+
+        return $this->stockUnitRepository->findAvailableForMovementReservation($mvt);
     }
 
     /**
@@ -209,6 +221,7 @@ class MovementService implements MovementServiceInterface
                 $unit->getStockItem(), $qty, $unit->getLocation(),
                 $unit->getBatch());
     }
+
 
     /**
      * @debug

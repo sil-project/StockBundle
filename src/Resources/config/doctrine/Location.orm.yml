@@ -11,6 +11,11 @@ Sil\Bundle\StockBundle\Domain\Entity\Location:
         typeValue:
             type: string(64)
             nullable: false
+        managed:
+            type: boolean
+            nullable: false
+            options:
+                default: TRUE
     
     manyToOne:
         warehouse: 

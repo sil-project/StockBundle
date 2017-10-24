@@ -8,6 +8,9 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             nullable: false
         expectedAt: 
             type: datetime
+        completedAt: 
+            type: datetime
+            nullable: true
         stateValue:
             type: string(64)
     
@@ -30,6 +33,12 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             joinColumn:
                 name: operation_type_id
                 referencedColumnName: id
+        partner: 
+            targetEntity: PartnerInterface
+            joinColumn:
+                name: partner_id
+                referencedColumnName: id
+                nullable: true
     oneToMany:
         movements:
           targetEntity: Movement

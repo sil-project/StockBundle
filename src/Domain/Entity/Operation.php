@@ -43,6 +43,12 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      *
+     * @var DateTimeInterface 
+     */
+    private $completedAt;
+
+    /**
+     *
      * @var string
      */
     private $stateValue;
@@ -64,6 +70,12 @@ class Operation implements ProgressStateAwareInterface
      * @var OperationType
      */
     private $type;
+
+    /**
+     *
+     * @var PartnerInterface
+     */
+    private $partner;
 
     /**
      *
@@ -108,6 +120,15 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
+     * 
+     * @return DateTimeInterface|null
+     */
+    public function getCompletedAt(): ?DateTimeInterface
+    {
+        return $this->completedAt;
+    }
+
+    /**
      * @return ProgressState
      */
     public function getState(): ProgressState
@@ -144,6 +165,15 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      * 
+     * @return PartnerInterface
+     */
+    public function getPartner(): ?PartnerInterface
+    {
+        return $this->partner;
+    }
+
+    /**
+     * 
      * @return Collection|Movement[]
      */
     public function getMovements(): Collection
@@ -155,16 +185,26 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @param DateTimeInterface $expectedAt
      */
-    public function setExpectedAt(DateTimeInterface $expectedAt)
+    public function setExpectedAt(DateTimeInterface $expectedAt): void
     {
         $this->expectedAt = $expectedAt;
     }
 
     /**
      * 
+     * @param DateTimeInterface $completedAt
+     * @return void
+     */
+    public function setCompletedAt(DateTimeInterface $completedAt): void
+    {
+        $this->completedAt = $completedAt;
+    }
+
+    /**
+     * 
      * @param string $code
      */
-    public function setCode(string $code)
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
@@ -173,7 +213,7 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @param ProgressState $state
      */
-    private function setState(ProgressState $state)
+    private function setState(ProgressState $state): void
     {
         $this->stateValue = $state->getValue();
     }
@@ -202,9 +242,18 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @param OperationType $type
      */
-    public function setType(OperationType $type)
+    public function setType(OperationType $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * 
+     * @param PartnerInterface $partner
+     */
+    public function setPartner(PartnerInterface $partner): void
+    {
+        $this->partner = $partner;
     }
 
     /**

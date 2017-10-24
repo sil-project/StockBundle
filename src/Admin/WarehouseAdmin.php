@@ -13,15 +13,22 @@ declare(strict_types=1);
 
 namespace Sil\Bundle\StockBundle\Admin;
 
-use Blast\CoreBundle\Admin\CoreAdmin;
+use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class WarehouseAdmin extends CoreAdmin
+class WarehouseAdmin extends ResourceAdmin
 {
 
     protected $baseRouteName = 'admin_stock_warehouses';
     protected $baseRoutePattern = 'stock/warehouses';
 
+    /**
+     * {@inheritdoc}
+     */
+    public function toString($warehouse)
+    {
+        return sprintf('[%s] %s', $warehouse->getCode(), $warehouse->getName());
+    }
 }

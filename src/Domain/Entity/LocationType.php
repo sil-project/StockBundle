@@ -20,6 +20,7 @@ class LocationType
     const INTERNAL = 'internal';
     const SUPPLIER = 'supplier';
     const CUSTOMER = 'customer';
+    const VIRTUAL = 'virtual';
     const SCRAP = 'scrap';
 
     /**
@@ -41,6 +42,11 @@ class LocationType
     public static function customer()
     {
         return new self(self::CUSTOMER);
+    }
+
+    public static function virtual()
+    {
+        return new self(self::VIRTUAL);
     }
 
     public static function scrap()
@@ -70,12 +76,13 @@ class LocationType
         return [
             self::customer(),
             self::internal(),
+            self::supplier(),
             self::scrap(),
-            self::supplier()
+            self::virtual()
         ];
     }
-    
-     /**
+
+    /**
      * 
      * @return string
      */

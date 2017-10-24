@@ -1,0 +1,6 @@
+Sil\Bundle\StockBundle\Domain\Entity\Partner:
+    type: mappedSuperclass
+    
+    fields:
+        fulltextName:
+            type: string

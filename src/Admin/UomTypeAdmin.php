@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Sil\Bundle\StockBundle\Admin;
 
-use Blast\CoreBundle\Admin\CoreAdmin;
+use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class UomTypeAdmin extends CoreAdmin
+class UomTypeAdmin extends ResourceAdmin
 {
 
     protected $baseRouteName = 'admin_stock_uomtypes';

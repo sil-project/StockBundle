@@ -15,7 +15,8 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGeneratorInterface;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Symfony\Component\Form\FormError;
+use Sil\Bundle\StockBundle\Domain\Repository\OperationTypeRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -39,6 +40,18 @@ class OperationAdmin extends ResourceAdmin
     protected $operationCodeGenerator;
 
     /**
+     *
+     * @var OperationTypeRepositoryInterface 
+     */
+    protected $operationTypeRepository;
+
+    /**
+     *
+     * @var LocationRepositoryInterface 
+     */
+    protected $locationRepository;
+
+    /**
      * {@inheritdoc}
      */
     protected function configureRoutes(RouteCollection $collection)
@@ -46,7 +59,30 @@ class OperationAdmin extends ResourceAdmin
         $collection->add('cancel', $this->getRouterIdParameter() . '/cancel');
         $collection->add('confirm', $this->getRouterIdParameter() . '/confirm');
         $collection->add('reserve', $this->getRouterIdParameter() . '/reserve');
+        $collection->add('unreserve', $this->getRouterIdParameter() . '/unreserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
+
+        $collection->add('create_by_type', 'create/{type_id}');
+    }
+
+    public function configureFormFields(\Sonata\AdminBundle\Form\FormMapper $mapper)
+    {
+        parent::configureFormFields($mapper);
+        $type = $this->getSubject()->getType();
+        /**
+         * @todo filter locations (src & dest) using type 
+         */
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOperationTypes()
+    {
+
+        $operationTypes = $this->getOperationTypeRepository()->findAll();
+
+        return $operationTypes;
     }
 
     /**
@@ -97,16 +133,32 @@ class OperationAdmin extends ResourceAdmin
         $this->movementCodeGenerator = $codeGenerator;
     }
 
+    public function getOperationTypeRepository(): OperationTypeRepositoryInterface
+    {
+        return $this->operationTypeRepository;
+    }
+
+    public function setOperationTypeRepository(OperationTypeRepositoryInterface $operationTypeRepository)
+    {
+        $this->operationTypeRepository = $operationTypeRepository;
+    }
+
+    public function getLocationRepository(): LocationRepositoryInterface
+    {
+        return $this->locationRepository;
+    }
+
+    public function setLocationRepository(LocationRepositoryInterface $locationRepository)
+    {
+        $this->locationRepository = $locationRepository;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function toString($object)
+    public function toString($operation)
     {
-        if ( !is_object($object) ) {
-            return '';
-        }
-
-        return sprintf('%s : %s', $object->getType()->getName(),
-            $object->getCode());
+        return sprintf('[%s] %s', $operation->getCode(),
+            $operation->getType()->getName());
     }
 }

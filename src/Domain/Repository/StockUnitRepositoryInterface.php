@@ -33,12 +33,27 @@ interface StockUnitRepositoryInterface
 
     /**
      * 
+     * @param Location $location
+     * @param array $orderBy
+     * @return array
+     */
+    public function findByLocation(Location $location, array $orderBy = [], ?int $limit = null): array;
+
+    /**
+     * 
      * @param StockItemInterface $item
      * @param Location $location
      * @return array|StockUnit[]
      */
     public function findByStockItemAndLocation(StockItemInterface $item,
         Location $location, ?BatchInterface $batch = null): array;
+
+    /**
+     * 
+     * @param Movement $mvt
+     * @return array|StockUnit[]
+     */
+    public function findAvailableForMovementReservation(Movement $mvt): array;
 
     /**
      * 

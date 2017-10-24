@@ -40,7 +40,7 @@ class Movement implements ProgressStateAwareInterface
      *
      * @var DateTimeInterface 
      */
-    private $createdAt;
+    private $completedAt;
 
     /**
      *
@@ -137,11 +137,11 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      */
-    public function getCreatedAt(): DateTimeInterface
+    public function getCompletedAt(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->completedAt;
     }
 
     /**
@@ -238,12 +238,12 @@ class Movement implements ProgressStateAwareInterface
 
     /**
      * 
-     * @param DateTimeInterface $createdAt
+     * @param DateTimeInterface $completedAt
      * @return void
      */
-    public function setCreatedAt(DateTimeInterface $createdAt): void
+    public function setCompletedAt(DateTimeInterface $completedAt): void
     {
-        $this->createdAt = $createdAt;
+        $this->completedAt = $completedAt;
     }
 
     /**
@@ -346,6 +346,7 @@ class Movement implements ProgressStateAwareInterface
             throw new \DomainException('The StockUnit is already reserved');
         }
         $unit->beReservedByMovement($this);
+        $this->setSrcLocation($unit->getLocation());
         $this->reservedStockUnits->add($unit);
     }
 
@@ -373,9 +374,19 @@ class Movement implements ProgressStateAwareInterface
      */
     public function unreserveAllUnits(): void
     {
+        if($this->isCancel() || $this->isDone()){
+            throw new DomainException('Movement which is '
+                    . 'cancel or done connot be unreserved');
+        }
+        
+        if(!$this->hasReservedStockUnits()){
+            return;
+        }
+        
         foreach ( $this->reservedStockUnits as $unit ) {
             $this->unreserve($unit);
         }
+       
     }
 
     /**

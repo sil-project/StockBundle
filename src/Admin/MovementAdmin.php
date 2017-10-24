@@ -70,4 +70,9 @@ class MovementAdmin extends ResourceAdmin
     {
         $this->stockItemQueries = $stockItemQueries;
     }
+    
+    public function toString($movement)
+    {
+        return sprintf('[%s]', $movement->getCode());
+    }
 }

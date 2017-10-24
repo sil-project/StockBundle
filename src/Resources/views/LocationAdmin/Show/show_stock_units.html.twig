@@ -7,27 +7,29 @@
 
         <div class="box box-primary">
             <div class="box-header">
-                <h4 class="box-title">{{ 'sil.stock.location.show.group.stockunits'|trans }}</h4>
+                <h4 class="box-title">{{ 'sil.stock.location.show.group.stock_units'|trans }}</h4>
+                <a href="">{{ 'sil.stock.location.show.action.see_all_stock_units'|trans }}</a>
             </div>
 
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>{{ 'sil.stock.stockunit.show.label.created_at'|trans }}</th>
-                        <th>{{ 'sil.stock.stockunit.show.label.code'|trans }}</th>
-                        <th>{{ 'sil.stock.stockunit.show.label.stock_item'|trans }}</th>
-                        <th>{{ 'sil.stock.stockunit.show.label.batch'|trans }}</th>
-                        <th>{{ 'sil.stock.stockunit.show.label.qty'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.created_at'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.code'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.stock_item'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.batch'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.location'|trans }}</th>
+                        <th>{{ 'sil.stock.stock_unit.show.label.qty'|trans }}</th>
                     </tr>   
                 </thead>
                 <tbody>
-                   
-                    {% for unit in object.getStockUnits() %}
+                    {% for unit in admin.getStockUnitsByLocation(object) %}
                         <tr class="sonata-ba-view-container">
                             <td>{{ unit.createdAt|date('d/m/Y H:i')}}</td>
                             <td>{{unit.code }}</td>
                             <td>{{unit.stockItem.name }}</td>
                             <td>{{unit.batch}}</td>
+                            <td>{{unit.location.name}}</td>
                             <td>{{ unit.qty}}</td>
                         </tr>
                     {% endfor %}

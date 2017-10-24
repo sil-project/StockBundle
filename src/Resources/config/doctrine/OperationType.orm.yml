@@ -2,6 +2,10 @@ Sil\Bundle\StockBundle\Domain\Entity\OperationType:
     type: mappedSuperclass
     repositoryClass: Sil\Bundle\StockBundle\Doctrine\ORM\OperationTypeRepository
     fields:
+        code:
+            type: string(64)
+            unique: true
+            nullable: false
         name:
             type: string(64)
             unique: true

@@ -14,6 +14,10 @@ parameters:
                             type:
                                 choice_label: name
                                 required: true
+                                attr:
+                                    disabled: disabled
+                            partner:
+                                choice_label: fulltextName
                             expectedAt:
                                 type: sonata_type_datetime_picker
                                 required: true
@@ -51,13 +55,15 @@ parameters:
                     sil.stock.operation.show.tab.general:
                         
                         sil.stock.operation.show.group.description:
+                            code: ~
                             type:
                                 associated_property: name
-                            code:
-                                identifier: true
+                            partner:
+                                associated_property: fulltextName
+                            expectedAt: ~
+                            completedAt: ~
                             state:
                                 template: SilStockBundle:Field:show_progress_state_field.html.twig
-                            expectedAt:
                                 
                         sil.stock.operation.show.group.locations:
                             srcLocation:
@@ -81,29 +87,33 @@ parameters:
                     createdAt: ~
                     updatedAt: ~
                 add:
-                    code: ~
+                    code:
+                        identifier: true
                     type:
                         associated_property: name
-                    state:
-                        template: SilStockBundle:Field:list_progress_state_field.html.twig
+                    partner:
+                        associated_property: fulltextName
                     expectedAt: ~
+                    completedAt: ~
                     srcLocation:
                         associated_property: name
                     destLocation:
                         associated_property: name
+                    state:
+                        template: SilStockBundle:Field:list_progress_state_field.html.twig
                     
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: ~
+                
 ##################
 # OPERATION TYPES
 ##################
-
         Sil\Bundle\StockBundle\Domain\Entity\OperationType:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    sil.stock.operation.form.tab.general:
+                    sil.stock.operation_type.form.tab.general:
                         
-                        sil.stock.operation.form.group.description:
+                        sil.stock.operation_type.form.group.description:
                             name:
                                 required: true
                         
@@ -113,17 +123,17 @@ parameters:
                             - form_tab_history
                             
             Sonata\AdminBundle\Show\ShowMapper:
-                titleTemplate: SilStockBundle:OperationAdmin/Show:show_title.html.twig
                 forceTabs: true
                 add:
-                    sil.stock.operation.show.tab.general:
+                    sil.stock.operation_type.show.tab.general:
                         
-                        sil.stock.operation.show.group.description:
-                            name: ~
+                        sil.stock.operation_type.show.group.description:
+                            name:
+                                identfier: true
                             
                     _options:
                         tabsOrder:
-                            - sil.stock.operation.show.tab.general
+                            - sil.stock.operation_type.show.tab.general
                             - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
@@ -146,8 +156,9 @@ parameters:
                     createdAt: ~
                     updatedAt: ~
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.movement.form.tab.general:
+                        
+                        sil.stock.movement.form.group.general:
                             stockItem:
                                 choice_label: name
                             batch:
@@ -156,15 +167,18 @@ parameters:
                                 type: Sil\Bundle\StockBundle\Form\Type\UomQtyFormType
                     _options:
                         tabsOrder:
-                            - form_tab_general
+                            - sil.stock.movement.form.tab.general
                             - form_tab_history
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.movement.show.tab.general:
+                        
+                        sil.stock.movement.show.group.general:
                             code: ~
+                            expectedAt: ~
+                            completedAt: ~
                             stockItem:
                                 associated_property: name
                             qty: ~
@@ -176,14 +190,15 @@ parameters:
                                 template: SilStockBundle:Field:show_progress_state_field.html.twig
                     _options:
                         tabsOrder:
-                            - show_tab_general
+                            - sil.stock.movement.show.tab.general
                             - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
                 add: 
-                    code: ~
-                    state:
-                        template: SilStockBundle:Field:list_progress_state_field.html.twig
+                    code:
+                        identifier: true
+                    expectedAt: ~
+                    completedAt: ~
                     stockItem:
                         associated_property: name
                     qty: ~
@@ -191,6 +206,8 @@ parameters:
                         associated_property: name
                     destLocation:
                         associated_property: name
+                    state:
+                        template: SilStockBundle:Field:list_progress_state_field.html.twig
                     
                         
             Sonata\AdminBundle\Datagrid\DatagridMapper:
@@ -209,16 +226,18 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\Warehouse:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.warehouse.form.tab.general:
+                        
+                        sil.stock.warehouse.form.group.general:
                             code: ~
                             name: ~
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    show_tab_general:
-                        show_group_general:
+                    sil.stock.warehouse.show.tab.general:
+                        
+                        sil.stock.warehouse.show.group.general:
                             code: ~
                             name: ~
                             
@@ -238,23 +257,27 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\Location:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    form_tab_general:
-                        form_group_general:
+                    sil.stock.location.form.tab.general:
+                        
+                        sil.stock.location.form.group.general:
                             code:
                                 required: true
                             name: 
                                 required: true
+                            managed: ~
                             type:
                                 type: Sil\Bundle\StockBundle\Form\Type\LocationTypeFormType
                             treeParent:
                                 type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
                                 choice_label: getIndentedName
+                                required: false
                             warehouse:
                                 choice_label: name
+                                required: true
                         
                             
             Sonata\AdminBundle\Show\ShowMapper:
-                forceTabs: true
+                forceTabs: false
                 add:
                     sil.stock.location.show.tab.general:
                         
@@ -263,6 +286,7 @@ parameters:
                             name: ~
                             type:
                                 template: SilStockBundle:Field:show_location_type_field.html.twig
+                            managed: ~
                             treeParent:
                                 associated_property: name
                             warehouse:
@@ -288,6 +312,7 @@ parameters:
                     indentedName: ~
                     type:
                         template: SilStockBundle:Field:list_location_type_field.html.twig
+                    managed: ~
                     warehouse:
                         associated_property: name
                      
@@ -302,17 +327,17 @@ parameters:
         Sil\Bundle\StockBundle\Domain\Entity\UomType:
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    sil.stock.uomtype.form.tab.general:
+                    sil.stock.uom_type.form.tab.general:
                         
-                        sil.stock.uomtype.form.group.general:
+                        sil.stock.uom_type.form.group.general:
                             name: ~
                             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    sil.stock.uomtype.show.tab.general:
+                    sil.stock.uom_type.show.tab.general:
                         
-                        sil.stock.uomtype.show.group.general:
+                        sil.stock.uom_type.show.group.general:
                             name: ~                               
                             
             Sonata\AdminBundle\Datagrid\ListMapper:
@@ -382,11 +407,12 @@ parameters:
 ##############
 
         Sil\Bundle\StockBundle\Domain\Entity\StockItem:
+            
             Sonata\AdminBundle\Form\FormMapper:
                 add:
-                    sil.stock.stockitem.form.tab.general:
+                    sil.stock.stock_item.form.tab.general:
                         
-                        sil.stock.stockitem.form.group.general:
+                        sil.stock.stock_item.form.group.general:
                             code: ~
                             name: ~
                             uom:
@@ -396,15 +422,16 @@ parameters:
                     
                     _options:
                         tabsOrder:
-                            - sil.stock.stockitem.form.tab.general
+                            - sil.stock.stock_item.form.tab.general
                             - show_tab_history        
                             
             Sonata\AdminBundle\Show\ShowMapper:
+                titleTemplate: SilStockBundle:StockItemAdmin/Show:show_title.html.twig
                 forceTabs: true
                 add:
-                    sil.stock.stockitem.show.tab.general:
+                    sil.stock.stock_item.show.tab.general:
                         
-                        sil.stock.stockitem.show.group.general:
+                        sil.stock.stock_item.show.group.general:
                             code: ~   
                             name: ~
                             uom:
@@ -421,17 +448,17 @@ parameters:
                                 mapped: false
                                 template: SilStockBundle:StockItemAdmin/Show:show_computed_qty.html.twig
                     
-                    sil.stock.stockitem.show.tab.stocks:
+                    sil.stock.stock_item.show.tab.stocks:
                         
-                        sil.stock.stockitem.show.group.stocks:
+                        sil.stock.stock_item.show.group.stocks:
                             locations:
                                 mapped: false
                                 template: SilStockBundle:StockItemAdmin/Show:show_stock_locations.html.twig
                                 
                     _options:
                         tabsOrder:
-                            - sil.stock.stockitem.show.tab.general
-                            - sil.stock.stockitem.show.tab.stocks
+                            - sil.stock.stock_item.show.tab.general
+                            - sil.stock.stock_item.show.tab.stocks
                             - show_tab_history
                         
                                 
@@ -459,13 +486,15 @@ parameters:
 
         Sil\Bundle\StockBundle\Domain\Entity\StockUnit:
             Sonata\AdminBundle\Form\FormMapper:
+                
                 add:
-                    sil.stock.stockunit.form.tab.general:
+                    sil.stock.stock_unit.form.tab.general:
                          
-                        sil.stock.stockunit.form.group.general:
+                        sil.stock.stock_unit.form.group.general:
                             stockItem:
                                 choice_label: name
                                 attr:
+                                    disabled: disabled
                                     class: inline-block
                                     width: 50
                             batch:
@@ -473,8 +502,9 @@ parameters:
                                 attr:
                                     class: inline-block
                                     width: 50
-                            location: 
+                            location:
                                 choice_label: name
+                                serviceCallback: [sil.stock.filter.location, filterByInternal, query_builder]
                                 attr:
                                     class: inline-block
                                     width: 50
@@ -485,16 +515,16 @@ parameters:
                                     width: 50
                     _options:
                         tabsOrder:
-                            - sil.stock.stockunit.form.tab.general
+                            - sil.stock.stock_unit.form.tab.general
                             - show_tab_history
                              
             
             Sonata\AdminBundle\Show\ShowMapper:
                 forceTabs: true
                 add:
-                    sil.stock.stockunit.show.tab.general:
+                    sil.stock.stock_unit.show.tab.general:
                          
-                        sil.stock.stockunit.show.group.general:
+                        sil.stock.stock_unit.show.group.general:
                             code: ~
                             stockItem:
                                 associated_property: name
@@ -507,7 +537,7 @@ parameters:
                             
                     _options:
                         tabsOrder:
-                            - sil.stock.stockunit.show.tab.general
+                            - sil.stock.stock_unit.show.tab.general
                             - show_tab_history
                             
             Sonata\AdminBundle\Datagrid\ListMapper:

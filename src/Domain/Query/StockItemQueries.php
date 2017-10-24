@@ -107,6 +107,7 @@ class StockItemQueries implements StockItemQueriesInterface
         return $this->computeQtyForUnits($item->getUom(), $units);
     }
 
+
     /**
      * 
      * @param Uom $uom

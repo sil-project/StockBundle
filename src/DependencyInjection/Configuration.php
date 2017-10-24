@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
         $this->addResourceDefinition($resourceNode, 'uom', Entity\Uom::class);
         $this->addResourceDefinition($resourceNode, 'uom_type', Entity\UomType::class);
         $this->addResourceDefinition($resourceNode, 'warehouse', Entity\Warehouse::class);
+        $this->addResourceDefinition($resourceNode, 'partner', Entity\Partner::class);
         
     }
 

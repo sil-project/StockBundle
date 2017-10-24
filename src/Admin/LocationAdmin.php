@@ -16,6 +16,7 @@ use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
 use Sil\Bundle\StockBundle\Domain\Query\StockItemQueriesInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\StockItemRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -34,6 +35,12 @@ class LocationAdmin extends ResourceAdmin
 
     /**
      *
+     * @var StockUnitRepositoryInterface 
+     */
+    protected $stockUnitRepository;
+
+    /**
+     *
      * @var StockItemQueriesInterface 
      */
     protected $stockItemQueries;
@@ -45,12 +52,18 @@ class LocationAdmin extends ResourceAdmin
      */
     public function getStockUnitsByLocation(Location $location)
     {
-        return $this->getStockUnitRepository()->findByLocation($location);
+        return $this->getStockUnitRepository()->findByLocation($location,
+                ['createdAt' => 'DESC'], 10);
     }
 
     public function getQtyByItemAndLocation(StockItem $item, Location $location)
     {
         return $this->getStockItemQueries()->getQtyByLocation($item, $location);
+    }
+
+    public function getStockUnitRepository(): StockUnitRepositoryInterface
+    {
+        return $this->stockUnitRepository;
     }
 
     public function getStockItemRepository(): StockItemRepositoryInterface
@@ -63,6 +76,11 @@ class LocationAdmin extends ResourceAdmin
         return $this->stockItemQueries;
     }
 
+    public function setStockUnitRepository(StockUnitRepositoryInterface $stockUnitRepository)
+    {
+        $this->stockUnitRepository = $stockUnitRepository;
+    }
+
     public function setStockItemRepository(StockItemRepositoryInterface $stockItemRepository)
     {
         $this->stockItemRepository = $stockItemRepository;
@@ -72,9 +90,9 @@ class LocationAdmin extends ResourceAdmin
     {
         $this->stockItemQueries = $stockItemQueries;
     }
-    
+
     public function toString($location)
     {
-        return $location->getCode() . ' | ' . $location->getName();
+        return sprintf('[%s] %s', $location->getCode(), $location->getName());
     }
 }

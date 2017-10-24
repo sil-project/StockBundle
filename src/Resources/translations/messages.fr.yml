@@ -19,6 +19,7 @@ sil:
             internal: Emplacement interne
             supplier: Emplacement fournisseur
             customer: Emplacement client
+            virtual: Emplacement virtuel
             scrap: Emplacement de rebut
        
         
@@ -26,27 +27,29 @@ sil:
         ##############
         # OPERATIONS
         ##############
-
         operation:
             breadcrumb:
                 link:
-                    list: Opérations sur les stocks
                     create: Nouvelle opération
+                    list: Opérations sur les stocks
+                    
             
             message:
                 no_available_stock_for_reservation: Aucun stock n'est disponible pour cette opération
             list:
                 label:
                     action: Actions
-                    code: Code
+                    code: Référence
                     operation: Liste des opérations sur les stocks
                     movements: Mouvements de stock
                     created_at: Date de création
                     expected_at: Date prévue
+                    completed_at: Date effective
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     type: Type d'opération
+                    partner: Partenaire
                     state: État
                     qty: Qantité
                     location_from: De
@@ -60,15 +63,17 @@ sil:
                     locations: Emplacements
                     movements: Mouvements de stocks à réaliser
                 label:
-                    code: Code
+                    code: Référence
                     operation: Opération
                     movements: Mouvements de stock
                     created_at: Date de création
                     expected_at: Date prévue
+                    completed_at: Date effective
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     type: Type d'opération
+                    partner: Partenaire
                     state: État
                     qty: Qantité
                     location_from: De
@@ -79,6 +84,7 @@ sil:
                     return_to_draft: Retour au brouillon
                     confirm: Planifier l'opération
                     reserve: Réserver les stocks
+                    unreserve: Annuler la réservation des stocks
                     apply: Valider l'opération
                     cancel: Annuler l'opération
                     cancel_edit: Annuler la modification
@@ -91,7 +97,7 @@ sil:
                     locations: Emplacements
                     movements: Mouvements de stocks à réaliser
                 label:
-                    code: Code
+                    code: Référence
                     operation: Opération
                     movements: Mouvements de stock
                     created_at: Date de création
@@ -100,6 +106,7 @@ sil:
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
                     type: Type d'opération
+                    partner: Partenaire
                     state: État
                     qty: Qantité
                     location_from: De
@@ -107,6 +114,7 @@ sil:
                     batch: N° de Lot
                 action:
                     create: Créer l'opération
+                    cancel: Supprimer
                     cancel_edit: Annuler
                     save: Enregistrer
                     
@@ -116,14 +124,16 @@ sil:
         movement: 
             breadcrumb:
                 link:
-                    list: Mouvements de stocks
+                    create: Nouveau mouvement de stock
+                    list: Mouvements de stock
             list:
                 label:
                     action: Actions
-                    code: Code
+                    code: Référence
                     movement: Liste des mouvements de stock
                     created_at: Date de création
                     expected_at: Date prévue
+                    completed_at: Date effective
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
@@ -135,13 +145,18 @@ sil:
                     location_to: À
                     batch: N° de Lot
             show:
+                tab:
+                    general: Général
+                group:
+                    general: ''
                 label:
-                    code: Code
+                    code: Référence
                     operation: Opération
                     movement: Mouvement
                     movements: Mouvements de stock
                     created_at: Date de création
                     expected_at: Date prévue
+                    updated_at: Date de dernière mise à jour
                     stock_item: Article
                     src_location: Emplacement d'origine
                     dest_location: Emplacement de destination
@@ -153,7 +168,7 @@ sil:
                     batch: N° de Lot
             form:
                 label:
-                    code: Code
+                    code: Référence
                     operation: Opération
                     movements: Mouvements de stock
                     created_at: Date de création
@@ -170,48 +185,85 @@ sil:
         ##############
         # STOCK ITEM
         ##############
-        stockitem:
+        stock_item:
             breadcrumb:
                 link:
+                    create: Nouvel Article
                     list: Articles
             show:
                 tab:
                     general: Général
                     stocks: Stocks
                 group:
-                    general: Général
-                    stocks: Stocks
+                    general: ''
                 action:
                     update_stock: Mettre à jour le stock disponible
                     
                 label:
-                    stockitem: Article
+                    stock_item: Article
                     name: Libellé
-                    code: Code
+                    code: Référence
                     uom: Unité de référence
                     output_strategy: Stratégie de sortie de stock
                     qty: Quantité
                     in_stock_qty: Quantité en stock
                     reserved_qty: Quantité réservée
                     available_qty: Quantité disponible
-            list:
+            form:
+                tab:
+                    general: Général
+                group:
+                    general: ''
+               
                 label:
                     name: Libellé
-                    code: Code
+                    code: Référence
+                    uom: Unité de référence
+                    output_strategy: Stratégie de sortie de stock
+            list:
+                label:
+                    stockitem: Liste des articles
+                    name: Libellé
+                    code: Référence
                     uom: Unité de référence
                     output_strategy: Stratégie de sortie de stock
                     action: Actions
-                
+        
+        ##############
+        # WAREHOUSE
+        ##############        
         warehouse: 
             breadcrumb:
                 link:
+                    create: Nouvel entrepôt
                     list: Entrepôts
+            list:
+                label:
+                    warehouse: Liste des entrepôts
+                    code: Référence
+                    name: Libellé
+                    action: Actions
+            show:
+                label:
+                    warehouse: Entrepôt
+                    code: Référence
+                    name: Libellé
+            
+            form:
+                label:
+                    warehouse: Entrepôt
+                    code: Référence
+                    name: Libellé
+                    
+        
+        ##############
+        # LOCATION
+        ##############   
         location:
             breadcrumb:
                 link:
+                    create: Nouvel Emplacement
                     list: Emplacements
-            message:
-                no_children: Il n'y a pas de sous-emplacements 
             show:
                 tab:
                     general: Général
@@ -219,38 +271,154 @@ sil:
                 group:
                     general: Général
                     children: Sous-emplacements
-                    stockunits: Unités de stock
+                    stock_units: Aperçu des unités de stock
                 label:
-                    type: Type
-                    code: Code
+                    location: Emplacement
+                    created_at: Date de création
+                    managed: Gestion de l'inventaire
+                    code: Référence
                     name: Libellé
-                    warehouse: Entrepôt
+                    type: Type d'emplacement
                     tree_parent: Emplacement parent
-        uomtype:
+                    warehouse: Entrepôt
+                action:
+                    see_all_stock_units: voir tout
+            form:
+                tab:
+                    general: Général
+                group:
+                    general: Général
+                label:
+                    code: Référence
+                    name: Libellé
+                    type: Type d'emplacement
+                    managed: Gérer l'inventaire
+                    tree_parent: Emplacement parent
+                    warehouse: Entrepôt       
+            list:
+                label:
+                    location: Liste des emplacements
+                    code_path: Référence
+                    managed: Gestion de l'inventaire
+                    indented_name: Libellé
+                    type: Type d'emplacement
+                    warehouse: Entrepôt
+                    action: Actions
+                    
+            message:
+                no_children: Il n'y a pas de sous-emplacements 
+           
+        
+        ##############
+        # UOM TYPE
+        ##############  
+        uom_type:
             breadcrumb:
                 link:
+                    create: Nouvelle catégorie d'unité de mesure
                     list: Catégories d'unité de mesure
+            show:
+                tab:
+                    general: Général
+                group:
+                    general: ''
+                label:
+                    uomtype: Catégorie
+                    name: Libellé
+                    action: Actions
+            form:
+                tab:
+                    general: Général
+                group:
+                    general: ''
+                label:
+                    name: Libellé
+            list:
+                label:
+                    name: Libellé
+                    
+        ##############
+        # UOM
+        ##############  
         uom: 
             breadcrumb:
                 link:
+                    create: Nouvelle unité de mesure
                     list: Unités de mesure
-        stockunit: 
+            list:
+                label:
+                    uom: Liste des unités de mesure
+                    name: Unité de mesure
+                    type: Catégorie
+                    rounding: Précision d'arrondi 
+                    action: Actions
+            show:
+                tab:
+                    general: Général
+                group:
+                    general: ''
+                label:
+                    uom: Unité de mesure
+                    name: Unité de mesure
+                    type: Catégorie
+                    factor: Ratio
+                    rounding: Précision d'arrondi 
+            form:
+                tab:
+                    general: Général
+                group:
+                    general: ''
+                label:
+                    uom: Unité de mesure
+                    name: Unité de mesure
+                    type: Catégorie
+                    factor: Ratio
+                    rounding: Précision d'arrondi 
+                    
+        ##############
+        # STOCK UNIT
+        ############## 
+        stock_unit: 
             breadcrumb:
                 link:
                     list: Unités de stock
             show:
                 label:
                     created_at: Date de création
-                    code: Code
+                    code: Référence
                     stock_item: Article
+                    location: Emplacement réel
+                    batch: N° de lot
+                    qty: Quantité
+            form:
+                label:
+                    created_at: Date de création
+                    code: Référence
+                    stock_item: Article
+                    location: Emplacement réel
                     batch: N° de lot
                     qty: Quantité
         
-                
-        operation_category: 
+        
+        #####################
+        # OPERATION CATEGORY
+        #####################
+        operation_type: 
             breadcrumb:
                 link:
+                    create: Nouvelle catégorie d'opération
                     list: Catégories d'opération
             show:
+                tab:
+                    general: Général
+                group:
+                    description: ''
                 label:
+                    operationtype: Type d'opération
                     name: Libellé
+            list:
+                label:
+                    operationtype: Liste des types d'opération
+                    name: Libellé
+                    action: Actions
+

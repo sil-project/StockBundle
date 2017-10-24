@@ -1,4 +1,4 @@
-{% extends 'BlastCoreBundle:CRUD:base_show.html.twig' %}
+{% extends 'BlastCoreBundle:CRUD:base_edit.html.twig' %}
 
 {% block sonata_head_title %}
 
@@ -29,12 +29,12 @@
 {% endblock %}
 
 {% block title %}
-    {% if admin.titles.show is defined %}
-        {{ admin.titles.show|trans() }}
+    {% if admin.titles.form is defined %}
+        {{ admin.titles.form|trans() }}
+    {% elseif admin.id(object) is not null %}
+        {# {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(15) }, 'SonataAdminBundle') }} #}
+        {{ "title_edit"|trans({'%name%': admin.toString(object) }, 'SonataAdminBundle') }}
     {% else %}
-        {{ admin.getLabelTranslatorStrategy().getLabel('%s', 'show', 'label') |format(admin.classnameLabel|lower) |trans() }} 
-        {{ admin.toString(object) }}
+        {{ "title_create"|trans({}, 'SonataAdminBundle') }} {{ admin.classnameLabel }}
     {% endif %}
 {% endblock %}
-
-

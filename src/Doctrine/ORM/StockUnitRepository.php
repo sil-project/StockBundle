@@ -45,6 +45,17 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
 
     /**
      * 
+     * @return array|StockUnit[]
+     */
+    public function findAvailable(): array
+    {
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByAvailability($qb);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
      * @param StockItemInterface $item
      * @param BatchInterface|null $batch
      * @param array $orderBy
@@ -58,6 +69,24 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
         $this->filterByAvailability($qb);
         $this->filterByStockItem($qb, $item, $batch);
         $this->addOrderBy($qb, $orderBy);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findAvailableForMovementReservation(Movement $mvt): array
+    {
+        $item = $mvt->getStockItem();
+        $batch = $mvt->getBatch();
+        $srcLoc = $mvt->getSrcLocation();
+        $destLoc = $mvt->getDestLocation();
+        $outStrategy = $item->getOutputStrategy();
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByAvailability($qb);
+        $this->filterByStockItem($qb, $item, $batch);
+        $this->filterByLocation($qb, $srcLoc, LocationType::INTERNAL, [$destLoc]);
+        $this->addOrderBy($qb, $outStrategy->getOrderBy());
 
 
         return $qb->getQuery()->getResult();
@@ -113,6 +142,24 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
 
     /**
      * 
+     * @param Location $location
+     * @param array $orderBy
+     * @return array
+     */
+    public function findByLocation(Location $location, array $orderBy = [],
+        ?int $limit = null): array
+    {
+
+        $qb = $this->createQueryBuilder('su');
+        $this->filterByLocation($qb, $location);
+        $this->addOrderBy($qb, $orderBy);
+        $this->addLimit($qb, $limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * 
      * @param StockItemInterface $item
      * @param Location $location
      * @return array|StockUnit[]
@@ -136,7 +183,8 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
      * @return QueryBuilder
      */
     private function filterByLocation(QueryBuilder $qb,
-        ?Location $location = null, ?string $locationType = null)
+        ?Location $location = null, ?string $locationType = null,
+        array $excludedLocations = [])
     {
 
         if ( null == $locationType && null == $location ) {
@@ -156,11 +204,15 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
             $qb
                 ->andWhere('l.treeLft >= :treeLeft')
                 ->andWhere('l.treeRgt <= :treeRight')
+                ->orderBy('l.treeLvl', 'DESC')
                 ->setParameter('treeLeft', $location->getTreeLft())
                 ->setParameter('treeRight', $location->getTreeRgt());
         }
-
-
+        if ( count($excludedLocations) ) {
+            $qb
+                ->andWhere('l NOT IN (:locations)')
+                ->setParameter('locations', $excludedLocations);
+        }
 
         return $qb;
     }
@@ -243,6 +295,14 @@ class StockUnitRepository extends ResourceRepository implements StockUnitReposit
             foreach ( $orderBy as $sortCol => $order ) {
                 $qb->orderBy($alias . '.' . $sortCol, $order);
             }
+        }
+        return $qb;
+    }
+
+    private function addLimit(QueryBuilder $qb, ?int $limit = null)
+    {
+        if ( null !== $limit ) {
+            $qb->setMaxResults($limit);
         }
         return $qb;
     }

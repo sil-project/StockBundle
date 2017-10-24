@@ -9,6 +9,7 @@ namespace Sil\Bundle\StockBundle\Doctrine\ORM;
 use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
 use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
+use Sil\Bundle\StockBundle\Domain\Entity\LocationType;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 
 /**
@@ -31,12 +32,29 @@ class LocationRepository extends ResourceRepository implements LocationRepositor
         return $this->createQueryBuilder('o')->getQuery()->getResult();
     }
 
-    public function findByOwnedItem(StockItemInterface $item)
+    public function findInternals(): array
     {
-        return $this->createQueryBuilder('l')
-            ->Join('Sil\Bundle\StockBundle\Domain\Entity\StockUnit', 'su', 'WITH', 'su.location = l.id')
+        $qb = $this->createQueryBuilder('l')
+            ->where('l.typeValue = :type')
+            ->setParameter('type', LocationType::INTERNAL);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByOwnedItem(StockItemInterface $item,
+        ?string $locationType = null)
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->Join('Sil\Bundle\StockBundle\Domain\Entity\StockUnit', 'su',
+                'WITH', 'su.location = l.id')
             ->where('su.stockItem = :item')
-            ->setParameter('item', $item)
-            ->getQuery()->getResult();
+            ->setParameter('item', $item);
+
+        if ( null !== $locationType ) {
+            $qb
+                ->andWhere('l.typeValue = :locationType')
+                ->setParameter('locationType', $locationType);
+        }
+        return $qb->getQuery()->getResult();
     }
 }

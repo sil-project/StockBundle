@@ -28,12 +28,14 @@ class OperationTypeFixtures extends Fixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
 
-        $oc1 = OperationType::createDefault('Réception');
-        $oc2 = OperationType::createDefault('Expédition');
-        $oc3 = OperationType::createDefault('Transfert interne');
+        $oc1 = OperationType::createDefault('REC', 'Réception');
+        $oc2 = OperationType::createDefault('EXP', 'Expédition');
+        $oc3 = OperationType::createDefault('INT', 'Transfert interne');
+        $oc4 = OperationType::createDefault('INV', 'Inventaire');
         $manager->persist($oc1);
         $manager->persist($oc2);
         $manager->persist($oc3);
+        $manager->persist($oc4);
         $manager->flush();
     }
 

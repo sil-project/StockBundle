@@ -52,6 +52,12 @@ class Location
 
     /**
      *
+     * @var bool 
+     */
+    private $managed = true;
+
+    /**
+     *
      * @var Collection|StockUnit[]
      */
     private $stockUnits;
@@ -117,6 +123,15 @@ class Location
             return $this->getParent()->getWarehouse();
         }
         return $this->warehouse;
+    }
+
+    /**
+     * 
+     * @return bool
+     */
+    public function isManaged(): bool
+    {
+        return $this->managed;
     }
 
     /**
@@ -211,6 +226,15 @@ class Location
                 'The warehouse cannot be update for a child location');
         }
         $this->warehouse = $warehouse;
+    }
+
+    /**
+     * 
+     * @param bool $isManaged
+     */
+    public function setManaged(bool $isManaged): void
+    {
+        $this->managed = $isManaged;
     }
 
     /**

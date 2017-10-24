@@ -9,21 +9,27 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-namespace Sil\Bundle\StockBundle\Admin;
+namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
+use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class UomAdmin extends ResourceAdmin
+class Partner implements PartnerInterface
 {
 
-    protected $baseRouteName = 'admin_stock_uoms';
-    protected $baseRoutePattern = 'stock/uoms';
+    use Guidable;
 
-    public function toString($uom)
+    private $fulltextName;
+
+    public function getFulltextName()
     {
-        return $uom->getName();
+        return $this->fulltextName;
+    }
+
+    public function setFulltextName($fulltextName)
+    {
+        $this->fulltextName = $fulltextName;
     }
 }

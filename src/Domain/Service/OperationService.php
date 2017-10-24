@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Repository\OperationRepositoryInterface;
@@ -49,8 +47,8 @@ class OperationService implements OperationServiceInterface
      * @param MovementServiceInterface $movementService
      */
     public function __construct(OperationRepositoryInterface $operationRepository,
-            MovementServiceInterface $movementService,
-            OperationFactoryInterface $operationFactory)
+        MovementServiceInterface $movementService,
+        OperationFactoryInterface $operationFactory)
     {
         $this->operationRepository = $operationRepository;
         $this->movementService = $movementService;
@@ -72,7 +70,7 @@ class OperationService implements OperationServiceInterface
     {
         if ( $op->isInProgress() ) {
             throw new DomainException('Operation with reserved units'
-                    . ' cannot return in the DRAFT state');
+                . ' cannot return in the DRAFT state');
         }
 
         foreach ( $op->getMovements() as $mvt ) {
@@ -120,6 +118,20 @@ class OperationService implements OperationServiceInterface
      * 
      * @param Operation $op
      */
+    public function unreserveUnits(Operation $op): void
+    {
+        foreach ( $op->getMovements() as $mvt ) {
+            $mvt->unreserveAllUnits();
+            $mvt->beConfirmed();
+        }
+
+        $op->beConfirmed();
+    }
+
+    /**
+     * 
+     * @param Operation $op
+     */
     public function apply(Operation $op): void
     {
         foreach ( $op->getMovements() as $mvt ) {
@@ -141,5 +153,4 @@ class OperationService implements OperationServiceInterface
 
         $op->beCancel();
     }
-
 }

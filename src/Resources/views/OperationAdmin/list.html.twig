@@ -1,0 +1,14 @@
+{% extends 'SilStockBundle:CRUD:list.html.twig' %}
+
+{% block actions %}
+    {% spaceless %}
+        {% for item in admin.getOperationTypes() %}
+            <li>
+                <a class="sonata-action-element" href="{{admin.generateUrl('create_by_type',{'type_id':item.id}) }}">
+                    <i class="fa fa-plus-circle"></i>
+                    {{item.name}}
+                </a>
+            </li>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}

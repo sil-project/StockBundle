@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
@@ -40,7 +38,7 @@ class Uom
      *
      * @var float
      */
-    private $factor;
+    private $factor = 1;
 
     /**
      * Rounding precision
@@ -62,7 +60,8 @@ class Uom
      * @param string $name
      * @param float $factor
      */
-    public static function createDefault(UomType $type, string $name, float $factor)
+    public static function createDefault(UomType $type, string $name,
+        float $factor)
     {
         $o = new self();
         $o->type = $type;
@@ -87,7 +86,7 @@ class Uom
     {
         if ( $toUom->getType() != $this->getType() ) {
             throw new \InvalidArgumentException(
-                    "Conversion cannot be made between different type of Uom");
+                "Conversion cannot be made between different type of Uom");
         }
         return ($value / $this->factor) * $toUom->factor;
     }
@@ -96,7 +95,7 @@ class Uom
      * 
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -105,7 +104,7 @@ class Uom
      * 
      * @return UomType
      */
-    public function getType(): UomType
+    public function getType(): ?UomType
     {
         return $this->type;
     }
@@ -186,10 +185,4 @@ class Uom
     {
         $this->active = $active;
     }
-    
-    public function __toString(): string
-    {
-        return $this->getName();
-    }
-
 }

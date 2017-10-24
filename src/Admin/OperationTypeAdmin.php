@@ -22,4 +22,8 @@ class OperationTypeAdmin extends ResourceAdmin
     protected $baseRouteName = 'admin_stock_operationtypes';
     protected $baseRoutePattern = 'stock/operationtypes';
 
+    public function toString($opType)
+    {
+        return $opType->getName();
+    }
 }

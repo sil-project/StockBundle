@@ -24,9 +24,9 @@ class StockUnitCRUDController extends CRUDController
         $request = $this->getRequest();
         // the key used to lookup the template
         $templateKey = 'edit';
-
+       
         $this->admin->checkAccess('create');
-        $stockItemRepository = $this->get('sil.stock.repository.stockitem');
+        $stockItemRepository = $this->get('sil.stock.repository.stock_item');
         $item = $stockItemRepository->get($request->get('item_id'));
 
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
@@ -54,7 +54,7 @@ class StockUnitCRUDController extends CRUDController
 
         /** @var $form \Symfony\Component\Form\Form */
         $form = $this->admin->getForm();
-        print_r($form->get('stockItem'));
+        
         $form->setData($object);
         $form->handleRequest($request);
 

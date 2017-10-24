@@ -1,5 +1,4 @@
 <?php
-
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -31,12 +30,12 @@ class OutputStrategyFixtures extends Fixture implements ContainerAwareInterface
     {
 
 
-        $outStrat = new OutputStrategy('default', ['createdAt' => 'ASC']);
+        $outStrat = new OutputStrategy('fifo', ['createdAt' => 'ASC']);
 
         $manager->persist($outStrat);
         $manager->flush();
-        
-        
+
+
         $this->addReference('outs-default', $outStrat);
     }
 
@@ -44,5 +43,4 @@ class OutputStrategyFixtures extends Fixture implements ContainerAwareInterface
     {
         $this->container = $container;
     }
-
 }

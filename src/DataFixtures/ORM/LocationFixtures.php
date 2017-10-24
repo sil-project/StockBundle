@@ -33,16 +33,16 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
 
         $supp = Location::createDefault('SUPPLIER', 'Emplacement Fournisseur',
                 LocationType::supplier());
-        
+
         $supp1 = Location::createDefault('SUP-1', 'Fournisseur 1',
                 LocationType::supplier());
-        
+
         $supp2 = Location::createDefault('SUP-2', 'Fournisseur 2',
                 LocationType::supplier());
 
         $supp->addChild($supp1);
         $supp->addChild($supp2);
-        
+
         $wh->addLocation($supp);
 
         $int = Location::createDefault('INTERNAL', 'Emplacement Stock',
@@ -50,16 +50,27 @@ class LocationFixtures extends Fixture implements ContainerAwareInterface
 
         $int1 = Location::createDefault('STOCK-1', 'Stock 1',
                 LocationType::internal());
-       
+
         $int2 = Location::createDefault('STOCK-2', 'Stock 2',
                 LocationType::internal());
-        
+
         $int->addChild($int1);
         $int->addChild($int2);
         $wh->addLocation($int);
 
+        $inv = Location::createDefault('INV', 'Ajustement de stock',
+                LocationType::virtual());
+
+        $crap = Location::createDefault('SCRAP', 'Emplacement de rebut',
+                LocationType::scrap());
+
+        $wh->addLocation($inv);
+        $wh->addLocation($crap);
+
         $manager->persist($supp);
         $manager->persist($int);
+        $manager->persist($inv);
+        $manager->persist($crap);
         $manager->flush();
 
         // other fixtures can get this object using the 'admin-user' name

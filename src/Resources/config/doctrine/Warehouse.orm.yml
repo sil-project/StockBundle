@@ -1,5 +1,6 @@
 Sil\Bundle\StockBundle\Domain\Entity\Warehouse:
     type: mappedSuperclass
+    repositoryClass: Sil\Bundle\StockBundle\Doctrine\ORM\WarehouseRepository
     
     fields:
         name:

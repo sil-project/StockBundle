@@ -8,6 +8,9 @@ Sil\Bundle\StockBundle\Domain\Entity\Movement:
             nullable: false
         expectedAt: 
             type: datetime
+        completedAt: 
+            type: datetime
+            nullable: true
         qtyValue:
             type: decimal
             precision: 15
