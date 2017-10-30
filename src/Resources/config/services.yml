@@ -8,8 +8,8 @@ services:
     
     sil.stock.code_generator.stock_unit:
         class: Sil\Bundle\StockBundle\Domain\Generator\StockUnitCodeGenerator
-    
-    
+        
+   
     sil.stock.factory.movement:
         class: Sil\Bundle\StockBundle\Domain\Factory\MovementFactory
         arguments:
@@ -88,6 +88,7 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Warehouse
+   
     
     ###################
     # FILTERS

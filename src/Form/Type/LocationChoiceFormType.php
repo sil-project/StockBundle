@@ -34,6 +34,7 @@ class LocationChoiceFormType extends AbstractType
     {
         $repo = $this->getLocationRepository();
         $locations = $repo->findAll();
+        
         $resolver->setDefaults(
             [
                 'choices' => $locations,

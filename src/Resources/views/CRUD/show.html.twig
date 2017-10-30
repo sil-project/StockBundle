@@ -37,4 +37,19 @@
     {% endif %}
 {% endblock %}
 
-
+{% block show %}
+    {{ parent()}}
+    <div class="sonata-ba-form-actions well well-small form-actions">
+        {% block showactions %}
+            <a class="btn btn-primary" href="{{ admin.generateObjectUrl('edit', object) }}">
+                <i class="fa fa-pencil" aria-hidden="true"></i> {{ 'sil.stock.action.edit'|trans }}
+            </a>
+            {% if admin.hasroute('delete') and admin.isGranted('DELETE', object) %}
+                <a class="btn btn-danger" href="{{ admin.generateObjectUrl('delete', object) }}">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i> 
+                    {{ 'link_delete'|trans({}, 'SonataAdminBundle') }}
+                </a>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

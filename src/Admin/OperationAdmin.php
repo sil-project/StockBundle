@@ -24,8 +24,8 @@ use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
 class OperationAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_operations';
-    protected $baseRoutePattern = 'stock/operations';
+    protected $baseRouteName = 'admin_stock_operation';
+    protected $baseRoutePattern = 'stock/operation';
 
     /**
      *
@@ -59,12 +59,16 @@ class OperationAdmin extends ResourceAdmin
         $collection->add('cancel', $this->getRouterIdParameter() . '/cancel');
         $collection->add('confirm', $this->getRouterIdParameter() . '/confirm');
         $collection->add('reserve', $this->getRouterIdParameter() . '/reserve');
-        $collection->add('unreserve', $this->getRouterIdParameter() . '/unreserve');
+        $collection->add('unreserve',
+            $this->getRouterIdParameter() . '/unreserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
 
         $collection->add('create_by_type', 'create/{type_id}');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configureFormFields(\Sonata\AdminBundle\Form\FormMapper $mapper)
     {
         parent::configureFormFields($mapper);
@@ -75,13 +79,13 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * {@inheritdoc}
+     * 
+     * @return array|OperationType[]
      */
     public function getOperationTypes()
     {
 
         $operationTypes = $this->getOperationTypeRepository()->findAll();
-
         return $operationTypes;
     }
 
@@ -99,55 +103,86 @@ class OperationAdmin extends ResourceAdmin
      */
     public function preUpdate($object)
     {
-        $code = $this->getOperationCodeGenerator()
-            ->generate();
+        //generate code for the operation and the related movements
+        $code = $this->getOperationCodeGenerator()->generate();
         $object->setCode($code);
 
         foreach ( $object->getMovements() as $m ) {
-            $m->setCode(
-                $this->getMovementCodeGenerator()->generate(
-                    $m->getStockItem(), $m->getQty())
-            );
+            $mCode = $this->getMovementCodeGenerator()->generate(
+                $m->getStockItem(), $m->getQty());
+            $m->setCode($mCode);
         }
 
         parent::preUpdate($object);
     }
 
+    /**
+     * 
+     * @return OperationCodeGeneratorInterface
+     */
     public function getOperationCodeGenerator(): OperationCodeGeneratorInterface
     {
         return $this->operationCodeGenerator;
     }
 
+    /**
+     * 
+     * @param OperationCodeGeneratorInterface $operationCodeGenerator
+     */
     public function setOperationCodeGenerator(OperationCodeGeneratorInterface $operationCodeGenerator)
     {
         $this->operationCodeGenerator = $operationCodeGenerator;
     }
 
+    /**
+     * 
+     * @return MovementCodeGeneratorInterface
+     */
     public function getMovementCodeGenerator(): MovementCodeGeneratorInterface
     {
         return $this->movementCodeGenerator;
     }
 
+    /**
+     * 
+     * @param MovementCodeGeneratorInterface $codeGenerator
+     */
     public function setMovementCodeGenerator(MovementCodeGeneratorInterface $codeGenerator)
     {
         $this->movementCodeGenerator = $codeGenerator;
     }
 
+    /**
+     * 
+     * @return OperationTypeRepositoryInterface
+     */
     public function getOperationTypeRepository(): OperationTypeRepositoryInterface
     {
         return $this->operationTypeRepository;
     }
 
+    /**
+     * 
+     * @param OperationTypeRepositoryInterface $operationTypeRepository
+     */
     public function setOperationTypeRepository(OperationTypeRepositoryInterface $operationTypeRepository)
     {
         $this->operationTypeRepository = $operationTypeRepository;
     }
 
+    /**
+     * 
+     * @return LocationRepositoryInterface
+     */
     public function getLocationRepository(): LocationRepositoryInterface
     {
         return $this->locationRepository;
     }
 
+    /**
+     * 
+     * @param LocationRepositoryInterface $locationRepository
+     */
     public function setLocationRepository(LocationRepositoryInterface $locationRepository)
     {
         $this->locationRepository = $locationRepository;

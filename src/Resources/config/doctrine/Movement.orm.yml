@@ -1,5 +1,5 @@
 Sil\Bundle\StockBundle\Domain\Entity\Movement:
-    type: entity
+    type: mappedSuperclass
     repositoryClass: Sil\Bundle\StockBundle\Doctrine\ORM\MovementRepository
     fields:
         code:

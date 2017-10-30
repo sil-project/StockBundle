@@ -14,8 +14,7 @@ parameters:
                             type:
                                 choice_label: name
                                 required: true
-                                attr:
-                                    disabled: disabled
+                                
                             partner:
                                 choice_label: fulltextName
                             expectedAt:
@@ -362,6 +361,7 @@ parameters:
                             name: ~
                             type:
                                 choice_label: name
+                                
                             factor: ~
                             rounding: ~
                     

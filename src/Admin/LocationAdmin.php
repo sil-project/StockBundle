@@ -24,8 +24,8 @@ use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
 class LocationAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_locations';
-    protected $baseRoutePattern = 'stock/locations';
+    protected $baseRouteName = 'admin_stock_location';
+    protected $baseRoutePattern = 'stock/location';
 
     /**
      *

@@ -22,8 +22,8 @@ use Sil\Bundle\StockBundle\Domain\Query\StockItemQueriesInterface;
 class MovementAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_movements';
-    protected $baseRoutePattern = 'stock/movements';
+    protected $baseRouteName = 'admin_stock_movement';
+    protected $baseRoutePattern = 'stock/movement';
 
     /**
      *

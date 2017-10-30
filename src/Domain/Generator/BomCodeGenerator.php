@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,18 +9,20 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
-namespace Sil\Bundle\StockBundle\Admin;
-
-use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
+namespace Sil\Bundle\StockBundle\Domain\Generator;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class UomTypeAdmin extends ResourceAdmin
+class BomCodeGenerator implements BomCodeGeneratorInterface
 {
 
-    protected $baseRouteName = 'admin_stock_uomtype';
-    protected $baseRoutePattern = 'stock/uomtype';
-
+    /**
+     * 
+     * @return string
+     */
+    public function generate(): string
+    {
+        return strtoupper(substr(md5((string) mt_rand()), 0, 7));
+    }
 }

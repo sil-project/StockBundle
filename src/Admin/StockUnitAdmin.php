@@ -19,8 +19,8 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class StockUnitAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_units';
-    protected $baseRoutePattern = 'stock/units';
+    protected $baseRouteName = 'admin_stock_unit';
+    protected $baseRoutePattern = 'stock/unit';
 
     /**
      *

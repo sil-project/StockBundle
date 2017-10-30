@@ -11,6 +11,7 @@ use Sil\Bundle\StockBundle\Domain\Entity\Operation;
 use Sil\Bundle\StockBundle\Domain\Service\OperationServiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
 
 /**
  * Description of MovementController
@@ -52,7 +53,7 @@ class OperationCRUDController extends CRUDController
 
         $this->admin->setSubject($object);
 
-        /** @var $form \Symfony\Component\Form\Form */
+        /* @var $form Form */
         $form = $this->admin->getForm();
 
         $form->setData($object);

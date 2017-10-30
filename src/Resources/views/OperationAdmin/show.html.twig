@@ -1,8 +1,7 @@
 {% extends 'SilStockBundle:CRUD:show.html.twig' %}
 
-{% block show %}
+{% block showactions %}
 
-    {{ parent()}}
     <div class="sonata-ba-form-actions well well-small form-actions">
 
         {% if  object.isDraft() %}

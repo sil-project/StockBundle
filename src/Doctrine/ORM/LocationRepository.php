@@ -24,6 +24,7 @@ class LocationRepository extends ResourceRepository implements LocationRepositor
         $qb->orderBy($alias . '.treeRoot', 'ASC')
             ->orderBy($alias . '.treeLft', 'ASC');
 
+
         return $qb;
     }
 

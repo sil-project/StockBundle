@@ -21,8 +21,8 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 class WarehouseAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_warehouses';
-    protected $baseRoutePattern = 'stock/warehouses';
+    protected $baseRouteName = 'admin_stock_warehouse';
+    protected $baseRoutePattern = 'stock/warehouse';
 
     /**
      * {@inheritdoc}

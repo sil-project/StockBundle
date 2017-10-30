@@ -12,4 +12,8 @@ librinfo:
         uoms: Unités de mesure
         operation_types: Types d'opération
         location_types: Types d'emplacement
+        
+        manufacturing: Fabrication
+        bom: Nomenclatures
+        
 

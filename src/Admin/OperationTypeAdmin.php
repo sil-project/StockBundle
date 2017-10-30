@@ -19,8 +19,8 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 class OperationTypeAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_operationtypes';
-    protected $baseRoutePattern = 'stock/operationtypes';
+    protected $baseRouteName = 'admin_stock_operationtype';
+    protected $baseRoutePattern = 'stock/operationtype';
 
     public function toString($opType)
     {

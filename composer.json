@@ -25,11 +25,13 @@
     "require": {
         "php": ">=7.1",
         "symfony/symfony": ">=3.2",
-        "blast-project/base-entities-bundle": "self.version"
+        "blast-project/core-bundle": "self.version",
+        "blast-project/base-entities-bundle": "self.version",
+        "blast-project/resource-bundle": "self.version",
+        "winzou/state-machine": "^0.3.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": ">=3.2",
-        "blast-project/outer-extension-bundle": ">=0.4"
+        "symfony/phpunit-bridge": ">=3.2"
     },
     "extra": {
         "branch-alias": {

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 /*
  * This file is part of the Blast Project package.
@@ -10,18 +9,15 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+namespace Sil\Bundle\StockBundle\Doctrine\ORM;
 
-namespace Sil\Bundle\StockBundle\Admin;
-
-use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
+use Sil\Bundle\StockBundle\Domain\Repository\BomRepositoryInterface;
+use Blast\Bundle\ResourceBundle\Doctrine\ORM\Repository\ResourceRepository;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class UomTypeAdmin extends ResourceAdmin
+class BomRepository extends ResourceRepository implements BomRepositoryInterface
 {
-
-    protected $baseRouteName = 'admin_stock_uomtype';
-    protected $baseRoutePattern = 'stock/uomtype';
-
+    //put your code here
 }

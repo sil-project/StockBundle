@@ -19,8 +19,8 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 class UomAdmin extends ResourceAdmin
 {
 
-    protected $baseRouteName = 'admin_stock_uoms';
-    protected $baseRoutePattern = 'stock/uoms';
+    protected $baseRouteName = 'admin_stock_uom';
+    protected $baseRoutePattern = 'stock/uom';
 
     public function toString($uom)
     {
