@@ -1,8 +1,8 @@
 librinfo:
    
     menu_label:
-        stock_management: Gestion des stocks
-        stock_management_settings: Configuration des stocks
+        stock_management: Stocks
+        stock_management_settings: Stocks
         items: Articles
         operations: Opérations sur les stocks
         movements: Mouvements de stock
@@ -12,8 +12,4 @@ librinfo:
         uoms: Unités de mesure
         operation_types: Types d'opération
         location_types: Types d'emplacement
-        
-        manufacturing: Fabrication
-        bom: Nomenclatures
-        
 
