@@ -33,12 +33,6 @@
     "require-dev": {
         "symfony/phpunit-bridge": ">=3.2"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.4.x-dev",
-            "dev-wip-lisem": "0.4.x-dev"
-        }
-    },
     "scripts": {
         "phpunit-install": [
             "wget https://phar.phpunit.de/phpunit-5.7.phar --output-document=bin/phpunit",
