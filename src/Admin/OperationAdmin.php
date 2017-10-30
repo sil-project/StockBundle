@@ -17,6 +17,7 @@ use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sil\Bundle\StockBundle\Domain\Repository\OperationTypeRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\OperationType;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -63,7 +64,7 @@ class OperationAdmin extends ResourceAdmin
             $this->getRouterIdParameter() . '/unreserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
 
-        $collection->add('create_by_type', 'create/{type_id}');
+        $collection->add('create_by_type', 'create/{type}');
     }
 
     /**
@@ -85,8 +86,7 @@ class OperationAdmin extends ResourceAdmin
     public function getOperationTypes()
     {
 
-        $operationTypes = $this->getOperationTypeRepository()->findAll();
-        return $operationTypes;
+        return OperationType::getTypes();
     }
 
     /**
@@ -152,24 +152,7 @@ class OperationAdmin extends ResourceAdmin
         $this->movementCodeGenerator = $codeGenerator;
     }
 
-    /**
-     * 
-     * @return OperationTypeRepositoryInterface
-     */
-    public function getOperationTypeRepository(): OperationTypeRepositoryInterface
-    {
-        return $this->operationTypeRepository;
-    }
-
-    /**
-     * 
-     * @param OperationTypeRepositoryInterface $operationTypeRepository
-     */
-    public function setOperationTypeRepository(OperationTypeRepositoryInterface $operationTypeRepository)
-    {
-        $this->operationTypeRepository = $operationTypeRepository;
-    }
-
+    
     /**
      * 
      * @return LocationRepositoryInterface

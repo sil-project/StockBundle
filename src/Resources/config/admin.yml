@@ -27,7 +27,6 @@ services:
         calls:
             - ["setOperationCodeGenerator", ['@sil.stock.code_generator.operation']]
             - ["setMovementCodeGenerator", ['@sil.stock.code_generator.movement']]
-            - ["setOperationTypeRepository", ['@sil.stock.repository.operation_type']]
             - ["setLocationRepository", ['@sil.stock.repository.location']]
             - ["setResourceRepository", ['@sil.stock.repository.operation']]
             - [ setTemplates, [{show: SilStockBundle:OperationAdmin:show.html.twig,edit: SilStockBundle:OperationAdmin:edit.html.twig,list: SilStockBundle:OperationAdmin:list.html.twig}]]
@@ -126,22 +125,6 @@ services:
                 
     
                 
-    ################
-    # OPERATION TYPE
-    ################            
-    sil_stock.admin.operation_type:
-        class: Sil\Bundle\StockBundle\Admin\OperationTypeAdmin
-        arguments: [~, Sil\Bundle\StockBundle\Domain\Entity\OperationType, BlastCoreBundle:CRUD]
-        calls:
-            - ["setResourceRepository", ['@sil.stock.repository.operation_type']]
-            - [ setTemplates, [{show: SilStockBundle:CRUD:show.html.twig,edit: SilStockBundle:CRUD:edit.html.twig,list: SilStockBundle:CRUD:list.html.twig}]]
-        tags:
-            -   name: sonata.admin
-                manager_type: orm
-                group: Stock Management
-                label: sil.stock.operation_type
-                label_translator_strategy: blast.resource.sonata.label_strategy.prefix
-    
     ##############
     # STOCK UNIT
     ##############

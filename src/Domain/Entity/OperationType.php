@@ -11,77 +11,69 @@ declare(strict_types=1);
  */
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
-
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class OperationType
 {
 
-    use Guidable;
+    const INTERNAL_TRANSFER = 'internal_transfer';
+    const RECEIPT = 'receipt';
+    const SHIPPING = 'shipping';
 
     /**
      *
      * @var string 
      */
-    private $name;
+    private $value;
 
-    /**
-     *
-     * @var string 
-     */
-    private $code;
-
-    /**
-     * @var Collection|Operation[]
-     */
-    private $operations;
-
-    /**
-     * 
-     * @param string $name
-     */
-    public static function createDefault(string $code, string $name)
+    public static function internalTransfer()
     {
-        $o = new self();
-        $o->code = $code;
-        $o->name = $name;
-        return $o;
+        return new self(self::INTERNAL_TRANSFER);
+    }
+
+    public static function receipt()
+    {
+        return new self(self::RECEIPT);
+    }
+
+    public static function shipping()
+    {
+        return new self(self::SHIPPING);
     }
 
     /**
      * 
      */
-    public function __construct()
+    public function __construct(string $value)
     {
-        $this->operations = new ArrayCollection();
+        $this->value = $value;
     }
 
-    public function getCode()
+    /**
+     * 
+     * @return string
+     */
+    public function getValue(): string
     {
-        return $this->code;
+        return $this->value;
     }
 
-    public function getName()
+    public static function getTypes()
     {
-        return $this->name;
+        return [
+            self::internalTransfer(),
+            self::receipt(),
+            self::shipping()
+        ];
     }
 
-    public function setCode($code)
+    /**
+     * 
+     * @return string
+     */
+    public function __toString(): string
     {
-        $this->code = $code;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getOperations(): Collection
-    {
-        return $this->operations;
+        return $this->getValue();
     }
 }

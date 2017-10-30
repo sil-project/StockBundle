@@ -34,7 +34,6 @@ class Configuration implements ConfigurationInterface
         $this->addResourceDefinition($resourceNode, 'location', Entity\Location::class);
         $this->addResourceDefinition($resourceNode, 'movement', Entity\Movement::class);
         $this->addResourceDefinition($resourceNode, 'operation', Entity\Operation::class);
-        $this->addResourceDefinition($resourceNode, 'operation_type', Entity\OperationType::class);
         $this->addResourceDefinition($resourceNode, 'output_strategy', Entity\OutputStrategy::class);
         $this->addResourceDefinition($resourceNode, 'stock_item', Entity\StockItem::class);
         $this->addResourceDefinition($resourceNode, 'stock_unit', Entity\StockUnit::class);

@@ -67,9 +67,9 @@ class Operation implements ProgressStateAwareInterface
 
     /**
      *
-     * @var OperationType
+     * @var string
      */
-    private $type;
+    private $typeValue;
 
     /**
      *
@@ -84,17 +84,19 @@ class Operation implements ProgressStateAwareInterface
     private $movements;
 
     public static function createDefault(string $code, Location $srcLocation,
-        Location $destLocation)
+        Location $destLocation, OperationType $type)
     {
         $o = new self();
         $o->code = $code;
         $o->srcLocation = $srcLocation;
         $o->destLocation = $destLocation;
+        $o->setType($type);
         return $o;
     }
 
     public function __construct()
     {
+        $this->setType(OperationType::internalTransfer());
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
         $this->setState(ProgressState::draft());
@@ -158,9 +160,9 @@ class Operation implements ProgressStateAwareInterface
      * 
      * @return OperationType
      */
-    public function getType(): ?OperationType
+    public function getType(): OperationType
     {
-        return $this->type;
+        return LocationType::{$this->typeValue}();
     }
 
     /**
@@ -244,7 +246,7 @@ class Operation implements ProgressStateAwareInterface
      */
     public function setType(OperationType $type): void
     {
-        $this->type = $type;
+        $this->typeValue = $type->getValue();
     }
 
     /**

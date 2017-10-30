@@ -4,9 +4,9 @@
     {% spaceless %}
         {% for item in admin.getOperationTypes() %}
             <li>
-                <a class="sonata-action-element" href="{{admin.generateUrl('create_by_type',{'type_id':item.id}) }}">
+                <a class="sonata-action-element" href="{{admin.generateUrl('create_by_type',{'type':item.value}) }}">
                     <i class="fa fa-plus-circle"></i>
-                    {{item.name}}
+                    {{item.value}}
                 </a>
             </li>
         {% endfor %}
