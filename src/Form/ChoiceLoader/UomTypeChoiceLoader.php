@@ -1,9 +1,15 @@
 <?php
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Form\ChoiceLoader;
 
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
@@ -12,16 +18,15 @@ use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 
 /**
- * Description of UomTypeChoiceLoader
+ * Description of UomTypeChoiceLoader.
  *
  * @author glenn
  */
 class UomTypeChoiceLoader implements ChoiceLoaderInterface
 {
-
     /**
      * @param UomTypeRepositoryInterface $manager
-     * @param array         $options
+     * @param array                      $options
      */
     public function __construct(UomTypeRepositoryInterface $uomTypeRepository)
     {
@@ -31,10 +36,9 @@ class UomTypeChoiceLoader implements ChoiceLoaderInterface
     //put your code here
     public function loadChoiceList($value = null): ChoiceListInterface
     {
-
         $uomTypes = $this->uomTypeRepository->findAll();
-       
-        return new ArrayChoiceList($uomTypes, function($ut){$ut->getId();});
+
+        return new ArrayChoiceList($uomTypes, function ($ut) {$ut->getId(); });
     }
 
     public function loadChoicesForValues(array $values, $value = null): array
@@ -46,6 +50,7 @@ class UomTypeChoiceLoader implements ChoiceLoaderInterface
     public function loadValuesForChoices(array $choices, $value = null): array
     {
         print_r($value);
+
         return [];
     }
 }

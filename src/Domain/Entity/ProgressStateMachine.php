@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,17 +11,16 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use DomainException;
-use \SM\StateMachine\StateMachine;
+use SM\StateMachine\StateMachine;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class ProgressStateMachine extends StateMachine
 {
-
     const DRAFT = 'draft';
     const CONFIRMED = 'confirmed';
     const PARTIALLY_AVAILABLE = 'partially_available';
@@ -28,42 +29,42 @@ class ProgressStateMachine extends StateMachine
     const CANCELED = 'canceled';
 
     protected $config = [
-        'graph' => 'progress_state',
+        'graph'         => 'progress_state',
         'property_path' => 'value',
-        'states' => [
+        'states'        => [
             self::DRAFT,
             self::CONFIRMED,
             self::PARTIALLY_AVAILABLE,
             self::AVAILABLE,
             self::DONE,
-            self::CANCELED
+            self::CANCELED,
         ],
         'transitions' => [
             'confirm' => [
                 'from' => [self::CONFIRMED, self::DRAFT, self::AVAILABLE],
-                'to' => self::CONFIRMED
+                'to'   => self::CONFIRMED,
             ],
             'back_to_draft' => [
                 'from' => [self::DRAFT, self::CONFIRMED],
-                'to' => self::DRAFT
+                'to'   => self::DRAFT,
             ],
             'partially_available' => [
                 'from' => [self::PARTIALLY_AVAILABLE, self::CONFIRMED],
-                'to' => self::PARTIALLY_AVAILABLE
+                'to'   => self::PARTIALLY_AVAILABLE,
             ],
             'available' => [
                 'from' => [self::AVAILABLE, self::CONFIRMED, self::PARTIALLY_AVAILABLE],
-                'to' => self::AVAILABLE
+                'to'   => self::AVAILABLE,
             ],
             'done' => [
                 'from' => [self::DONE, self::AVAILABLE],
-                'to' => self::DONE
+                'to'   => self::DONE,
             ],
             'cancel' => [
                 'from' => [self::CANCELED, self::CONFIRMED, self::PARTIALLY_AVAILABLE, self::AVAILABLE],
-                'to' => self::CANCELED
-            ]
-        ]
+                'to'   => self::CANCELED,
+            ],
+        ],
     ];
 
     public function __construct($object)

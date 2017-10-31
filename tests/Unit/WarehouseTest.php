@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 use PHPUnit\Framework\TestCase;
@@ -18,7 +20,6 @@ use Sil\Bundle\StockBundle\Domain\Entity;
  */
 class WharehouseTest extends TestCase
 {
-
     public function testAddingLocation()
     {
         $wh = new Entity\Warehouse('Entrepôt #1', 'WH-1');

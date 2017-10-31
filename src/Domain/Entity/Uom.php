@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
@@ -19,46 +22,41 @@ use InvalidArgumentException;
  */
 class Uom
 {
-
     use Guidable;
 
     /**
-     *
      * @var string
      */
     private $name;
 
     /**
-     *
      * @var UomType
      */
     private $type;
 
     /**
-     *
      * @var float
      */
     private $factor = 1;
 
     /**
-     * Rounding precision
-     * 
+     * Rounding precision.
+     *
      * @var int
      */
     private $rounding = 4;
 
     /**
-     * Enable/disable the unit of measure without deleting it
-     * 
+     * Enable/disable the unit of measure without deleting it.
+     *
      * @var bool
      */
     private $active = true;
 
     /**
-     * 
      * @param UomType $type
-     * @param string $name
-     * @param float $factor
+     * @param string  $name
+     * @param float   $factor
      */
     public static function createDefault(UomType $type, string $name,
         float $factor)
@@ -67,32 +65,33 @@ class Uom
         $o->type = $type;
         $o->name = $name;
         $o->factor = $factor;
+
         return $o;
     }
 
     public function __construct()
     {
-        
     }
 
     /**
-     * 
      * @param float $value
-     * @param Uom $toUom
+     * @param Uom   $toUom
+     *
      * @return float
+     *
      * @throws InvalidArgumentException
      */
     public function convertValueTo(float $value, Uom $toUom): float
     {
-        if ( $toUom->getType() != $this->getType() ) {
+        if ($toUom->getType() != $this->getType()) {
             throw new \InvalidArgumentException(
-                "Conversion cannot be made between different type of Uom");
+                'Conversion cannot be made between different type of Uom');
         }
+
         return ($value / $this->factor) * $toUom->factor;
     }
 
     /**
-     * 
      * @return string
      */
     public function getName(): ?string
@@ -101,7 +100,6 @@ class Uom
     }
 
     /**
-     * 
      * @return UomType
      */
     public function getType(): ?UomType
@@ -110,7 +108,6 @@ class Uom
     }
 
     /**
-     * 
      * @return float
      */
     public function getFactor(): float
@@ -119,7 +116,6 @@ class Uom
     }
 
     /**
-     * 
      * @return int
      */
     public function getRounding(): int
@@ -128,7 +124,6 @@ class Uom
     }
 
     /**
-     * 
      * @return bool
      */
     public function getActive(): bool
@@ -137,9 +132,7 @@ class Uom
     }
 
     /**
-     * 
      * @param string $name
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -147,9 +140,7 @@ class Uom
     }
 
     /**
-     * 
      * @param UomType $type
-     * @return void
      */
     public function setType(UomType $type): void
     {
@@ -157,9 +148,7 @@ class Uom
     }
 
     /**
-     * 
      * @param float $factor
-     * @return void
      */
     public function setFactor(float $factor): void
     {
@@ -167,9 +156,7 @@ class Uom
     }
 
     /**
-     * 
      * @param int $rounding
-     * @return void
      */
     public function setRounding(int $rounding): void
     {
@@ -177,9 +164,7 @@ class Uom
     }
 
     /**
-     * 
      * @param bool $active
-     * @return void
      */
     public function setActive(bool $active): void
     {

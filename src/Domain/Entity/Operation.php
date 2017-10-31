@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -24,61 +27,51 @@ use InvalidArgumentException;
  */
 class Operation implements ProgressStateAwareInterface
 {
-
     use Guidable,
         Timestampable,
         ProgressStateAwareTrait;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $code;
 
     /**
-     *
-     * @var DateTimeInterface 
+     * @var DateTimeInterface
      */
     private $expectedAt;
 
     /**
-     *
-     * @var DateTimeInterface 
+     * @var DateTimeInterface
      */
     private $completedAt;
 
     /**
-     *
      * @var string
      */
     private $stateValue;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     private $srcLocation;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     private $destLocation;
 
     /**
-     *
      * @var string
      */
     private $typeValue;
 
     /**
-     *
      * @var PartnerInterface
      */
     private $partner;
 
     /**
-     *
      * @var Collection|Movement[]
      */
     private $movements;
@@ -91,6 +84,7 @@ class Operation implements ProgressStateAwareInterface
         $o->srcLocation = $srcLocation;
         $o->destLocation = $destLocation;
         $o->setType($type);
+
         return $o;
     }
 
@@ -104,7 +98,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return string
      */
     public function getCode(): string
@@ -113,7 +106,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return DateTimeInterface
      */
     public function getExpectedAt(): DateTimeInterface
@@ -122,7 +114,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return DateTimeInterface|null
      */
     public function getCompletedAt(): ?DateTimeInterface
@@ -139,7 +130,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Location
      */
     public function getSrcLocation(): ?Location
@@ -148,7 +138,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Location
      */
     public function getDestLocation(): ?Location
@@ -157,7 +146,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return OperationType
      */
     public function getType(): OperationType
@@ -166,7 +154,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return PartnerInterface
      */
     public function getPartner(): ?PartnerInterface
@@ -175,7 +162,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Collection|Movement[]
      */
     public function getMovements(): Collection
@@ -184,7 +170,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param DateTimeInterface $expectedAt
      */
     public function setExpectedAt(DateTimeInterface $expectedAt): void
@@ -193,9 +178,7 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param DateTimeInterface $completedAt
-     * @return void
      */
     public function setCompletedAt(DateTimeInterface $completedAt): void
     {
@@ -203,7 +186,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param string $code
      */
     public function setCode(string $code): void
@@ -212,7 +194,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param ProgressState $state
      */
     private function setState(ProgressState $state): void
@@ -221,9 +202,7 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Location $srcLocation
-     * @return void
      */
     public function setSrcLocation(Location $srcLocation): void
     {
@@ -231,9 +210,7 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Location $destLocation
-     * @return void
      */
     public function setDestLocation(Location $destLocation): void
     {
@@ -241,7 +218,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param OperationType $type
      */
     public function setType(OperationType $type): void
@@ -250,7 +226,6 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param PartnerInterface $partner
      */
     public function setPartner(PartnerInterface $partner): void
@@ -259,8 +234,8 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Movement $mvt
+     *
      * @return bool
      */
     public function hasMovement(Movement $mvt): bool
@@ -269,20 +244,18 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Movement $mvt
-     * @return void
+     *
      * @throws InvalidArgumentException
      */
     public function addMovement(Movement $mvt): void
     {
-
-        if ( !$mvt->getState()->isDraft() ) {
+        if (!$mvt->getState()->isDraft()) {
             throw new \InvalidArgumentException(
                 'Only Draft Movement can be added');
         }
 
-        if ( $this->hasMovement($mvt) ) {
+        if ($this->hasMovement($mvt)) {
             throw new \InvalidArgumentException(
                 'The same Movement cannot be added twice');
         }
@@ -292,14 +265,13 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Movement $mvt
-     * @return void
+     *
      * @throws InvalidArgumentException
      */
     public function removeMovement(Movement $mvt): void
     {
-        if ( !$this->hasMovement($mvt) ) {
+        if (!$this->hasMovement($mvt)) {
             throw new \InvalidArgumentException(
                 'The Movement is not part of this Operation and cannot be removed from there');
         }
@@ -307,22 +279,21 @@ class Operation implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return bool
      */
     public function isFullyReserved(): bool
     {
-        return $this->getMovements()->forAll(function($i, $mvt) {
-                return $mvt->isFullyReserved();
-            });
+        return $this->getMovements()->forAll(function ($i, $mvt) {
+            return $mvt->isFullyReserved();
+        });
     }
 
     public function hasReservedStockUnits(): bool
     {
-        $noStockUnitReserved = $this->getMovements()->forAll(function($i, $mvt) {
+        $noStockUnitReserved = $this->getMovements()->forAll(function ($i, $mvt) {
             return !$mvt->hasReservedStockUnits();
         });
 
-        return ($noStockUnitReserved == false);
+        return $noStockUnitReserved == false;
     }
 }

@@ -1,4 +1,15 @@
 <?php
+
+/*
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -14,12 +25,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\OperationType;
 
 /**
- *
  * @author glenn
  */
 class OperationTypeFixtures extends Fixture implements ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -27,7 +36,6 @@ class OperationTypeFixtures extends Fixture implements ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-
         $oc1 = OperationType::createDefault('REC', 'Réception');
         $oc2 = OperationType::createDefault('EXP', 'Expédition');
         $oc3 = OperationType::createDefault('INT', 'Transfert interne');

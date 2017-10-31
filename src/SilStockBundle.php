@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -21,10 +22,8 @@ use  Sil\Bundle\StockBundle\DependencyInjection\SilStockExtension;
  */
 class SilStockBundle extends Bundle
 {
-
     public function getContainerExtension()
     {
         return new SilStockExtension();
     }
-
 }

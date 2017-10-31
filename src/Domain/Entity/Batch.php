@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -20,17 +21,14 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
  */
 class Batch implements BatchInterface
 {
-
     use Guidable;
 
     /**
-     *
      * @var string
      */
     private $code;
 
     /**
-     *
      * @var int
      */
     private $number;
@@ -44,5 +42,4 @@ class Batch implements BatchInterface
     {
         return $this->code;
     }
-
 }

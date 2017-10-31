@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 /**
@@ -15,7 +17,6 @@ namespace Sil\Bundle\StockBundle\Test\Unit;
  */
 class StockUnitTest extends AbstractStockTestCase
 {
-
     public function testLocationQty()
     {
         $srcLocQty = $this->stockItemQueries

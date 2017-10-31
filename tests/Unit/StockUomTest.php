@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 use Sil\Bundle\StockBundle\Domain\Entity\UomType;
@@ -19,9 +21,8 @@ use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
  */
 class StockUomTest extends AbstractStockTestCase
 {
-
     /**
-     * Uoms should be convertible into other Uom of the same type 
+     * Uoms should be convertible into other Uom of the same type.
      */
     public function testUomConversion()
     {
@@ -36,11 +37,10 @@ class StockUomTest extends AbstractStockTestCase
     }
 
     /**
-     * Uoms should not be convertible into other Uom of different type  
+     * Uoms should not be convertible into other Uom of different type.
      */
     public function testUomConversionBetweenDifferentUomType()
     {
-
         $plopType = new UomType('Plop');
         $plopUom = new Uom($plopType, 'g', 0.001);
         $qtyInPlop = new UomQty($plopUom, 20.50);

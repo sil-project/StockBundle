@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -13,35 +14,27 @@ declare(strict_types=1);
 
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Sil\Bundle\StockBundle\Domain\Entity\Uom;
-use Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy;
-
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 interface StockItemInterface
 {
-
     /**
-     * 
      * @return string
      */
     public function getName(): ?string;
 
     /**
-     * 
      * @return string
      */
     public function getCode(): ?string;
 
     /**
-     * 
      * @return Uom
      */
     public function getUom(): ?Uom;
 
     /**
-     * 
      * @return OutputStrategy
      */
     public function getOutputStrategy(): ?OutputStrategy;

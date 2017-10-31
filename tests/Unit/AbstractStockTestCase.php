@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 use PHPUnit\Framework\TestCase;
@@ -49,112 +51,93 @@ use Sil\Bundle\StockBundle\Domain\Generator\OperationCodeGenerator;
  */
 class AbstractStockTestCase extends TestCase
 {
-
     /**
-     *
-     * @var UomType 
+     * @var UomType
      */
     protected $uomTypeMass;
 
     /**
-     *
-     * @var Uom 
+     * @var Uom
      */
     protected $uomKg;
 
     /**
-     *
-     * @var Uom 
+     * @var Uom
      */
     protected $uomGr;
 
     /**
-     *
      * @var Warehouse
      */
     protected $ws;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     protected $whLocSrc;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     protected $whLocDest;
 
     /**
-     *
      * @var StockItem
      */
     protected $stockItem;
 
     /**
-     *
      * @var StockUnitRepositoryInterface
      */
     protected $unitRepo;
 
     /**
-     *
-     * @var MovementRepositoryInterface 
+     * @var MovementRepositoryInterface
      */
     protected $mvtRepo;
 
     /**
-     *
-     * @var OperationRepositoryInterface 
+     * @var OperationRepositoryInterface
      */
     protected $opRepo;
 
     /**
-     *
-     * @var StockItemRepositoryInterface 
+     * @var StockItemRepositoryInterface
      */
     protected $stockItemRepo;
 
     /**
-     *
      * @var MovementServiceInterface
      */
     protected $mvtService;
 
     /**
-     *
-     * @var OperationServiceInterface 
+     * @var OperationServiceInterface
      */
     protected $opService;
 
     /**
-     *
-     * @var UomServiceInterface 
+     * @var UomServiceInterface
      */
     protected $uomService;
 
     /**
-     *
      * @var StockItemQueriesInterface
      */
     protected $stockItemQueries;
 
     /**
-     *
      * @var StockUnitFactoryInterface
      */
     protected $stockunitFactory;
 
     /**
-     *
-     * @var MovementFactoryInterface 
+     * @var MovementFactoryInterface
      */
     protected $movementFactory;
 
     /**
-     *
-     * @var OperationFactoryInterface 
+     * @var OperationFactoryInterface
      */
     protected $opFactory;
 
@@ -193,7 +176,6 @@ class AbstractStockTestCase extends TestCase
 
     protected function initSrcStockUnits()
     {
-
         $itemUom = $this->stockItem->getUom();
         $q1 = $this->stockUnitFactory->createNew($this->stockItem,
             new UomQty($itemUom, 5), $this->whLocSrc);
@@ -201,7 +183,6 @@ class AbstractStockTestCase extends TestCase
             new UomQty($itemUom, 3), $this->whLocSrc);
         $q3 = $this->stockUnitFactory->createNew($this->stockItem,
             new UomQty($itemUom, 10), $this->whLocSrc);
-
 
         $this->unitRepo->addAll([$q1, $q2, $q3]);
     }

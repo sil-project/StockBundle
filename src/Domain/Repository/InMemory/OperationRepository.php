@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Repository\InMemory;
 
 use Sil\Bundle\StockBundle\Domain\Repository\OperationRepositoryInterface;
@@ -18,7 +20,6 @@ use Sil\Bundle\StockBundle\Domain\Entity\Operation;
  */
 class OperationRepository extends InMemoryRepository implements OperationRepositoryInterface
 {
-
     public function __construct()
     {
         parent::__construct(Operation::class);

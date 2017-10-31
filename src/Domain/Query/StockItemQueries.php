@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Query;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
@@ -23,15 +26,12 @@ use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
  */
 class StockItemQueries implements StockItemQueriesInterface
 {
-
     /**
-     *
      * @var StockUnitRepositoryInterface
      */
     private $stockUnitRepository;
 
     /**
-     * 
      * @param StockUnitRepositoryInterface $stockUnitRepository
      */
     public function __construct(StockUnitRepositoryInterface $stockUnitRepository)
@@ -40,8 +40,8 @@ class StockItemQueries implements StockItemQueriesInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
+     *
      * @return UomQty
      */
     public function getQty(StockItemInterface $item): UomQty
@@ -53,8 +53,8 @@ class StockItemQueries implements StockItemQueriesInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
+     *
      * @return UomQty
      */
     public function getReservedQty(StockItemInterface $item): UomQty
@@ -66,8 +66,8 @@ class StockItemQueries implements StockItemQueriesInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
+     *
      * @return UomQty
      */
     public function getAvailableQty(StockItemInterface $item): UomQty
@@ -79,8 +79,8 @@ class StockItemQueries implements StockItemQueriesInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
+     *
      * @return UomQty
      */
     public function getReservedQtyByMovement(StockItemInterface $item,
@@ -93,9 +93,9 @@ class StockItemQueries implements StockItemQueriesInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
-     * @param Location $location
+     * @param Location           $location
+     *
      * @return UomQty
      */
     public function getQtyByLocation(StockItemInterface $item,
@@ -107,16 +107,15 @@ class StockItemQueries implements StockItemQueriesInterface
         return $this->computeQtyForUnits($item->getUom(), $units);
     }
 
-
     /**
-     * 
-     * @param Uom $uom
+     * @param Uom               $uom
      * @param array|StockUnit[] $stockUnits
+     *
      * @return UomQty
      */
     protected function computeQtyForUnits(Uom $uom, array $stockUnits): UomQty
     {
-        $unitQties = array_map(function($q) {
+        $unitQties = array_map(function ($q) {
             return $q->getQty()->getValue();
         }, $stockUnits);
         $sumQty = array_sum($unitQties);

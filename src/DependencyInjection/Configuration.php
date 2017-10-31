@@ -1,9 +1,13 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
 
 namespace Sil\Bundle\StockBundle\DependencyInjection;
@@ -16,19 +20,19 @@ use Sil\Bundle\StockBundle\Domain\Entity;
 
 class Configuration implements ConfigurationInterface
 {
-
     use ResourceConfigurationTrait;
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('sil_stock');
-        
+
         $this->addResourcesSection($rootNode);
+
         return $treeBuilder;
     }
-    
-     private function addResourceDefinitions(NodeBuilder $resourceNode)
+
+    private function addResourceDefinitions(NodeBuilder $resourceNode)
     {
         $this->addResourceDefinition($resourceNode, 'batch', Entity\Batch::class);
         $this->addResourceDefinition($resourceNode, 'location', Entity\Location::class);
@@ -41,7 +45,5 @@ class Configuration implements ConfigurationInterface
         $this->addResourceDefinition($resourceNode, 'uom_type', Entity\UomType::class);
         $this->addResourceDefinition($resourceNode, 'warehouse', Entity\Warehouse::class);
         $this->addResourceDefinition($resourceNode, 'partner', Entity\Partner::class);
-        
     }
-
 }

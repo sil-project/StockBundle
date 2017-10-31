@@ -1,4 +1,15 @@
 <?php
+
+/*
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -14,13 +25,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\OutputStrategy;
 
 /**
- * Description of WarehouseFixtures
+ * Description of WarehouseFixtures.
  *
  * @author glenn
  */
 class OutputStrategyFixtures extends Fixture implements ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -28,13 +38,10 @@ class OutputStrategyFixtures extends Fixture implements ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-
-
         $outStrat = new OutputStrategy('fifo', ['createdAt' => 'ASC']);
 
         $manager->persist($outStrat);
         $manager->flush();
-
 
         $this->addReference('outs-default', $outStrat);
     }
