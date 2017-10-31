@@ -18,7 +18,7 @@ use Sil\Bundle\StockBundle\Domain\Entity;
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-class WharehouseTest extends TestCase
+class WarehouseTest extends TestCase
 {
     public function testAddingLocation()
     {
