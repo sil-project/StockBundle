@@ -17,6 +17,7 @@ use Sil\Bundle\StockBundle\Domain\Entity\StockUnit;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\Location;
 use Sil\Bundle\StockBundle\Domain\Entity\Movement;
+use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
@@ -34,12 +35,32 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
      *
      * @return array|StockUnit[]
      */
-    public function findByStockItem(StockItemInterface $item)
-    {
-        return array_filter($this->findAll(),
+    public function findByStockItem(
+        StockItemInterface $item,
+        ?BatchInterface $batch = null
+    ): array {
+    
+        return array_filter(
+            $this->findAll(),
             function ($su) use ($item) {
                 return $su->getStockItem() == $item;
-            });
+            }
+        );
+    }
+ /**
+     * @param Location $location
+     * @param array    $orderBy
+     *
+     * @return array
+     */
+    public function findByLocation(
+        Location $location,
+        array $orderBy = [],
+        ?int $limit = null
+    ): array {
+    
+        /** @todo: implement this method */
+        return [];
     }
 
     /**
@@ -47,15 +68,74 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
      *
      * @return array|StockUnit[]
      */
-    public function findByStockItemAndLocation(StockItemInterface $item,
-        Location $location)
-    {
-        return array_filter($this->findAll(),
+    public function findByStockItemAndLocation(
+        StockItemInterface $item,
+        Location $location,
+        ?BatchInterface $batch = null
+    ): array {
+    
+        return array_filter(
+            $this->findAll(),
             function ($su) use ($item, $location) {
                 return $su->getLocation() == $location && $su->getStockItem() == $item;
-            });
+            }
+        );
     }
 
+        /**
+     * @param Movement $mvt
+     *
+     * @return array|StockUnit[]
+     */
+    public function findAvailableForMovementReservation(Movement $mvt): array
+    {
+    
+        /** @todo: implement this method */
+        return [];
+    }
+
+    /**
+     * @param StockItemInterface $item
+     * @param array              $orderBy
+     *
+     * @return array|StockUnit[]
+     */
+    public function findAvailableByStockItem(
+        StockItemInterface $item,
+        ?BatchInterface $batch = null,
+        array $orderBy = []
+    ): array {
+    
+        /** @todo: implement this method */
+        return [];
+    }
+
+    /**
+     * @param StockItemInterface $item
+     *
+     * @return array|StockUnit[]
+     */
+    public function findReservedByStockItem(
+        StockItemInterface $item,
+        ?BatchInterface $batch = null
+    ): array {
+    
+        /** @todo: implement this method */
+        return [];
+    }
+
+    /**
+     * @param Movement $mvt
+     *
+     * @return array|StockUnit[]
+     */
+    public function findReservedByMovement(Movement $mvt): array
+    {
+    
+        /** @todo: implement this method */
+        return [];
+    }
+    
     /**
      * @param array $criteria
      *
@@ -63,10 +143,12 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
      */
     public function findAllAvailableBy(array $criteria)
     {
-        return array_filter($this->findBy($criteria),
+        return array_filter(
+            $this->findBy($criteria),
             function ($su) {
                 return !$su->isReserved();
-            });
+            }
+        );
     }
 
     /**
@@ -76,9 +158,11 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
      */
     public function findAllReservedBy(Movement $mvt)
     {
-        return array_filter($this->findAll(),
+        return array_filter(
+            $this->findAll(),
             function ($su) use ($mvt) {
                 return $su->isReserved() && $su->getReservationMovement() == $mvt;
-            });
+            }
+        );
     }
 }
