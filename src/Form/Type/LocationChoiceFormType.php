@@ -1,9 +1,15 @@
 <?php
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,16 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
- * Description of LocationChoiceFormType
+ * Description of LocationChoiceFormType.
  *
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class LocationChoiceFormType extends AbstractType
 {
-
     /**
-     *
-     * @var LocationRepositoryInterface 
+     * @var LocationRepositoryInterface
      */
     protected $locationRepository;
 
@@ -34,10 +38,10 @@ class LocationChoiceFormType extends AbstractType
     {
         $repo = $this->getLocationRepository();
         $locations = $repo->findAll();
-        
+
         $resolver->setDefaults(
             [
-                'choices' => $locations,
+                'choices'      => $locations,
                 'choice_label' => 'getIndentedName',
                 'choice_value' => 'id',
             ]

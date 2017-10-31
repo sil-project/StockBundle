@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Generator;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
@@ -20,13 +23,12 @@ use Sil\Bundle\StockBundle\Domain\Entity\Location;
  */
 interface MovementCodeGeneratorInterface
 {
-
     /**
-     * 
      * @param StockItemInterface $stockItem
-     * @param UomQty $qty
-     * @param Location $srcLocation
-     * @param Location $destLocation
+     * @param UomQty             $qty
+     * @param Location           $srcLocation
+     * @param Location           $destLocation
+     *
      * @return string
      */
     public function generate(StockItemInterface $stockItem, UomQty $qty): string;

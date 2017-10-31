@@ -1,9 +1,15 @@
 <?php
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Doctrine\ORM;
 
 use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
@@ -17,13 +23,11 @@ use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
  */
 class LocationRepository extends ResourceRepository implements LocationRepositoryInterface
 {
-
     public function createQueryBuilder($alias, $indexBy = null)
     {
         $qb = parent::createQueryBuilder($alias, $indexBy);
         $qb->orderBy($alias . '.treeRoot', 'ASC')
             ->orderBy($alias . '.treeLft', 'ASC');
-
 
         return $qb;
     }
@@ -51,11 +55,12 @@ class LocationRepository extends ResourceRepository implements LocationRepositor
             ->where('su.stockItem = :item')
             ->setParameter('item', $item);
 
-        if ( null !== $locationType ) {
+        if (null !== $locationType) {
             $qb
                 ->andWhere('l.typeValue = :locationType')
                 ->setParameter('locationType', $locationType);
         }
+
         return $qb->getQuery()->getResult();
     }
 }

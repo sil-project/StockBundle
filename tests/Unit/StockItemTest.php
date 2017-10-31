@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 /**
@@ -15,21 +17,18 @@ namespace Sil\Bundle\StockBundle\Test\Unit;
  */
 class StockItemTest extends AbstractStockTestCase
 {
-
     /**
-     * A StockItem might be contained in several locations
+     * A StockItem might be contained in several locations.
      */
     public function testHasLocations()
     {
-        
     }
 
     /**
-     * Units of a StockItem should be updated when the Uom is changed 
+     * Units of a StockItem should be updated when the Uom is changed.
      */
     public function testUpdateUnitsUom()
     {
-
         $qty = $this->stockItemQueries->getQty($this->stockItem);
         $this->assertTrue($qty->getValue() == 18);
 

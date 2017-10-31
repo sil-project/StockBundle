@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -16,13 +26,12 @@ use Sil\Bundle\StockBundle\Domain\Entity\UomType;
 use Sil\Bundle\StockBundle\Domain\Entity\Uom;
 
 /**
- * Description of WarehouseFixtures
+ * Description of WarehouseFixtures.
  *
  * @author glenn
  */
 class UomFixtures extends Fixture implements ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -30,7 +39,6 @@ class UomFixtures extends Fixture implements ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-
         $uomTypeMass = UomType::createDefault('Mass');
         $uomTypePiece = UomType::createDefault('Piece');
 
@@ -60,5 +68,4 @@ class UomFixtures extends Fixture implements ContainerAwareInterface
     {
         $this->container = $container;
     }
-
 }

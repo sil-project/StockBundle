@@ -1,16 +1,18 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
 
 namespace Sil\Bundle\StockBundle\Controller;
 
 use Blast\CoreBundle\Controller\CRUDController;
-use Sil\Bundle\StockBundle\Domain\Entity\StockUnit;
-use Sil\Bundle\StockBundle\Form\Type\StockUnitFormType;
 use Symfony\Component\Form\Form;
 
 /**
@@ -18,35 +20,34 @@ use Symfony\Component\Form\Form;
  */
 class StockUnitCRUDController extends CRUDController
 {
-
     public function updateStockAction()
     {
         $request = $this->getRequest();
         // the key used to lookup the template
         $templateKey = 'edit';
-       
+
         $this->admin->checkAccess('create');
         $stockItemRepository = $this->get('sil.stock.repository.stock_item');
         $item = $stockItemRepository->get($request->get('item_id'));
 
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
 
-        if ( $class->isAbstract() ) {
+        if ($class->isAbstract()) {
             return $this->render(
                             'SonataAdminBundle:CRUD:select_subclass.html.twig',
                             array(
                                 'base_template' => $this->getBaseTemplate(),
-                                'admin' => $this->admin,
-                                'action' => 'create',
+                                'admin'         => $this->admin,
+                                'action'        => 'create',
                             ), null, $request
             );
         }
-        
+
         $object = $this->admin->getNewInstance();
         $object->setStockItem($item);
-        
+
         $preResponse = $this->preCreate($request, $object);
-        if ( $preResponse !== null ) {
+        if ($preResponse !== null) {
             return $preResponse;
         }
 
@@ -54,27 +55,27 @@ class StockUnitCRUDController extends CRUDController
 
         /** @var $form \Symfony\Component\Form\Form */
         $form = $this->admin->getForm();
-        
+
         $form->setData($object);
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() ) {
+        if ($form->isSubmitted()) {
             //TODO: remove this check for 4.0
-            if ( method_exists($this->admin, 'preValidate') ) {
+            if (method_exists($this->admin, 'preValidate')) {
                 $this->admin->preValidate($object);
             }
             $isFormValid = $form->isValid();
 
             // persist if the form was valid and if in preview mode the preview was approved
-            if ( $isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request)) ) {
+            if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
                 $this->admin->checkAccess('create', $object);
 
                 try {
                     $object = $this->admin->create($object);
 
-                    if ( $this->isXmlHttpRequest() ) {
+                    if ($this->isXmlHttpRequest()) {
                         return $this->renderJson(array(
-                                    'result' => 'ok',
+                                    'result'   => 'ok',
                                     'objectId' => $this->admin->getNormalizedIdentifier($object),
                                         ), 200, array());
                     }
@@ -90,7 +91,7 @@ class StockUnitCRUDController extends CRUDController
 
                     // redirect to edit mode
                     return $this->redirectTo($object);
-                } catch ( ModelManagerException $e ) {
+                } catch (ModelManagerException $e) {
                     $this->handleModelManagerException($e);
 
                     $isFormValid = false;
@@ -98,8 +99,8 @@ class StockUnitCRUDController extends CRUDController
             }
 
             // show an error message if the form failed validation
-            if ( !$isFormValid ) {
-                if ( !$this->isXmlHttpRequest() ) {
+            if (!$isFormValid) {
+                if (!$this->isXmlHttpRequest()) {
                     $this->addFlash(
                             'sonata_flash_error',
                             $this->admin->trans(
@@ -109,7 +110,7 @@ class StockUnitCRUDController extends CRUDController
                             )
                     );
                 }
-            } elseif ( $this->isPreviewRequested() ) {
+            } elseif ($this->isPreviewRequested()) {
                 // pick the preview template if the form was valid and preview was requested
                 $templateKey = 'preview';
                 $this->admin->getShow();
@@ -124,9 +125,8 @@ class StockUnitCRUDController extends CRUDController
         return $this->render($this->admin->getTemplate($templateKey),
                         array(
                     'action' => 'create',
-                    'form' => $view,
+                    'form'   => $view,
                     'object' => $object,
                         ), null);
     }
-
 }

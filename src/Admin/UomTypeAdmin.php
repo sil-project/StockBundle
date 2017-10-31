@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -20,8 +21,6 @@ use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
  */
 class UomTypeAdmin extends ResourceAdmin
 {
-
     protected $baseRouteName = 'admin_stock_uomtype';
     protected $baseRoutePattern = 'stock/uomtype';
-
 }

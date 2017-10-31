@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Doctrine\Common\Collections\Collection;
@@ -20,12 +23,10 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
  */
 class UomType
 {
-
     use Guidable;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $name;
 
@@ -35,26 +36,22 @@ class UomType
     private $uoms;
 
     /**
-     * 
      * @param string $name
      */
     public static function createDefault(string $name)
     {
         $o = new self();
         $o->name = $name;
+
         return $o;
     }
 
-    /**
-     * 
-     */
     public function __construct()
     {
         $this->uoms = new ArrayCollection();
     }
 
     /**
-     * 
      * @return string
      */
     public function getName(): ?string

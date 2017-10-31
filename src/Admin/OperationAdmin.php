@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
@@ -17,37 +20,33 @@ use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sil\Bundle\StockBundle\Domain\Repository\OperationTypeRepositoryInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
+use Sil\Bundle\StockBundle\Domain\Entity\OperationType;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class OperationAdmin extends ResourceAdmin
 {
-
     protected $baseRouteName = 'admin_stock_operation';
     protected $baseRoutePattern = 'stock/operation';
 
     /**
-     *
-     * @var MovementCodeGeneratorInterface 
+     * @var MovementCodeGeneratorInterface
      */
     protected $movementCodeGenerator;
 
     /**
-     *
-     * @var OperationCodeGeneratorInterface 
+     * @var OperationCodeGeneratorInterface
      */
     protected $operationCodeGenerator;
 
     /**
-     *
-     * @var OperationTypeRepositoryInterface 
+     * @var OperationTypeRepositoryInterface
      */
     protected $operationTypeRepository;
 
     /**
-     *
-     * @var LocationRepositoryInterface 
+     * @var LocationRepositoryInterface
      */
     protected $locationRepository;
 
@@ -63,7 +62,7 @@ class OperationAdmin extends ResourceAdmin
             $this->getRouterIdParameter() . '/unreserve');
         $collection->add('apply', $this->getRouterIdParameter() . '/apply');
 
-        $collection->add('create_by_type', 'create/{type_id}');
+        $collection->add('create_by_type', 'create/{type}');
     }
 
     /**
@@ -73,20 +72,17 @@ class OperationAdmin extends ResourceAdmin
     {
         parent::configureFormFields($mapper);
         $type = $this->getSubject()->getType();
-        /**
-         * @todo filter locations (src & dest) using type 
+        /*
+         * @todo filter locations (src & dest) using type
          */
     }
 
     /**
-     * 
      * @return array|OperationType[]
      */
     public function getOperationTypes()
     {
-
-        $operationTypes = $this->getOperationTypeRepository()->findAll();
-        return $operationTypes;
+        return OperationType::getTypes();
     }
 
     /**
@@ -94,7 +90,6 @@ class OperationAdmin extends ResourceAdmin
      */
     public function prePersist($operation)
     {
-
         $this->preUpdate($operation);
     }
 
@@ -107,7 +102,7 @@ class OperationAdmin extends ResourceAdmin
         $code = $this->getOperationCodeGenerator()->generate();
         $object->setCode($code);
 
-        foreach ( $object->getMovements() as $m ) {
+        foreach ($object->getMovements() as $m) {
             $mCode = $this->getMovementCodeGenerator()->generate(
                 $m->getStockItem(), $m->getQty());
             $m->setCode($mCode);
@@ -117,7 +112,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
      * @return OperationCodeGeneratorInterface
      */
     public function getOperationCodeGenerator(): OperationCodeGeneratorInterface
@@ -126,7 +120,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
      * @param OperationCodeGeneratorInterface $operationCodeGenerator
      */
     public function setOperationCodeGenerator(OperationCodeGeneratorInterface $operationCodeGenerator)
@@ -135,7 +128,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
      * @return MovementCodeGeneratorInterface
      */
     public function getMovementCodeGenerator(): MovementCodeGeneratorInterface
@@ -144,7 +136,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
      * @param MovementCodeGeneratorInterface $codeGenerator
      */
     public function setMovementCodeGenerator(MovementCodeGeneratorInterface $codeGenerator)
@@ -153,25 +144,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
-     * @return OperationTypeRepositoryInterface
-     */
-    public function getOperationTypeRepository(): OperationTypeRepositoryInterface
-    {
-        return $this->operationTypeRepository;
-    }
-
-    /**
-     * 
-     * @param OperationTypeRepositoryInterface $operationTypeRepository
-     */
-    public function setOperationTypeRepository(OperationTypeRepositoryInterface $operationTypeRepository)
-    {
-        $this->operationTypeRepository = $operationTypeRepository;
-    }
-
-    /**
-     * 
      * @return LocationRepositoryInterface
      */
     public function getLocationRepository(): LocationRepositoryInterface
@@ -180,7 +152,6 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
-     * 
      * @param LocationRepositoryInterface $locationRepository
      */
     public function setLocationRepository(LocationRepositoryInterface $locationRepository)

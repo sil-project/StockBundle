@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,11 +11,11 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\MovementCodeGeneratorInterface;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sil\Bundle\StockBundle\Domain\Query\StockItemQueriesInterface;
 
 /**
@@ -21,13 +23,11 @@ use Sil\Bundle\StockBundle\Domain\Query\StockItemQueriesInterface;
  */
 class MovementAdmin extends ResourceAdmin
 {
-
     protected $baseRouteName = 'admin_stock_movement';
     protected $baseRoutePattern = 'stock/movement';
 
     /**
-     *
-     * @var MovementCodeGeneratorInterface 
+     * @var MovementCodeGeneratorInterface
      */
     protected $movementCodeGenerator;
 
@@ -70,7 +70,7 @@ class MovementAdmin extends ResourceAdmin
     {
         $this->stockItemQueries = $stockItemQueries;
     }
-    
+
     public function toString($movement)
     {
         return sprintf('[%s]', $movement->getCode());

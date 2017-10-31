@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTime;
@@ -18,64 +21,38 @@ use DateTime;
  */
 trait ProgressStateAwareTrait
 {
-
-    /**
-     * 
-     * @return void
-     */
     public function beDraft(): void
     {
         $this->setState($this->getState()->toDraft());
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function beConfirmed(): void
     {
         $this->setState($this->getState()->toConfirmed());
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function bePartiallyAvailable(): void
     {
         $this->setState($this->getState()->toPartiallyAvailable());
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function beAvailable(): void
     {
         $this->setState($this->getState()->toAvailable());
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function beDone(): void
     {
         $this->setState($this->getState()->toDone());
         $this->setCompletedAt(new DateTime());
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function beCancel(): void
     {
         $this->setState($this->getState()->toCancel());
     }
 
     /**
-     * 
      * @return bool
      */
     public function isDraft(): bool
@@ -84,7 +61,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isConfirmed(): bool
@@ -93,7 +69,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isPartiallyAvailable(): bool
@@ -102,7 +77,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isAvailable(): bool
@@ -111,7 +85,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isDone(): bool
@@ -120,7 +93,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isCancel(): bool
@@ -129,7 +101,6 @@ trait ProgressStateAwareTrait
     }
 
     /**
-     * 
      * @return bool
      */
     public function isToDo(): bool

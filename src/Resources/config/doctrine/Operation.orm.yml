@@ -6,6 +6,9 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
             type: string(64)
             unique: true
             nullable: false
+        typeValue:
+            type: string(64)
+            nullable: false
         expectedAt: 
             type: datetime
         completedAt: 
@@ -27,12 +30,7 @@ Sil\Bundle\StockBundle\Domain\Entity\Operation:
                 name: location_dest_id
                 referencedColumnName: id
                 nullable: true
-        type: 
-            targetEntity: OperationType
-            inversedBy: operations
-            joinColumn:
-                name: operation_type_id
-                referencedColumnName: id
+       
         partner: 
             targetEntity: PartnerInterface
             joinColumn:

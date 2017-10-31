@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Generator;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
@@ -20,13 +22,12 @@ use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
  */
 interface StockUnitCodeGeneratorInterface
 {
-
     /**
-     * 
-     * @param StockItemInterface $item
-     * @param UomQty $qty
-     * @param Location $location
+     * @param StockItemInterface  $item
+     * @param UomQty              $qty
+     * @param Location            $location
      * @param BatchInterface|null $batch
+     *
      * @return string
      */
     public function generate(StockItemInterface $item, UomQty $qty, Location $location,

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -24,40 +25,34 @@ use Sil\Bundle\StockBundle\Domain\Entity\Movement;
  */
 interface MovementServiceInterface
 {
-
     /**
-     * 
-     * @param StockItemInterface $item
-     * @param UomQty $qty
-     * @param Location $srcLoc
-     * @param Location $destLoc
+     * @param StockItemInterface  $item
+     * @param UomQty              $qty
+     * @param Location            $srcLoc
+     * @param Location            $destLoc
      * @param BatchInterface|null $batch
-     * 
+     *
      * @return Movement
      */
     public function createDraft(StockItemInterface $item, UomQty $qty,
             Location $srcLoc, Location $destLoc, ?BatchInterface $batch = null): Movement;
 
     /**
-     * 
      * @param Movement $mvt
      */
     public function confirm(Movement $mvt): void;
 
     /**
-     * 
      * @param Movement $mvt
      */
     public function reserveUnits(Movement $mvt): void;
 
     /**
-     * 
      * @param Movement $mvt
      */
     public function apply(Movement $mvt): void;
 
     /**
-     * 
      * @param Movement $mvt
      */
     public function cancel(Movement $mvt): void;

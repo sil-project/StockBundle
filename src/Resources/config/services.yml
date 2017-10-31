@@ -9,7 +9,6 @@ services:
     sil.stock.code_generator.stock_unit:
         class: Sil\Bundle\StockBundle\Domain\Generator\StockUnitCodeGenerator
         
-   
     sil.stock.factory.movement:
         class: Sil\Bundle\StockBundle\Domain\Factory\MovementFactory
         arguments:
@@ -35,11 +34,6 @@ services:
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Operation
             
-    sil.stock.repository.operation_type:
-        class:  Sil\Bundle\StockBundle\Doctrine\ORM\OperationTypeRepository
-        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-        arguments:
-            - Sil\Bundle\StockBundle\Domain\Entity\OperationType
         
     sil.stock.repository.movement:
         class:  Sil\Bundle\StockBundle\Doctrine\ORM\MovementRepository

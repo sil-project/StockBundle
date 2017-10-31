@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -22,7 +25,6 @@ use Symfony\Component\Config\FileLocator;
  */
 class SilStockExtension extends Extension
 {
-
     use ResourceExtensionTrait;
 
     public function load(array $configs, ContainerBuilder $container): void
@@ -39,13 +41,12 @@ class SilStockExtension extends Extension
         $blastLoader = new YamlFileLoader($newContainer, $fileLocator);
         $blastLoader->load('blast.yml');
 
-        /**
+        /*
          * @todo refacto stop using parameters
          */
         $container->setParameter('blast',
             array_merge($container->getParameter('blast'),
                 $newContainer->getParameter('blast')));
-
 
         $this->registerResources($config['resources'], $container);
     }

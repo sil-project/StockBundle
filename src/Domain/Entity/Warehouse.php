@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -23,24 +24,20 @@ use InvalidArgumentException;
  */
 class Warehouse
 {
-
     use Guidable;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $name;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $code;
 
     /**
-     *
-     * @var Collection|Location[] 
+     * @var Collection|Location[]
      */
     private $locations;
 
@@ -53,16 +50,12 @@ class Warehouse
         return $o;
     }
 
-    /**
-     * 
-     */
     public function __construct()
     {
         $this->locations = new ArrayCollection();
     }
 
     /**
-     * 
      * @return string
      */
     public function getName(): ?string
@@ -71,7 +64,6 @@ class Warehouse
     }
 
     /**
-     * 
      * @return string
      */
     public function getCode(): ?string
@@ -80,7 +72,6 @@ class Warehouse
     }
 
     /**
-     * 
      * @return Collection
      */
     public function getLocations(): Collection
@@ -89,9 +80,7 @@ class Warehouse
     }
 
     /**
-     * 
      * @param string $name
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -99,9 +88,7 @@ class Warehouse
     }
 
     /**
-     * 
      * @param type $code
-     * @return void
      */
     public function setCode(string $code): void
     {
@@ -109,8 +96,8 @@ class Warehouse
     }
 
     /**
-     * 
      * @param Location $location
+     *
      * @return bool
      */
     public function hasLocation(Location $location): bool
@@ -119,14 +106,13 @@ class Warehouse
     }
 
     /**
-     * 
      * @param Location $location
-     * @return void
+     *
      * @throws InvalidArgumentException
      */
     public function addLocation(Location $location): void
     {
-        if ( $this->locations->contains($location) ) {
+        if ($this->locations->contains($location)) {
             throw new \InvalidArgumentException(
                     'The same Location cannot be added twice');
         }
@@ -135,19 +121,17 @@ class Warehouse
     }
 
     /**
-     * 
      * @param Location $location
-     * @return void
+     *
      * @throws InvalidArgumentException
      */
     public function removeLocation(Location $location): void
     {
-        if ( !$this->locations->contains($location) ) {
+        if (!$this->locations->contains($location)) {
             throw new \InvalidArgumentException(
                     'The location to remove does not exist');
         }
         $location->setWarehouse(null);
         $this->locations->removeElement($location);
     }
-
 }

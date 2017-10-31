@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
@@ -17,10 +19,8 @@ use Sil\Bundle\StockBundle\Domain\Entity\UomQty;
  */
 class MovementTest extends AbstractStockTestCase
 {
-
     public function testMovementLifecycle()
     {
-
         $uomQty = new UomQty($this->uomGr, 6500);
 
         $mvt = $this->mvtService->createDraft($this->stockItem, $uomQty,

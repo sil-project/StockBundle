@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Test\Unit;
 
 /**
@@ -15,10 +17,8 @@ namespace Sil\Bundle\StockBundle\Test\Unit;
  */
 class OperationTest extends AbstractStockTestCase
 {
-
     public function testOperationLifecycle()
     {
-
         $op = $this->opService->createDraft();
 
         $this->assertTrue($op->isDraft());
@@ -31,7 +31,6 @@ class OperationTest extends AbstractStockTestCase
 
         $this->opService->apply($op);
         $this->assertTrue($op->isDone());
-
 
         $this->expectException(\DomainException::class);
         $this->opService->cancel($op);

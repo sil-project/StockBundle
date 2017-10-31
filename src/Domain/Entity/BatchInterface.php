@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -18,9 +19,7 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 interface BatchInterface
 {
-
     /**
-     * 
      * @return string
      */
     public function getCode(): string;

@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
@@ -19,12 +22,9 @@ use Sil\Bundle\StockBundle\Domain\Entity\Uom;
  */
 interface UomServiceInterface
 {
-
     /**
-     * 
      * @param StockItemInterface $item
-     * @param Uom $newUom
-     * @return void
+     * @param Uom                $newUom
      */
     public function updateUomForStockItem(StockItemInterface $item, Uom $newUom): void;
 }

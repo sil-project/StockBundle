@@ -31,7 +31,8 @@
         "winzou/state-machine": "^0.3.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": ">=3.2"
+        "symfony/phpunit-bridge": ">=3.2",
+        "phpunit/phpunit": "^6.4"
     },
     "scripts": {
         "phpunit-install": [

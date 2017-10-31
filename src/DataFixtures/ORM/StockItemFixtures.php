@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Sil\Bundle\StockBundle\DataFixtures\ORM;
 
 /*
@@ -15,13 +25,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sil\Bundle\StockBundle\Domain\Entity\StockItem;
 
 /**
- * Description of WarehouseFixtures
+ * Description of WarehouseFixtures.
  *
  * @author glenn
  */
 class StockItemFixtures extends Fixture implements ContainerAwareInterface
 {
-
     /**
      * @var ContainerInterface
      */
@@ -32,7 +41,7 @@ class StockItemFixtures extends Fixture implements ContainerAwareInterface
         $uomKg = $this->getReference('uom-kg');
         $outs = $this->getReference('outs-default');
 
-        $item1 = StockItem::creatDefault('ART-1','Item 1', $uomKg, $outs);
+        $item1 = StockItem::creatDefault('ART-1', 'Item 1', $uomKg, $outs);
 
         $manager->persist($item1);
         $manager->flush();
@@ -48,8 +57,7 @@ class StockItemFixtures extends Fixture implements ContainerAwareInterface
         return array(
             LocationFixtures::class,
             UomFixtures::class,
-            OutputStrategyFixtures::class
+            OutputStrategyFixtures::class,
         );
     }
-
 }
