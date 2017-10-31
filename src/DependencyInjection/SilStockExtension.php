@@ -34,8 +34,8 @@ class SilStockExtension extends Extension
 
         $fileLocator = new FileLocator(__DIR__ . '/../Resources/config');
         $loader = new YamlFileLoader($container, $fileLocator);
-        $loader->load('admin.yml');
-        $loader->load('services.yml');
+        //$loader->load('admin.yml');
+        //$loader->load('services.yml');
 
         $newContainer = new ContainerBuilder();
         $blastLoader = new YamlFileLoader($newContainer, $fileLocator);

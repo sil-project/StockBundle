@@ -1,6 +1,6 @@
 {% extends 'BlastCoreBundle:CRUD:base_edit.html.twig' %}
 
-
+{% block sonata_form_action_url %}{{ admin.generateUrl('create_by_type', {'type':object.type,'id': objectId|default(admin.id(object)), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}{% endblock %}
 
 {% block sonata_form_actions %}
     {% if admin.id(object) is not null %}

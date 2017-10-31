@@ -82,6 +82,12 @@ services:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
         arguments:
             - Sil\Bundle\StockBundle\Domain\Entity\Warehouse
+            
+    sil.stock.repository.partner:
+        class:  Sil\Bundle\StockBundle\Doctrine\ORM\PartnerRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - Sil\Bundle\StockBundle\Domain\Entity\Partner
    
     
     ###################

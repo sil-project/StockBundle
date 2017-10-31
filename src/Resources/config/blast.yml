@@ -11,24 +11,19 @@ parameters:
                     sil.stock.operation.form.tab.general:
                         
                         sil.stock.operation.form.group.description:
-                            type:
-                                required: true
-                                
-                            partner:
-                                choice_label: fulltextName
-                            expectedAt:
-                                type: sonata_type_datetime_picker
-                                required: true
+                                                            
+                            dummy_1:
+                                type: hidden
+                                mapped: false
+                            
                                 
                         sil.stock.operation.form.group.locations:
-                            srcLocation:
-                                type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
-                                choice_label: getIndentedName
-                                required: true
-                            destLocation:
-                                type: Sil\Bundle\StockBundle\Form\Type\LocationChoiceFormType
-                                choice_label: getIndentedName
-                                required: true
+                            
+                             dummy_2:
+                                type: hidden
+                                mapped: false
+                           
+                            
                         
                         sil.stock.operation.form.group.movements:
                             _options:
@@ -54,9 +49,11 @@ parameters:
                         
                         sil.stock.operation.show.group.description:
                             code: ~
-                            type: ~
+                            type: 
+                                template: SilStockBundle:Field:show_operation_type_field.html.twig
                             partner:
                                 associated_property: fulltextName
+                                admin_code: librinfo_seedbatch.admin.organism
                             expectedAt: ~
                             completedAt: ~
                             state:
@@ -86,9 +83,11 @@ parameters:
                 add:
                     code:
                         identifier: true
-                    type: ~
+                    type: 
+                        template: SilStockBundle:Field:list_operation_type_field.html.twig
                     partner:
                         associated_property: fulltextName
+                        admin_code: librinfo_seedbatch.admin.organism
                     expectedAt: ~
                     completedAt: ~
                     srcLocation:

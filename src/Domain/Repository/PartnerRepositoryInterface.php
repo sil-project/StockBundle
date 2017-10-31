@@ -10,20 +10,13 @@
  */
 namespace Sil\Bundle\StockBundle\Domain\Repository;
 
-use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
-
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
-interface LocationRepositoryInterface
+interface PartnerRepositoryInterface
 {
 
-    public function findInternalLocations(): array;
+    public function getCustomers(): array;
 
-    public function findCustomerLocations(): array;
-
-    public function findSupplierLocations(): array;
-
-    public function findByOwnedItem(StockItemInterface $item,
-        ?string $locationType = null): array;
+    public function getSuppliers(): array;
 }
