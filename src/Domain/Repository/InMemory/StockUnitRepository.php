@@ -39,7 +39,6 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         StockItemInterface $item,
         ?BatchInterface $batch = null
     ): array {
-    
         return array_filter(
             $this->findAll(),
             function ($su) use ($item) {
@@ -47,7 +46,8 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
             }
         );
     }
- /**
+
+    /**
      * @param Location $location
      * @param array    $orderBy
      *
@@ -58,8 +58,7 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         array $orderBy = [],
         ?int $limit = null
     ): array {
-    
-        /** @todo: implement this method */
+        /* @todo: implement this method */
         return [];
     }
 
@@ -73,7 +72,6 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         Location $location,
         ?BatchInterface $batch = null
     ): array {
-    
         return array_filter(
             $this->findAll(),
             function ($su) use ($item, $location) {
@@ -82,15 +80,14 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         );
     }
 
-        /**
+    /**
      * @param Movement $mvt
      *
      * @return array|StockUnit[]
      */
     public function findAvailableForMovementReservation(Movement $mvt): array
     {
-    
-        /** @todo: implement this method */
+        /* @todo: implement this method */
         return [];
     }
 
@@ -105,8 +102,7 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         ?BatchInterface $batch = null,
         array $orderBy = []
     ): array {
-    
-        /** @todo: implement this method */
+        /* @todo: implement this method */
         return [];
     }
 
@@ -119,8 +115,7 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
         StockItemInterface $item,
         ?BatchInterface $batch = null
     ): array {
-    
-        /** @todo: implement this method */
+        /* @todo: implement this method */
         return [];
     }
 
@@ -131,11 +126,10 @@ class StockUnitRepository extends InMemoryRepository implements StockUnitReposit
      */
     public function findReservedByMovement(Movement $mvt): array
     {
-    
-        /** @todo: implement this method */
+        /* @todo: implement this method */
         return [];
     }
-    
+
     /**
      * @param array $criteria
      *
