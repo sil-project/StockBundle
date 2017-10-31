@@ -3,10 +3,7 @@
 // if the bundle is within a symfony project, try to reuse the project's autoload
 
 $files = array(
-    //bundle level
     __DIR__.'/../../vendor/autoload.php',
-    //platform level
-    __DIR__.'/../../../../../../vendor/autoload.php',
 );
 
 $autoload = false;
