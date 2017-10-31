@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,10 +11,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DateTimeInterface;
-use Sil\Bundle\StockBundle\Domain\Entity\Operation;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,87 +27,74 @@ use DomainException;
  */
 class Movement implements ProgressStateAwareInterface
 {
-
     use Guidable,
         Timestampable,
         ProgressStateAwareTrait;
 
     /**
-     *
      * @var string
      */
     private $code;
 
     /**
-     *
-     * @var DateTimeInterface 
+     * @var DateTimeInterface
      */
     private $completedAt;
 
     /**
-     *
-     * @var DateTimeInterface 
+     * @var DateTimeInterface
      */
     private $expectedAt;
 
     /**
-     *
-     * @var StockItemInterface 
+     * @var StockItemInterface
      */
     private $stockItem;
 
     /**
-     *
-     * @var float 
+     * @var float
      */
     private $qtyValue = 0;
 
     /**
-     *
-     * @var Uom 
+     * @var Uom
      */
     private $qtyUom;
 
     /**
-     *
      * @var Operation
      */
     private $operation;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     private $srcLocation;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     private $destLocation;
 
     /**
-     *
      * @var string
      */
     private $stateValue;
 
     /**
-     *
      * @var BatchInterface
      */
     private $batch;
 
     /**
-     *
-     * @var Collection|StockUnit[] 
+     * @var Collection|StockUnit[]
      */
     private $reservedStockUnits;
 
     /**
-     * @param string $code
+     * @param string             $code
      * @param StockItemInterface $stockItem
-     * @param UomQty $qty
+     * @param UomQty             $qty
      */
     public static function createDefault(string $code, StockItemInterface $item,
         UomQty $qty)
@@ -114,12 +103,12 @@ class Movement implements ProgressStateAwareInterface
         $o->code = $code;
         $o->stockItem = $item;
         $o->setQty($qty);
+
         return $o;
     }
 
     public function __construct()
     {
-
         $this->createdAt = new DateTime();
         $this->expectedAt = new DateTime();
         $this->setState(ProgressState::draft());
@@ -127,7 +116,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return string
      */
     public function getCode(): ?string
@@ -136,7 +124,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return DateTimeInterface|null
      */
     public function getCompletedAt(): ?DateTimeInterface
@@ -145,7 +132,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return DateTimeInterface
      */
     public function getExpectedAt(): DateTimeInterface
@@ -154,7 +140,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Operation
      */
     public function getOperation(): Operation
@@ -163,7 +148,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Location
      */
     public function getSrcLocation(): ?Location
@@ -172,7 +156,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Location
      */
     public function getDestLocation(): ?Location
@@ -189,7 +172,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return StockItemInterface
      */
     public function getStockItem(): ?StockItemInterface
@@ -198,19 +180,18 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return UomQty
      */
     public function getQty(): ?UomQty
     {
-        if ( null == $this->qtyUom ) {
+        if (null == $this->qtyUom) {
             return null;
         }
+
         return new UomQty($this->qtyUom, floatval($this->qtyValue));
     }
 
     /**
-     * 
      * @return BatchInterface|null
      */
     public function getBatch(): ?BatchInterface
@@ -219,7 +200,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return Collection
      */
     public function getReservedStockUnits(): Collection
@@ -228,7 +208,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param string $code
      */
     public function setCode(string $code)
@@ -237,9 +216,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param DateTimeInterface $completedAt
-     * @return void
      */
     public function setCompletedAt(DateTimeInterface $completedAt): void
     {
@@ -247,9 +224,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param DateTimeInterface $expectedAt
-     * @return void
      */
     public function setExpectedAt(DateTimeInterface $expectedAt): void
     {
@@ -257,7 +232,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Operation $operation
      */
     public function setOperation(Operation $operation)
@@ -266,9 +240,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Location $srcLocation
-     * @return void
      */
     public function setSrcLocation(Location $srcLocation): void
     {
@@ -276,9 +248,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param Location $destLocation
-     * @return void
      */
     public function setDestLocation(Location $destLocation): void
     {
@@ -286,9 +256,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $stockItem
-     * @return void
      */
     public function setStockItem(StockItemInterface $stockItem): void
     {
@@ -296,9 +264,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param UomQty $qty
-     * @return void
      */
     public function setQty(UomQty $qty): void
     {
@@ -307,9 +273,7 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param BatchInterface|null $batch
-     * @return void
      */
     public function setBatch(?BatchInterface $batch): void
     {
@@ -317,7 +281,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param ProgressState $state
      */
     private function setState(ProgressState $state)
@@ -326,7 +289,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return bool
      */
     public function withBatchTracking(): bool
@@ -335,14 +297,13 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param StockUnit $unit
-     * @return void
+     *
      * @throws DomainException
      */
     public function reserve(StockUnit $unit): void
     {
-        if ( $unit->isReserved() ) {
+        if ($unit->isReserved()) {
             throw new \DomainException('The StockUnit is already reserved');
         }
         $unit->beReservedByMovement($this);
@@ -351,53 +312,46 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @param StockUnit $unit
-     * @return void
+     *
      * @throws DomainException
      */
     public function unreserve(StockUnit $unit): void
     {
-        if ( !$unit->isReserved() ) {
+        if (!$unit->isReserved()) {
             throw new \DomainException('The StockUnit is not reserved and cannot be unreserved');
         }
-        if ( !$this->reservedStockUnits->contains($unit) ) {
+        if (!$this->reservedStockUnits->contains($unit)) {
             throw new \DomainException('The StockUnit is not reserved by this Movement');
         }
         $unit->beUnreserved();
         $this->reservedStockUnits->removeElement($unit);
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function unreserveAllUnits(): void
     {
-        if($this->isCancel() || $this->isDone()){
+        if ($this->isCancel() || $this->isDone()) {
             throw new DomainException('Movement which is '
                     . 'cancel or done connot be unreserved');
         }
-        
-        if(!$this->hasReservedStockUnits()){
+
+        if (!$this->hasReservedStockUnits()) {
             return;
         }
-        
-        foreach ( $this->reservedStockUnits as $unit ) {
+
+        foreach ($this->reservedStockUnits as $unit) {
             $this->unreserve($unit);
         }
-       
     }
 
     /**
-     * 
      * @return UomQty
      */
     public function getReservedQty(): UomQty
     {
         $qty = $this->getQty()->copyWithValue(0);
 
-        foreach ( $this->reservedStockUnits as $unit ) {
+        foreach ($this->reservedStockUnits as $unit) {
             $qty = $qty->increasedBy($unit->getQty());
         }
 
@@ -405,7 +359,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return UomQty
      */
     public function getRemainingQtyToBeReserved(): UomQty
@@ -414,7 +367,6 @@ class Movement implements ProgressStateAwareInterface
     }
 
     /**
-     * 
      * @return bool
      */
     public function isFullyReserved(): bool

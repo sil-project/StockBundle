@@ -12,7 +12,6 @@ parameters:
                         
                         sil.stock.operation.form.group.description:
                             type:
-                                choice_label: name
                                 required: true
                                 
                             partner:
@@ -55,8 +54,7 @@ parameters:
                         
                         sil.stock.operation.show.group.description:
                             code: ~
-                            type:
-                                associated_property: name
+                            type: ~
                             partner:
                                 associated_property: fulltextName
                             expectedAt: ~
@@ -88,8 +86,7 @@ parameters:
                 add:
                     code:
                         identifier: true
-                    type:
-                        associated_property: name
+                    type: ~
                     partner:
                         associated_property: fulltextName
                     expectedAt: ~
@@ -104,46 +101,6 @@ parameters:
             Sonata\AdminBundle\Datagrid\DatagridMapper:
                 add: ~
                 
-##################
-# OPERATION TYPES
-##################
-        Sil\Bundle\StockBundle\Domain\Entity\OperationType:
-            Sonata\AdminBundle\Form\FormMapper:
-                add:
-                    sil.stock.operation_type.form.tab.general:
-                        
-                        sil.stock.operation_type.form.group.description:
-                            name:
-                                required: true
-                        
-                    _options:
-                        tabsOrder:
-                            - sil.stock.operation.form.tab.general
-                            - form_tab_history
-                            
-            Sonata\AdminBundle\Show\ShowMapper:
-                forceTabs: true
-                add:
-                    sil.stock.operation_type.show.tab.general:
-                        
-                        sil.stock.operation_type.show.group.description:
-                            name:
-                                identfier: true
-                            
-                    _options:
-                        tabsOrder:
-                            - sil.stock.operation_type.show.tab.general
-                            - show_tab_history
-                            
-            Sonata\AdminBundle\Datagrid\ListMapper:
-                remove:
-                    createdAt: ~
-                    updatedAt: ~
-                add:
-                    name: ~
-                    
-            Sonata\AdminBundle\Datagrid\DatagridMapper:
-                add: ~
 
 ##############
 # MOVEMENTS

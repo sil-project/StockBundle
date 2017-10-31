@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -20,37 +21,31 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
  */
 class StockItem implements StockItemInterface
 {
-
     use Guidable;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $name;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $code;
 
     /**
-     *
      * @var Uom
      */
     private $uom;
 
     /**
-     *
-     * @var OutputStrategy 
+     * @var OutputStrategy
      */
     private $outputStrategy;
 
     /**
-     * 
      * @param string $name
-     * @param Uom $uom
+     * @param Uom    $uom
      */
     public static function creatDefault(string $code, string $name, Uom $uom,
             OutputStrategy $strategy)
@@ -60,16 +55,15 @@ class StockItem implements StockItemInterface
         $o->name = $name;
         $o->uom = $uom;
         $o->outputStrategy = $strategy;
+
         return $o;
     }
 
     public function __construct()
     {
-        
     }
 
     /**
-     * 
      * @return string
      */
     public function getName(): ?string
@@ -78,7 +72,6 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @return string
      */
     public function getCode(): ?string
@@ -87,7 +80,6 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @return Uom
      */
     public function getUom(): ?Uom
@@ -96,7 +88,6 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @return OutputStrategy
      */
     public function getOutputStrategy(): ?OutputStrategy
@@ -105,9 +96,7 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @param string $name
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -115,9 +104,7 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @param string $code
-     * @return void
      */
     public function setCode(string $code): void
     {
@@ -125,9 +112,7 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @param Uom $uom
-     * @return void
      */
     public function setUom(Uom $uom): void
     {
@@ -135,13 +120,10 @@ class StockItem implements StockItemInterface
     }
 
     /**
-     * 
      * @param OutputStrategy $outputStrategy
-     * @return void
      */
     public function setOutputStrategy(OutputStrategy $outputStrategy): void
     {
         $this->outputStrategy = $outputStrategy;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use DomainException;
@@ -18,21 +21,17 @@ use DomainException;
  */
 class ProgressState
 {
-
     /**
-     *
      * @var string
      */
     private $value;
 
     /**
-     *
      * @var ProgressStateMachine
      */
     private $stateMachine;
 
     /**
-     * 
      * @return ProgressState
      */
     public static function draft(): ProgressState
@@ -41,7 +40,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public static function confirmed(): ProgressState
@@ -50,7 +48,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public static function partiallyAvailable(): ProgressState
@@ -59,7 +56,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public static function available(): ProgressState
@@ -68,7 +64,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public static function done(): ProgressState
@@ -77,7 +72,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return ProgressState
      */
     public static function cancel(): ProgressState
@@ -86,7 +80,8 @@ class ProgressState
     }
 
     /**
-     * @internal 
+     * @internal
+     *
      * @return ProgressState
      */
     public function __construct($value)
@@ -96,7 +91,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isDraft(): bool
@@ -105,7 +99,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isConfirmed(): bool
@@ -114,7 +107,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isPartiallyAvailable(): bool
@@ -123,7 +115,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isAvailable(): bool
@@ -132,7 +123,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isDone(): bool
@@ -141,7 +131,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isCancel(): bool
@@ -150,7 +139,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return bool
      */
     public function isToDo(): bool
@@ -160,77 +148,82 @@ class ProgressState
 
     public function isInProgress(): bool
     {
-        return ($this->isPartiallyAvailable() || $this->isAvailable());
+        return $this->isPartiallyAvailable() || $this->isAvailable();
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toDraft(): ProgressState
     {
         $this->stateMachine->apply('back_to_draft');
+
         return $this;
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toConfirmed(): ProgressState
     {
         $this->stateMachine->apply('confirm');
+
         return $this;
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toPartiallyAvailable(): ProgressState
     {
         $this->stateMachine->apply('partially_available');
+
         return $this;
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toAvailable(): ProgressState
     {
         $this->stateMachine->apply('available');
+
         return $this;
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toDone(): ProgressState
     {
         $this->stateMachine->apply('done');
+
         return $this;
     }
 
     /**
-     * 
      * @return ProgressState
+     *
      * @throws DomainException
      */
     public function toCancel(): ProgressState
     {
         $this->stateMachine->apply('cancel');
+
         return $this;
     }
 
     /**
-     * 
      * @return string
      */
     public function getValue(): string
@@ -244,7 +237,6 @@ class ProgressState
     }
 
     /**
-     * 
      * @return string
      */
     public function __toString(): string

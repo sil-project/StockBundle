@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
@@ -20,59 +23,50 @@ use DomainException;
  */
 class StockUnit
 {
-
     use Guidable,
         Timestampable;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $code;
 
     /**
-     *
-     * @var float 
+     * @var float
      */
     private $qtyValue = 0;
 
     /**
-     *
-     * @var Uom 
+     * @var Uom
      */
     private $qtyUom;
 
     /**
-     *
-     * @var StockItemInterface 
+     * @var StockItemInterface
      */
     private $stockItem;
 
     /**
-     *
-     * @var Location 
+     * @var Location
      */
     private $location;
 
     /**
-     *
-     * @var BatchInterface 
+     * @var BatchInterface
      */
     private $batch;
 
     /**
-     *
-     * @var Movement 
+     * @var Movement
      */
     private $reservationMovement;
 
     /**
-     * 
-     * @param string $code
+     * @param string             $code
      * @param StockItemInterface $item
-     * @param UomQty $qty
-     * @param Location $location
-     * @param BatchInterface $batch
+     * @param UomQty             $qty
+     * @param Location           $location
+     * @param BatchInterface     $batch
      */
     public static function createDefault($code, StockItemInterface $item,
         UomQty $qty, Location $location, BatchInterface $batch = null)
@@ -84,11 +78,11 @@ class StockUnit
         $o->location = $location;
         $o->batch = $batch;
         $location->addStockUnit($o);
+
         return $o;
     }
 
     /**
-     * 
      * @return string
      */
     public function getCode(): ?string
@@ -97,19 +91,18 @@ class StockUnit
     }
 
     /**
-     * 
      * @return UomQty
      */
     public function getQty(): ?UomQty
     {
-        if ( null == $this->qtyUom ) {
+        if (null == $this->qtyUom) {
             return null;
         }
+
         return new UomQty($this->qtyUom, floatval($this->qtyValue));
     }
 
     /**
-     * 
      * @return StockItemInterface
      */
     public function getStockItem(): ?StockItemInterface
@@ -118,7 +111,6 @@ class StockUnit
     }
 
     /**
-     * 
      * @return Location
      */
     public function getLocation(): ?Location
@@ -127,7 +119,6 @@ class StockUnit
     }
 
     /**
-     * 
      * @return BatchInterface|null
      */
     public function getBatch(): ?BatchInterface
@@ -136,7 +127,6 @@ class StockUnit
     }
 
     /**
-     * 
      * @return Movement|null
      */
     public function getReservationMovement(): ?Movement
@@ -145,7 +135,6 @@ class StockUnit
     }
 
     /**
-     * 
      * @param string $code
      */
     public function setCode(string $code): void
@@ -154,7 +143,6 @@ class StockUnit
     }
 
     /**
-     * 
      * @param StockItemInterface $stockItem
      */
     public function setStockItem(StockItemInterface $stockItem): void
@@ -163,9 +151,7 @@ class StockUnit
     }
 
     /**
-     * 
      * @param Location $location
-     * @return void
      */
     public function setLocation(Location $location): void
     {
@@ -173,9 +159,7 @@ class StockUnit
     }
 
     /**
-     * 
      * @param UomQty $qty
-     * @return void
      */
     public function setQty(UomQty $qty): void
     {
@@ -184,9 +168,7 @@ class StockUnit
     }
 
     /**
-     * 
      * @param BatchInterface|null $batch
-     * @return void
      */
     public function setBatch(?BatchInterface $batch): void
     {
@@ -194,30 +176,24 @@ class StockUnit
     }
 
     /**
-     * 
      * @param Movement $reservationMovement
-     * @return void
+     *
      * @throws DomainException
      */
     public function beReservedByMovement(Movement $reservationMovement): void
     {
-        if ( $this->isReserved() ) {
+        if ($this->isReserved()) {
             throw new DomainException('The StockUnit is already reserved');
         }
         $this->reservationMovement = $reservationMovement;
     }
 
-    /**
-     * 
-     * @return void
-     */
     public function beUnreserved(): void
     {
         $this->reservationMovement = null;
     }
 
     /**
-     * 
      * @return bool
      */
     public function isReserved(): bool

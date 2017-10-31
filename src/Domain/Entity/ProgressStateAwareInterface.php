@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -18,93 +19,59 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 interface ProgressStateAwareInterface
 {
-
     /**
-     * 
      * @return ProgressState
      */
     public function getState(): ProgressState;
 
-    /**
-     * 
-     * @return void
-     */
     public function beDraft(): void;
 
-    /**
-     * 
-     * @return void
-     */
     public function beConfirmed(): void;
 
-    /**
-     * 
-     * @return void
-     */
     public function bePartiallyAvailable(): void;
 
-    /**
-     * 
-     * @return void
-     */
     public function beAvailable(): void;
 
-    /**
-     * 
-     * @return void
-     */
     public function beDone(): void;
 
-    /**
-     * 
-     * @return void
-     */
     public function beCancel(): void;
 
     /**
-     * 
      * @return bool
      */
     public function isDraft(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isConfirmed(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isPartiallyAvailable(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isAvailable(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isDone(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isCancel(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isToDo(): bool;
 
     /**
-     * 
      * @return bool
      */
     public function isInProgress(): bool;

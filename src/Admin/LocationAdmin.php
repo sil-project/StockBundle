@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
@@ -23,31 +26,27 @@ use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
  */
 class LocationAdmin extends ResourceAdmin
 {
-
     protected $baseRouteName = 'admin_stock_location';
     protected $baseRoutePattern = 'stock/location';
 
     /**
-     *
-     * @var StockItemRepositoryInterface 
+     * @var StockItemRepositoryInterface
      */
     protected $stockItemRepository;
 
     /**
-     *
-     * @var StockUnitRepositoryInterface 
+     * @var StockUnitRepositoryInterface
      */
     protected $stockUnitRepository;
 
     /**
-     *
-     * @var StockItemQueriesInterface 
+     * @var StockItemQueriesInterface
      */
     protected $stockItemQueries;
 
     /**
-     * 
      * @param Location $location
+     *
      * @return array|Stockitem[]
      */
     public function getStockUnitsByLocation(Location $location)

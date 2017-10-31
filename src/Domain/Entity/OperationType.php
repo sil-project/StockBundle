@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,79 +11,65 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-namespace Sil\Bundle\StockBundle\Domain\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
+namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 /**
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class OperationType
 {
-
-    use Guidable;
-
-    /**
-     *
-     * @var string 
-     */
-    private $name;
+    const INTERNAL_TRANSFER = 'internal_transfer';
+    const RECEIPT = 'receipt';
+    const SHIPPING = 'shipping';
 
     /**
-     *
-     * @var string 
+     * @var string
      */
-    private $code;
+    private $value;
 
-    /**
-     * @var Collection|Operation[]
-     */
-    private $operations;
-
-    /**
-     * 
-     * @param string $name
-     */
-    public static function createDefault(string $code, string $name)
+    public static function internalTransfer()
     {
-        $o = new self();
-        $o->code = $code;
-        $o->name = $name;
-        return $o;
+        return new self(self::INTERNAL_TRANSFER);
+    }
+
+    public static function receipt()
+    {
+        return new self(self::RECEIPT);
+    }
+
+    public static function shipping()
+    {
+        return new self(self::SHIPPING);
+    }
+
+    public function __construct(string $value)
+    {
+        $this->value = $value;
     }
 
     /**
-     * 
+     * @return string
      */
-    public function __construct()
+    public function getValue(): string
     {
-        $this->operations = new ArrayCollection();
+        return $this->value;
     }
 
-    public function getCode()
+    public static function getTypes()
     {
-        return $this->code;
+        return [
+            self::internalTransfer(),
+            self::receipt(),
+            self::shipping(),
+        ];
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return $this->name;
-    }
-
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getOperations(): Collection
-    {
-        return $this->operations;
+        return $this->getValue();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -20,29 +21,24 @@ use Blast\BaseEntitiesBundle\Entity\Traits\Guidable;
  */
 class OutputStrategy
 {
-
     use Guidable;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $name;
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $description;
 
     /**
-     *
-     * @var array 
+     * @var array
      */
     private $orderBy;
 
     /**
-     * 
      * @param string $name
      * @param string $orderBy
      */
@@ -53,7 +49,6 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @return string
      */
     public function getName(): string
@@ -62,7 +57,6 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @return string
      */
     public function getDescription(): ?string
@@ -71,7 +65,6 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @return array
      */
     public function getOrderBy(): array
@@ -80,9 +73,7 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @param string $name
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -90,9 +81,7 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @param string|null $description
-     * @return void
      */
     public function setDescription(?string $description): void
     {
@@ -100,13 +89,10 @@ class OutputStrategy
     }
 
     /**
-     * 
      * @param array $orderBy
-     * @return void
      */
     public function setOrderBy(array $orderBy): void
     {
         $this->orderBy = $orderBy;
     }
-
 }

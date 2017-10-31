@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Generator;
 
 use Sil\Bundle\StockBundle\Domain\Entity\StockItemInterface;
@@ -21,13 +24,12 @@ use Sil\Bundle\StockBundle\Domain\Entity\BatchInterface;
  */
 class StockUnitCodeGenerator implements StockUnitCodeGeneratorInterface
 {
-
     /**
-     * 
-     * @param StockItemInterface $item
-     * @param UomQty $qty
-     * @param Location $location
+     * @param StockItemInterface  $item
+     * @param UomQty              $qty
+     * @param Location            $location
      * @param BatchInterface|null $batch
+     *
      * @return string
      */
     public function generate(StockItemInterface $item, UomQty $qty, Location $location,

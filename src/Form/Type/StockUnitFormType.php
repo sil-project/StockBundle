@@ -1,27 +1,29 @@
 <?php
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\BaseType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Sil\Bundle\StockBundle\Domain\Repository\LocationRepositoryInterface;
 
 /**
- *
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class StockUnitFormType extends BaseType
 {
-
     /**
-     *
-     * @var LocationRepositoryInterface 
+     * @var LocationRepositoryInterface
      */
     protected $locationRepository;
 
@@ -35,14 +37,13 @@ class StockUnitFormType extends BaseType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $locations = $this->locationRepository->findAll();
 
         $builder->add('location', EntityType::class,
             [
-                'label' => false,
-                'class' => 'Sil\Bundle\StockBundle\Domain\Entity\Location',
-                'choices' => $locations,
+                'label'        => false,
+                'class'        => 'Sil\Bundle\StockBundle\Domain\Entity\Location',
+                'choices'      => $locations,
                 'choice_label' => 'name',
         ]);
 
@@ -53,8 +54,7 @@ class StockUnitFormType extends BaseType
     {
         return 'stock_unit_form';
     }
-    
-   
+
     public function getName()
     {
         return 'stock_unit_form';

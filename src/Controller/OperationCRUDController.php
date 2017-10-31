@@ -1,9 +1,15 @@
 <?php
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Controller;
 
 use Blast\CoreBundle\Controller\CRUDController;
@@ -14,13 +20,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
 
 /**
- * Description of MovementController
+ * Description of MovementController.
  *
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class OperationCRUDController extends CRUDController
 {
-
     public function createByTypeAction()
     {
         $request = $this->getRequest();
@@ -32,13 +37,13 @@ class OperationCRUDController extends CRUDController
         $opType = $opTypeRepository->get($request->get('type_id'));
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
 
-        if ( $class->isAbstract() ) {
+        if ($class->isAbstract()) {
             return $this->render(
                     'SonataAdminBundle:CRUD:select_subclass.html.twig',
                     array(
                         'base_template' => $this->getBaseTemplate(),
-                        'admin' => $this->admin,
-                        'action' => 'create',
+                        'admin'         => $this->admin,
+                        'action'        => 'create',
                     ), null, $request
             );
         }
@@ -47,7 +52,7 @@ class OperationCRUDController extends CRUDController
         $object->setType($opType);
 
         $preResponse = $this->preCreate($request, $object);
-        if ( $preResponse !== null ) {
+        if ($preResponse !== null) {
             return $preResponse;
         }
 
@@ -59,23 +64,23 @@ class OperationCRUDController extends CRUDController
         $form->setData($object);
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() ) {
+        if ($form->isSubmitted()) {
             //TODO: remove this check for 4.0
-            if ( method_exists($this->admin, 'preValidate') ) {
+            if (method_exists($this->admin, 'preValidate')) {
                 $this->admin->preValidate($object);
             }
             $isFormValid = $form->isValid();
 
             // persist if the form was valid and if in preview mode the preview was approved
-            if ( $isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request)) ) {
+            if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
                 $this->admin->checkAccess('create', $object);
 
                 try {
                     $object = $this->admin->create($object);
 
-                    if ( $this->isXmlHttpRequest() ) {
+                    if ($this->isXmlHttpRequest()) {
                         return $this->renderJson(array(
-                                'result' => 'ok',
+                                'result'   => 'ok',
                                 'objectId' => $this->admin->getNormalizedIdentifier($object),
                                 ), 200, array());
                     }
@@ -91,7 +96,7 @@ class OperationCRUDController extends CRUDController
 
                     // redirect to edit mode
                     return $this->redirectTo($object);
-                } catch ( ModelManagerException $e ) {
+                } catch (ModelManagerException $e) {
                     $this->handleModelManagerException($e);
 
                     $isFormValid = false;
@@ -99,8 +104,8 @@ class OperationCRUDController extends CRUDController
             }
 
             // show an error message if the form failed validation
-            if ( !$isFormValid ) {
-                if ( !$this->isXmlHttpRequest() ) {
+            if (!$isFormValid) {
+                if (!$this->isXmlHttpRequest()) {
                     $this->addFlash(
                         'sonata_flash_error',
                         $this->admin->trans(
@@ -110,7 +115,7 @@ class OperationCRUDController extends CRUDController
                         )
                     );
                 }
-            } elseif ( $this->isPreviewRequested() ) {
+            } elseif ($this->isPreviewRequested()) {
                 // pick the preview template if the form was valid and preview was requested
                 $templateKey = 'preview';
                 $this->admin->getShow();
@@ -125,7 +130,7 @@ class OperationCRUDController extends CRUDController
         return $this->render($this->admin->getTemplate($templateKey),
                 array(
                     'action' => 'create',
-                    'form' => $view,
+                    'form'   => $view,
                     'object' => $object,
                 ), null);
     }
@@ -138,8 +143,7 @@ class OperationCRUDController extends CRUDController
     }
 
     /**
-     *
-     * @var OperationServiceInterface 
+     * @var OperationServiceInterface
      */
     protected $operationService;
 
@@ -163,12 +167,11 @@ class OperationCRUDController extends CRUDController
         $this->admin->update($operation);
 
         //nothing has been reserved because no stock available
-        if ( $operation->isConfirmed() ) {
+        if ($operation->isConfirmed()) {
             $this->addFlash('sonata_flash_info',
                 $this->trans(
                     'sil.stock.operation.message.no_available_stock_for_reservation'));
         }
-
 
         return $this->redirectTo($operation);
     }
@@ -219,29 +222,29 @@ class OperationCRUDController extends CRUDController
 
         $url = false;
 
-        if ( null !== $request->get('btn_update_and_list') ) {
+        if (null !== $request->get('btn_update_and_list')) {
             $url = $this->admin->generateUrl('list');
         }
-        if ( null !== $request->get('btn_create_and_list') ) {
+        if (null !== $request->get('btn_create_and_list')) {
             $url = $this->admin->generateUrl('list');
         }
 
-        if ( null !== $request->get('btn_create_and_create') ) {
+        if (null !== $request->get('btn_create_and_create')) {
             $params = array();
-            if ( $this->admin->hasActiveSubClass() ) {
+            if ($this->admin->hasActiveSubClass()) {
                 $params['subclass'] = $request->get('subclass');
             }
             $url = $this->admin->generateUrl('create', $params);
         }
 
-        if ( $this->getRestMethod() === 'DELETE' ) {
+        if ($this->getRestMethod() === 'DELETE') {
             $url = $this->admin->generateUrl('list');
         }
 
-        if ( !$url ) {
-            foreach ( array('show', 'edit') as $route ) {
-                if ( $this->admin->hasRoute($route) && $this->admin->hasAccess($route,
-                        $object) ) {
+        if (!$url) {
+            foreach (array('show', 'edit') as $route) {
+                if ($this->admin->hasRoute($route) && $this->admin->hasAccess($route,
+                        $object)) {
                     $url = $this->admin->generateObjectUrl($route, $object);
 
                     break;
@@ -249,7 +252,7 @@ class OperationCRUDController extends CRUDController
             }
         }
 
-        if ( !$url ) {
+        if (!$url) {
             $url = $this->admin->generateUrl('list');
         }
 
@@ -257,7 +260,6 @@ class OperationCRUDController extends CRUDController
     }
 
     /**
-     * 
      * @return OperationServiceInterface
      */
     public function getOperationService(): OperationServiceInterface
@@ -266,7 +268,6 @@ class OperationCRUDController extends CRUDController
     }
 
     /**
-     * 
      * @param OperationServiceInterface $operationService
      */
     public function setOperationService(OperationServiceInterface $operationService)

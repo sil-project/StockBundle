@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 /**
@@ -16,7 +19,6 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 class LocationType
 {
-
     const INTERNAL = 'internal';
     const SUPPLIER = 'supplier';
     const CUSTOMER = 'customer';
@@ -24,8 +26,7 @@ class LocationType
     const SCRAP = 'scrap';
 
     /**
-     *
-     * @var string 
+     * @var string
      */
     private $value;
 
@@ -54,16 +55,12 @@ class LocationType
         return new self(self::SCRAP);
     }
 
-    /**
-     * 
-     */
     public function __construct(string $value)
     {
         $this->value = $value;
     }
 
     /**
-     * 
      * @return string
      */
     public function getValue(): string
@@ -78,12 +75,11 @@ class LocationType
             self::internal(),
             self::supplier(),
             self::scrap(),
-            self::virtual()
+            self::virtual(),
         ];
     }
 
     /**
-     * 
      * @return string
      */
     public function __toString(): string

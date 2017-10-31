@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Repository\InMemory;
 
 use ArrayObject;
@@ -19,7 +21,6 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 class InMemoryRepository
 {
-
     /**
      * @var string
      */
@@ -44,18 +45,18 @@ class InMemoryRepository
 
     public function addAll(array $resources)
     {
-        foreach ( $resources as $resource ) {
+        foreach ($resources as $resource) {
             $this->add($resource);
         }
     }
 
     public function add($resource)
     {
-        if ( !$resource instanceof $this->interface ) {
+        if (!$resource instanceof $this->interface) {
             throw new \InvalidArgumentException(
             'The added resource must be an instance of ' . $this->interface);
         }
-        if ( in_array($resource, $this->findAll()) ) {
+        if (in_array($resource, $this->findAll())) {
             throw new \InvalidArgumentException('Resource already exists and cannot be added');
         }
         $this->arrayObject->append($resource);
@@ -65,17 +66,18 @@ class InMemoryRepository
     {
         $newResources = array_filter($this->findAll(),
             function ($object) use ($resource) {
-            return $object !== $resource;
-        });
+                return $object !== $resource;
+            });
         $this->arrayObject->exchangeArray($newResources);
     }
 
     public function get($id)
     {
         $resource = $this->find($id);
-        if ( null == $resource ) {
+        if (null == $resource) {
             throw new \InvalidArgumentException('Resource does not exist');
         }
+
         return $resource;
     }
 
@@ -93,25 +95,27 @@ class InMemoryRepository
         $offset = null)
     {
         $results = $this->findAll();
-        if ( !empty($criteria) ) {
+        if (!empty($criteria)) {
             $results = $this->applyCriteria($results, $criteria);
         }
-        if ( !empty($orderBy) ) {
+        if (!empty($orderBy)) {
             $results = $this->applyOrder($results, $orderBy);
         }
         $results = array_slice($results, ($offset ? $offset : 0), $limit);
+
         return $results;
     }
 
     public function findOneBy(array $criteria)
     {
-        if ( empty($criteria) ) {
+        if (empty($criteria)) {
             throw new \InvalidArgumentException('The criteria array needs to be set.');
         }
         $results = $this->applyCriteria($this->findAll(), $criteria);
-        if ( $result = reset($results) ) {
+        if ($result = reset($results)) {
             return $result;
         }
+
         return null;
     }
 
@@ -122,36 +126,38 @@ class InMemoryRepository
 
     private function applyCriteria(array $resources, array $criteria)
     {
-        foreach ( $this->arrayObject as $object ) {
-            foreach ( $criteria as $criterion => $value ) {
-                if ( $value !== $this->accessor->getValue($object, $criterion) ) {
+        foreach ($this->arrayObject as $object) {
+            foreach ($criteria as $criterion => $value) {
+                if ($value !== $this->accessor->getValue($object, $criterion)) {
                     $key = array_search($object, $resources);
                     unset($resources[$key]);
                 }
             }
         }
+
         return $resources;
     }
 
     private function applyOrder(array $resources, array $orderBy)
     {
         $results = $resources;
-        foreach ( $orderBy as $property => $order ) {
+        foreach ($orderBy as $property => $order) {
             $sortable = [];
-            foreach ( $results as $key => $object ) {
+            foreach ($results as $key => $object) {
                 $sortable[$key] = $this->accessor->getValue($object, $property);
             }
-            if ( RepositoryInterface::ORDER_ASCENDING === $order ) {
+            if (RepositoryInterface::ORDER_ASCENDING === $order) {
                 asort($sortable);
             }
-            if ( RepositoryInterface::ORDER_DESCENDING === $order ) {
+            if (RepositoryInterface::ORDER_DESCENDING === $order) {
                 arsort($sortable);
             }
             $results = [];
-            foreach ( $sortable as $key => $propertyValue ) {
+            foreach ($sortable as $key => $propertyValue) {
                 $results[$key] = $resources[$key];
             }
         }
+
         return $results;
     }
 }

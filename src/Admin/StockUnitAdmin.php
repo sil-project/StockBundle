@@ -1,9 +1,13 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file is part of the Blast Project package.
+ *
+ * Copyright (C) 2015-2017 Libre Informatique
+ *
+ * This file is licenced under the GNU LGPL v3.
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
 
 namespace Sil\Bundle\StockBundle\Admin;
@@ -11,20 +15,19 @@ namespace Sil\Bundle\StockBundle\Admin;
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
 use Sil\Bundle\StockBundle\Domain\Generator\StockUnitCodeGeneratorInterface;
 use Sonata\AdminBundle\Route\RouteCollection;
+
 /**
- * Description of StockUnitAdmin
+ * Description of StockUnitAdmin.
  *
  * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
  */
 class StockUnitAdmin extends ResourceAdmin
 {
-
     protected $baseRouteName = 'admin_stock_unit';
     protected $baseRoutePattern = 'stock/unit';
 
     /**
-     *
-     * @var StockUnitCodeGeneratorInterface 
+     * @var StockUnitCodeGeneratorInterface
      */
     protected $stockUnitCodeGenerator;
 
@@ -33,7 +36,7 @@ class StockUnitAdmin extends ResourceAdmin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->add('update_stock',  'updatestock/{item_id}');
+        $collection->add('update_stock', 'updatestock/{item_id}');
     }
 
     /**
@@ -59,5 +62,4 @@ class StockUnitAdmin extends ResourceAdmin
     {
         $this->stockUnitCodeGenerator = $stockUnitCodeGenerator;
     }
-
 }

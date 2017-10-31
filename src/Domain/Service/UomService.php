@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -9,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Service;
 
 use Sil\Bundle\StockBundle\Domain\Repository\StockUnitRepositoryInterface;
@@ -20,15 +23,12 @@ use Sil\Bundle\StockBundle\Domain\Entity\Uom;
  */
 class UomService implements UomServiceInterface
 {
-
     /**
-     *
-     * @var StockUnitRepositoryInterface 
+     * @var StockUnitRepositoryInterface
      */
     protected $stockUnitRepository;
 
     /**
-     * 
      * @param StockUnitRepositoryInterface $stockUnitRepo
      */
     public function __construct(StockUnitRepositoryInterface $stockUnitRepo)
@@ -37,16 +37,14 @@ class UomService implements UomServiceInterface
     }
 
     /**
-     * 
      * @param StockItemInterface $item
-     * @param Uom $newUom
+     * @param Uom                $newUom
      */
     public function updateUomForStockItem(StockItemInterface $item, Uom $newUom): void
     {
-
         $stockUnits = $this->stockUnitRepository->findByStockItem($item);
 
-        foreach ( $stockUnits as $sUnit ) {
+        foreach ($stockUnits as $sUnit) {
             $sUnit->setQty($sUnit->getQty()->convertTo($newUom));
         }
 
