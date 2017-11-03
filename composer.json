@@ -21,7 +21,6 @@
             "Sil\\Bundle\\StockBundle\\Test\\": "tests/"
         }
     },
-    "version": "0.6.4",
     "require": {
         "php": ">=7.1",
         "symfony/symfony": ">=3.2",
