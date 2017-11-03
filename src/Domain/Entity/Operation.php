@@ -150,13 +150,13 @@ class Operation implements ProgressStateAwareInterface
      */
     public function getType(): OperationType
     {
-        return LocationType::{$this->typeValue}();
+        return OperationType::{$this->typeValue}();
     }
 
     /**
      * @return PartnerInterface
      */
-    public function getPartner(): ?PartnerInterface
+    public function getPartner()
     {
         return $this->partner;
     }
@@ -228,7 +228,7 @@ class Operation implements ProgressStateAwareInterface
     /**
      * @param PartnerInterface $partner
      */
-    public function setPartner(PartnerInterface $partner): void
+    public function setPartner($partner): void
     {
         $this->partner = $partner;
     }

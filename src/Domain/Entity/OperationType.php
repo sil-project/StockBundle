@@ -19,7 +19,7 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 class OperationType
 {
-    const INTERNAL_TRANSFER = 'internal_transfer';
+    const INTERNAL_TRANSFER = 'internalTransfer';
     const RECEIPT = 'receipt';
     const SHIPPING = 'shipping';
 
@@ -49,6 +49,30 @@ class OperationType
     }
 
     /**
+     * @return bool
+     */
+    public function isInternalTransfer(): bool
+    {
+        return $this->value == self::INTERNAL_TRANSFER;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReceipt(): bool
+    {
+        return $this->value == self::RECEIPT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShipping(): bool
+    {
+        return $this->value == self::SHIPPING;
+    }
+
+    /**
      * @return string
      */
     public function getValue(): string
@@ -62,6 +86,15 @@ class OperationType
             self::internalTransfer(),
             self::receipt(),
             self::shipping(),
+        ];
+    }
+
+    public static function getTypeValues()
+    {
+        return [
+            self::INTERNAL_TRANSFER,
+            self::RECEIPT,
+            self::SHIPPING,
         ];
     }
 

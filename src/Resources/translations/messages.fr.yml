@@ -28,6 +28,11 @@ sil:
             customer: Emplacement client
             virtual: Emplacement virtuel
             scrap: Emplacement de rebut
+            
+        operation_type:
+            internalTransfer: Transfert interne
+            receipt: Réception
+            shipping: Expédition
        
         action:
             edit: Modifier

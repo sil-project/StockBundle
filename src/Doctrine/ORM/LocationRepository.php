@@ -37,7 +37,7 @@ class LocationRepository extends ResourceRepository implements LocationRepositor
         return $this->createQueryBuilder('o')->getQuery()->getResult();
     }
 
-    public function findInternals(): array
+    public function findInternalLocations(): array
     {
         $qb = $this->createQueryBuilder('l')
             ->where('l.typeValue = :type')
@@ -46,8 +46,26 @@ class LocationRepository extends ResourceRepository implements LocationRepositor
         return $qb->getQuery()->getResult();
     }
 
+    public function findCustomerLocations(): array
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->where('l.typeValue = :type')
+            ->setParameter('type', LocationType::CUSTOMER);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findSupplierLocations(): array
+    {
+        $qb = $this->createQueryBuilder('l')
+            ->where('l.typeValue = :type')
+            ->setParameter('type', LocationType::SUPPLIER);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findByOwnedItem(StockItemInterface $item,
-        ?string $locationType = null)
+        ?string $locationType = null): array
     {
         $qb = $this->createQueryBuilder('l')
             ->Join('Sil\Bundle\StockBundle\Domain\Entity\StockUnit', 'su',

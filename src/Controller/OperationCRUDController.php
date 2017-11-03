@@ -18,6 +18,7 @@ use Sil\Bundle\StockBundle\Domain\Service\OperationServiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Form;
+use Sil\Bundle\StockBundle\Domain\Entity\OperationType;
 
 /**
  * Description of MovementController.
@@ -33,8 +34,8 @@ class OperationCRUDController extends CRUDController
         $templateKey = 'edit';
 
         $this->admin->checkAccess('create');
-        $opTypeRepository = $this->get('sil.stock.repository.operation_type');
-        $opType = $opTypeRepository->get($request->get('type_id'));
+
+        $opType = OperationType::{$request->get('type')}();
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
 
         if ($class->isAbstract()) {
@@ -60,7 +61,6 @@ class OperationCRUDController extends CRUDController
 
         /* @var $form Form */
         $form = $this->admin->getForm();
-
         $form->setData($object);
         $form->handleRequest($request);
 
