@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,6 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Form\DataTransformer;
 
 use Sil\Bundle\StockBundle\Domain\Entity\OperationType;
@@ -18,15 +20,14 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class OperationTypeDataTransformer implements DataTransformerInterface
 {
-
     /**
-     * 
      * @param OperationType|null $type
+     *
      * @return string
      */
     public function transform($type)
     {
-        if ( null === $type ) {
+        if (null === $type) {
             return '';
         }
 
@@ -34,13 +35,13 @@ class OperationTypeDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * 
      * @param string|null $typeValue
+     *
      * @return OperationType
      */
     public function reverseTransform($typeValue)
     {
-        if ( !$typeValue ) {
+        if (!$typeValue) {
             return null;
         }
 

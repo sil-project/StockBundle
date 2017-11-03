@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -10,6 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
 namespace Sil\Bundle\StockBundle\Domain\Entity;
 
 /**
@@ -17,7 +19,6 @@ namespace Sil\Bundle\StockBundle\Domain\Entity;
  */
 class OperationType
 {
-
     const INTERNAL_TRANSFER = 'internalTransfer';
     const RECEIPT = 'receipt';
     const SHIPPING = 'shipping';
@@ -48,7 +49,6 @@ class OperationType
     }
 
     /**
-     * 
      * @return bool
      */
     public function isInternalTransfer(): bool
@@ -57,7 +57,6 @@ class OperationType
     }
 
     /**
-     * 
      * @return bool
      */
     public function isReceipt(): bool
@@ -66,7 +65,6 @@ class OperationType
     }
 
     /**
-     * 
      * @return bool
      */
     public function isShipping(): bool
@@ -96,7 +94,7 @@ class OperationType
         return [
             self::INTERNAL_TRANSFER,
             self::RECEIPT,
-            self::SHIPPING
+            self::SHIPPING,
         ];
     }
 

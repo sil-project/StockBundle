@@ -34,7 +34,7 @@ class OperationCRUDController extends CRUDController
         $templateKey = 'edit';
 
         $this->admin->checkAccess('create');
-       
+
         $opType = OperationType::{$request->get('type')}();
         $class = new \ReflectionClass($this->admin->hasActiveSubClass() ? $this->admin->getActiveSubClass() : $this->admin->getClass());
 
