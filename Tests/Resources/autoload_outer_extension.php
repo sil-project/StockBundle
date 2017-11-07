@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Blast Project package.
  *
@@ -8,15 +9,7 @@
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-namespace Sil\Bundle\StockBundle\Domain\Repository;
 
-/**
- * @author Glenn Cavarlé <glenn.cavarle@libre-informatique.fr>
- */
-interface PartnerRepositoryInterface
-{
-
-    public function getCustomers(): array;
-
-    public function getSuppliers(): array;
+foreach (glob(__DIR__ . '/AppBundle/Entity/OuterExtension/*/*.php') as $file) {
+    require_once $file;
 }

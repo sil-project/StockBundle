@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /*
@@ -11,7 +10,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
-
 namespace Sil\Bundle\StockBundle\Admin;
 
 use Blast\Bundle\ResourceBundle\Sonata\Admin\ResourceAdmin;
@@ -30,6 +28,7 @@ use Sil\Bundle\StockBundle\Form\DataTransformer\OperationTypeDataTransformer;
  */
 class OperationAdmin extends ResourceAdmin
 {
+
     protected $baseRouteName = 'admin_stock_operation';
     protected $baseRoutePattern = 'stock/operation';
 
@@ -89,48 +88,51 @@ class OperationAdmin extends ResourceAdmin
         $descGroup->add('expectedAt', 'sonata_type_datetime_picker',
             ['required' => true]);
 
-        if (!$type->isInternalTransfer()) {
+        if ( !$type->isInternalTransfer() ) {
             $this->createPartnerField($descGroup, $type, $mapper);
         }
         $descGroup->end();
+
 
         $locationGroup = $generalTab->with('sil.stock.operation.form.group.locations');
         $this->createLocationFields($locationGroup, $type, $mapper);
     }
 
     /**
-     * @param type          $group
+     * 
+     * @param type $group
      * @param OperationType $type
-     * @param FormMapper    $mapper
+     * @param FormMapper $mapper
      */
     private function createOperationTypeFields($group, OperationType $type,
         FormMapper $mapper)
     {
         $group->add('type_choice', 'choice',
             [
-                'label'        => 'type',
-                'mapped'       => false,
-                'choices'      => OperationType::getTypes(),
-                'choice_label' => function ($label) {
+                'label' => 'type',
+                'mapped' => false,
+                'choices' => OperationType::getTypes(),
+                'choice_label' => function($label) {
                     return 'sil.stock.operation_type.' . $label;
                 },
                 'choice_value' => 'value',
-                'data'         => $type,
-                'attr'         => ['disabled' => true],
+                'data' => $type,
+                'attr' => ['disabled' => true]
         ]);
         $group->add('type', 'hidden');
         $group->get('type')->addModelTransformer(new OperationTypeDataTransformer());
     }
 
     /**
-     * @param type          $group
+     * 
+     * @param type $group
      * @param OperationType $type
-     * @param FormMapper    $mapper
+     * @param FormMapper $mapper
      */
     protected function createPartnerField($group, OperationType $type,
         FormMapper $mapper)
     {
-        if ($type->isReceipt()) {
+        if ( $type->isReceipt() ) {
             $parters = $this->getPartnerRepository()->getSuppliers();
         } else {
             $parters = $this->getPartnerRepository()->getCustomers();
@@ -138,15 +140,16 @@ class OperationAdmin extends ResourceAdmin
 
         $group->add('partner', 'choice',
             [
-                'choices'      => $parters,
-                'choice_label' => 'fulltextName',
+                'choices' => $parters,
+                'choice_label' => 'fulltextName'
         ]);
     }
 
     /**
-     * @param type          $group
+     * 
+     * @param type $group
      * @param OperationType $type
-     * @param FormMapper    $mapper
+     * @param FormMapper $mapper
      */
     private function createLocationFields($group, OperationType $type,
         FormMapper $mapper)
@@ -154,10 +157,10 @@ class OperationAdmin extends ResourceAdmin
         $srcLocations = [];
         $destLocations = [];
 
-        if ($type->isReceipt()) {
+        if ( $type->isReceipt() ) {
             $srcLocations = $this->getLocationRepository()->findSupplierLocations();
             $destLocations = $this->getLocationRepository()->findInternalLocations();
-        } elseif ($type->isShipping()) {
+        } else if ( $type->isShipping() ) {
             $srcLocations = $this->getLocationRepository()->findInternalLocations();
             $destLocations = $this->getLocationRepository()->findCustomerLocations();
         } else {
@@ -166,14 +169,14 @@ class OperationAdmin extends ResourceAdmin
 
         $group->add('srcLocation', 'choice',
             [
-                'choices'      => $srcLocations,
-                'choice_label' => 'name',
+                'choices' => $srcLocations,
+                'choice_label' => 'name'
         ]);
 
         $group->add('destLocation', 'choice',
             [
-                'choices'      => $destLocations,
-                'choice_label' => 'name',
+                'choices' => $destLocations,
+                'choice_label' => 'name'
         ]);
     }
 
@@ -198,11 +201,12 @@ class OperationAdmin extends ResourceAdmin
      */
     public function preUpdate($object)
     {
+
         //generate code for the operation and the related movements
         $code = $this->getOperationCodeGenerator()->generate();
         $object->setCode($code);
 
-        foreach ($object->getMovements() as $m) {
+        foreach ( $object->getMovements() as $m ) {
             $mCode = $this->getMovementCodeGenerator()->generate(
                 $m->getStockItem(), $m->getQty());
             $m->setCode($mCode);
@@ -260,6 +264,7 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
+     * 
      * @return PartnerRepositoryInterface
      */
     public function getPartnerRepository(): PartnerRepositoryInterface
@@ -268,6 +273,7 @@ class OperationAdmin extends ResourceAdmin
     }
 
     /**
+     * 
      * @param PartnerRepositoryInterface $partnerRepository
      */
     public function setPartnerRepository(PartnerRepositoryInterface $partnerRepository)
@@ -284,7 +290,7 @@ class OperationAdmin extends ResourceAdmin
         $type = $tr->trans('sil.stock.operation_type.' . $operation->getType());
 
         //return sprintf('[%s] %s', $operation->getCode(), $type);
-
+        
         return 'plop';
     }
 }

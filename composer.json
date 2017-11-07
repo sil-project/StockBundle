@@ -17,8 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Sil\\Bundle\\StockBundle\\": "src/",
-            "Sil\\Bundle\\StockBundle\\Test\\": "tests/"
+            "Sil\\Bundle\\StockBundle\\": "/"
         }
     },
     "require": {
