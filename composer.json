@@ -39,5 +39,6 @@
             "chmod u+x bin/phpunit"
         ]
     },
-    "suggest": {}
+    "suggest": {},
+    "version": "dev-wip-lisem"
 }
